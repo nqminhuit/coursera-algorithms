@@ -1,4 +1,4 @@
-// import edu.princeton.cs.algs4.StdRandom;
+import edu.princeton.cs.algs4.StdRandom;
 
 public class Percolation {
 
@@ -35,6 +35,7 @@ public class Percolation {
 
     // test client (optional)
     public static void main(String[] args) {
+        System.out.println("Percolation with " + StdRandom.uniform(4));
     }
 
 }
