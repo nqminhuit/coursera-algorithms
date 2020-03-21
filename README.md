@@ -9,6 +9,11 @@ $ java -cp build/classes/java/main/:libs/algs4.jar Percolation
 # How to compile and execute java class that requires input file:
 
 ```bash
-$ javac -cp libs/algs4.jar src/UnionFind.java -d build/classes/java/main/
-$ java -cp build/classes/java/main/:libs/algs4.jar UnionFind < test-set/tinyUF
+$ javac -cp percolation/libs/algs4.jar percolation/src/*.java -d percolation/build/classes/java/main/
+$ java -cp percolation/build/classes/java/main/:percolation/libs/algs4.jar UnionFind < percolation/test-set/tinyUF
+```
+
+* quick: for single command:
+```bash
+$ javac -cp percolation/libs/algs4.jar percolation/src/*.java -d percolation/build/classes/java/main/; java -cp percolation/build/classes/java/main/:percolation/libs/algs4.jar UnionFind < percolation/test-set/tinyUF
 ```
