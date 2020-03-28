@@ -12,8 +12,8 @@ public class PercolationStats {
         for (int i = 0; i < trials; ++i) {
             Percolation p = new Percolation(n);
             while (!p.percolates()) {
-                int row = StdRandom.uniform(0, n);
-                int col = StdRandom.uniform(0, n);
+                int row = StdRandom.uniform(1, n + 1);
+                int col = StdRandom.uniform(1, n + 1);
                 p.open(row, col);
             }
             a[i] = 1D * p.numberOfOpenSites() / (n * n);

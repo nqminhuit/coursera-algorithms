@@ -18,12 +18,12 @@ public class Percolation {
     // creates n-by-n grid, with all sites initially blocked
     public Percolation(int n) {
         this.n = n;
-        openSites = new boolean[n][n];
-        wquf = new WeightedQuickUnionUF(n * n + 2);
-        virtualTop = n;
-        virtualBot = n + 1;
-        for (int i = 0; i < n; ++i) {
-            for (int j = 0; j < n; ++j) {
+        openSites = new boolean[n + 1][n + 1];
+        wquf = new WeightedQuickUnionUF((n + 1) * (n + 1) + 2);
+        virtualTop = 0;
+        virtualBot = n * n + 1;
+        for (int i = 1; i <= n; ++i) {
+            for (int j = 1; j <= n; ++j) {
                 openSites[i][j] = false;
             }
         }
@@ -40,22 +40,22 @@ public class Percolation {
         }
 
         int toBeOpenedSite = getIndex(row, col);
-        if (isOpen(row - 1, col)) {
+        if (row > 1 && isOpen(row - 1, col)) {
             wquf.union(toBeOpenedSite, getIndex(row - 1, col));
         }
-        if (isOpen(row + 1, col)) {
+        if (row < n && isOpen(row + 1, col)) {
             wquf.union(toBeOpenedSite, getIndex(row + 1, col));
         }
-        if (isOpen(row, col - 1)) {
+        if (col > 1 && isOpen(row, col - 1)) {
             wquf.union(toBeOpenedSite, getIndex(row, col - 1));
         }
-        if (isOpen(row, col + 1)) {
+        if (col < n && isOpen(row, col + 1)) {
             wquf.union(toBeOpenedSite, getIndex(row, col + 1));
         }
 
-        if (row == 0) {
+        if (row == 1) {
             wquf.union(toBeOpenedSite, virtualTop);
-        } else if (row == n - 1) {
+        } else if (row == n) {
             wquf.union(toBeOpenedSite, virtualBot);
         }
 
@@ -65,8 +65,8 @@ public class Percolation {
 
     // is the site (row, col) open?
     public boolean isOpen(int row, int col) {
-        if (row >= n || col >= n || row < 0 || col < 0) {
-            return false;
+        if (row > n || col > n || row < 1 || col < 1) {
+            throw new IllegalArgumentException("row/col outside of range!");
         }
         return openSites[row][col];
     }
@@ -91,10 +91,8 @@ public class Percolation {
         int n = StdIn.readInt();
         Percolation p = new Percolation(n);
         while (!p.percolates()) {
-            int row;
-            int col;
-            row = StdIn.readInt() - 1;
-            col = StdIn.readInt() - 1;
+            int row = StdIn.readInt();
+            int col = StdIn.readInt();
             p.open(row, col);
         }
 
