@@ -3,6 +3,8 @@ import edu.princeton.cs.algs4.WeightedQuickUnionUF;
 
 public class Percolation {
 
+    private static final int VIRTUAL_TOP = 0;
+
     private boolean[][] openSites;
 
     private final WeightedQuickUnionUF wquf;
@@ -11,16 +13,16 @@ public class Percolation {
 
     private final int virtualBot;
 
-    private final int virtualTop;
-
     private final int n;
 
     // creates n-by-n grid, with all sites initially blocked
     public Percolation(int n) {
+        if (n < 1) {
+            throw new IllegalArgumentException("n must be greater than 0");
+        }
         this.n = n;
         openSites = new boolean[n + 1][n + 1];
         wquf = new WeightedQuickUnionUF((n + 1) * (n + 1) + 2);
-        virtualTop = 0;
         virtualBot = n * n + 1;
         for (int i = 1; i <= n; ++i) {
             for (int j = 1; j <= n; ++j) {
@@ -54,7 +56,7 @@ public class Percolation {
         }
 
         if (row == 1) {
-            wquf.union(toBeOpenedSite, virtualTop);
+            wquf.union(toBeOpenedSite, VIRTUAL_TOP);
         } else if (row == n) {
             wquf.union(toBeOpenedSite, virtualBot);
         }
@@ -73,7 +75,7 @@ public class Percolation {
 
     // is the site (row, col) full?
     public boolean isFull(int row, int col) {
-        return wquf.find(getIndex(row, col)) == wquf.find(virtualTop);
+        return isOpen(row, col) && wquf.find(getIndex(row, col)) == wquf.find(VIRTUAL_TOP);
     }
 
     // returns the number of open sites
@@ -83,7 +85,7 @@ public class Percolation {
 
     // does the system percolate?
     public boolean percolates() {
-        return wquf.find(virtualTop) == wquf.find(virtualBot);
+        return wquf.find(VIRTUAL_TOP) == wquf.find(virtualBot);
     }
 
     // test client (optional)
