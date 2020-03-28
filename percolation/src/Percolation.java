@@ -1,31 +1,30 @@
-import java.util.NoSuchElementException;
 import edu.princeton.cs.algs4.StdIn;
 import edu.princeton.cs.algs4.WeightedQuickUnionUF;
 
 public class Percolation {
 
-    private int[][] openSites;
+    private boolean[][] openSites;
 
-    private WeightedQuickUnionUF wquf;
+    private final WeightedQuickUnionUF wquf;
 
     private int numberOfOpenSites = 0;
 
-    private int virtualBot;
+    private final int virtualBot;
 
-    private int virtualTop;
+    private final int virtualTop;
 
-    private int n;
+    private final int n;
 
     // creates n-by-n grid, with all sites initially blocked
     public Percolation(int n) {
         this.n = n;
-        openSites = new int[n][n];
+        openSites = new boolean[n][n];
         wquf = new WeightedQuickUnionUF(n * n + 2);
         virtualTop = n;
         virtualBot = n + 1;
         for (int i = 0; i < n; ++i) {
             for (int j = 0; j < n; ++j) {
-                openSites[i][j] = 0;
+                openSites[i][j] = false;
             }
         }
     }
@@ -60,7 +59,7 @@ public class Percolation {
             wquf.union(toBeOpenedSite, virtualBot);
         }
 
-        openSites[row][col] = 1;
+        openSites[row][col] = true;
         numberOfOpenSites++;
     }
 
@@ -69,7 +68,7 @@ public class Percolation {
         if (row >= n || col >= n || row < 0 || col < 0) {
             return false;
         }
-        return openSites[row][col] == 1;
+        return openSites[row][col];
     }
 
     // is the site (row, col) full?
@@ -94,14 +93,8 @@ public class Percolation {
         while (!p.percolates()) {
             int row;
             int col;
-            try {
-                row = StdIn.readInt() - 1;
-                col = StdIn.readInt() - 1;
-            }
-            catch (NoSuchElementException e) {
-                System.out.println("Running out of input, system does not percolate!");
-                return;
-            }
+            row = StdIn.readInt() - 1;
+            col = StdIn.readInt() - 1;
             p.open(row, col);
         }
 
