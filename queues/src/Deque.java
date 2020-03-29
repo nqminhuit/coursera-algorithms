@@ -115,10 +115,15 @@ public class Deque<Item> implements Iterable<Item> {
     private class Stack {
 
         public void push(Item item) {
-            Node newNode = new Node(item);
-            newNode.next = firstOfDeque;
-            firstOfDeque.prev = newNode;
-            firstOfDeque = newNode;
+            if (firstOfDeque.item == null) {
+                firstOfDeque = new Node(item);
+                lastOfDeque = firstOfDeque;
+            } else {
+                Node newNode = new Node(item);
+                newNode.next = firstOfDeque;
+                firstOfDeque.prev = newNode;
+                firstOfDeque = newNode;
+            }
         }
 
         public Item pop() {
