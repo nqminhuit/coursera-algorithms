@@ -62,12 +62,14 @@ public class Deque<Item> implements Iterable<Item> {
     // remove and return the item from the front
     public Item removeFirst() {
         preventOperationOnEmptyQueue();
+        size--;
         return queue.dequeue();
     }
 
     // remove and return the item from the back
     public Item removeLast() {
         preventOperationOnEmptyQueue();
+        size--;
         return stack.pop();
     }
 
@@ -128,8 +130,8 @@ public class Deque<Item> implements Iterable<Item> {
 
         public Item pop() {
             Item item = lastOfDeque.item;
-            lastOfDeque = lastOfDeque.prev;
             lastOfDeque.next = null;
+            lastOfDeque = lastOfDeque.prev;
             return item;
         }
     }
