@@ -17,6 +17,7 @@ public class Deque<Item> implements Iterable<Item> {
     public Deque() {
         firstOfDeque = new Node(null);
         lastOfDeque = firstOfDeque;
+        firstOfDeque.next = lastOfDeque;
         stack = new Stack();
         queue = new Queue();
         size = 0;
@@ -71,9 +72,12 @@ public class Deque<Item> implements Iterable<Item> {
     }
 
     private class Node {
+
         Item item;
 
         Node next;
+
+        Node prev;
 
         public Node(Item item) {
             this.item = item;
@@ -82,7 +86,7 @@ public class Deque<Item> implements Iterable<Item> {
 
     private class ListItorator implements Iterator<Item> {
 
-        Node current = lastOfDeque;
+        Node current = firstOfDeque;
 
         @Override
         public boolean hasNext() {
@@ -109,58 +113,39 @@ public class Deque<Item> implements Iterable<Item> {
     }
 
     private class Stack {
-        Node first;
-
-        public Stack() {
-            first = firstOfDeque;
-        }
 
         public void push(Item item) {
-            if (first == null) {
-                first.item = item;
-                first.next = lastOfDeque;
-            } else {
-                Node newFirst = new Node(null);
-                newFirst.item = item;
-                newFirst.next = first;
-                first = newFirst;
-                lastOfDeque = first;
-            }
+            Node newNode = new Node(item);
+            newNode.next = firstOfDeque;
+            firstOfDeque.prev = newNode;
+            firstOfDeque = newNode;
         }
 
         public Item pop() {
-            Item item = firstOfDeque.item;
-            firstOfDeque = firstOfDeque.next;
+            Item item = lastOfDeque.item;
+            lastOfDeque = lastOfDeque.prev;
+            lastOfDeque.next = null;
             return item;
         }
     }
 
     class Queue {
 
-        // private Node first;
-
-        private Node last;
-
-        public Queue() {
-            // first = firstOfDeque;
-            last = firstOfDeque;
-        }
-
         public void enqueue(Item item) {
-            if (last == null) {
-                last.item = item;
-                firstOfDeque.next = last;
+            if (lastOfDeque.item == null) {
+                lastOfDeque = new Node(item);
+                firstOfDeque = lastOfDeque;
             } else {
-                Node newLast = new Node(item);
-                last.next = newLast;
-                last = newLast;
-                firstOfDeque = last;
+                Node newNode = new Node(item);
+                lastOfDeque.next = newNode;
+                newNode.prev = lastOfDeque;
+                lastOfDeque = newNode;
             }
         }
 
         public Item dequeue() {
-            Item item = lastOfDeque.item;
-            lastOfDeque = lastOfDeque.next;
+            Item item = firstOfDeque.item;
+            firstOfDeque = firstOfDeque.next;
             return item;
         }
     }
@@ -168,19 +153,24 @@ public class Deque<Item> implements Iterable<Item> {
     // unit testing (required)
     public static void main(String[] args) {
         Deque<String> deque = new Deque<>();
-        for (int i = 0; i < 3; ++i) {
+        for (int i = 0; i < 4; ++i) {
             deque.addFirst("item " + i);
             deque.addLast("item " + i);
         }
 
-        deque.forEach(System.out::println);
+        deque.forEach(System.out::print);
 
-        // System.out.println("Remove first and last:");
-        // for (int i = 0; i < 3; ++i) {
-        //     deque.removeFirst();
-        //     deque.removeLast();
-        //     deque.forEach(System.out::println);
-        // }
+        System.out.println("Remove first and last:");
+        for (int i = 0; i < 3; ++i) {
+            deque.removeFirst();
+            deque.removeLast();
+            for (String item : deque) {
+                System.out.println(item + " ");
+            }
+            System.out.println();
+        }
+        System.out.print("Remaining: ");
+        deque.forEach(System.out::println);
     }
 
 }
