@@ -3,25 +3,33 @@ import java.util.NoSuchElementException;
 
 public class Deque<Item> implements Iterable<Item> {
 
-    private Node first;
+    private Node firstOfDeque;
 
-    private Node last;
+    private Node lastOfDeque;
+
+    private int size;
+
+    private Stack stack;
+
+    private Queue queue;
 
     // construct an empty deque
     public Deque() {
-        first = new Node(null);
-        last = first;
-        first.next = last;
+        firstOfDeque = new Node(null);
+        lastOfDeque = firstOfDeque;
+        stack = new Stack();
+        queue = new Queue();
+        size = 0;
     }
 
     // is the deque empty?
     public boolean isEmpty() {
-        return first.item == null && last.item == null;
+        return size() == 0;
     }
 
     // return the number of items on the deque
     public int size() {
-        return 0;
+        return this.size;
     }
 
     private void validateItem(Item item) {
@@ -33,13 +41,15 @@ public class Deque<Item> implements Iterable<Item> {
     // add the item to the front
     public void addFirst(Item item) {
         validateItem(item);
-        push(item);
+        stack.push(item);
+        size++;
     }
 
     // add the item to the back
     public void addLast(Item item) {
         validateItem(item);
-        enqueue(item);
+        queue.enqueue(item);
+        size++;
     }
 
     private void preventOperationOnEmptyQueue() {
@@ -51,17 +61,16 @@ public class Deque<Item> implements Iterable<Item> {
     // remove and return the item from the front
     public Item removeFirst() {
         preventOperationOnEmptyQueue();
-        return dequeue();
+        return queue.dequeue();
     }
 
     // remove and return the item from the back
     public Item removeLast() {
         preventOperationOnEmptyQueue();
-        return pop();
+        return stack.pop();
     }
 
     private class Node {
-
         Item item;
 
         Node next;
@@ -71,47 +80,9 @@ public class Deque<Item> implements Iterable<Item> {
         }
     }
 
-    private void initializeFirstItem(Item item) {
-        last.item = item;
-        first.item = item;
-    }
-
-    private void enqueue(Item item) {
-        if (isEmpty()) {
-            initializeFirstItem(item);
-        } else {
-            Node newLast = new Node(item);
-            last.next = newLast;
-            last = newLast;
-        }
-    }
-
-    private Item dequeue() {
-        Item item = first.item;
-        first = first.next;
-        return item;
-    }
-
-    private void push(Item item) {
-        if (isEmpty()) {
-            initializeFirstItem(item);
-        } else {
-            Node newFirst = new Node(item);
-            newFirst.item = item;
-            newFirst.next = first;
-            first = newFirst;
-        }
-    }
-
-    private Item pop() {
-        Item item = last.item;
-        last = last.next;
-        return item;
-    }
-
     private class ListItorator implements Iterator<Item> {
 
-        Node current = first;
+        Node current = lastOfDeque;
 
         @Override
         public boolean hasNext() {
@@ -130,12 +101,68 @@ public class Deque<Item> implements Iterable<Item> {
         public void remove() {
             throw new UnsupportedOperationException("This method is not supported!");
         }
-
     }
 
     // return an iterator over items in order from front to back
     public Iterator<Item> iterator() {
         return new ListItorator();
+    }
+
+    private class Stack {
+        Node first;
+
+        public Stack() {
+            first = firstOfDeque;
+        }
+
+        public void push(Item item) {
+            if (first == null) {
+                first.item = item;
+                first.next = lastOfDeque;
+            } else {
+                Node newFirst = new Node(null);
+                newFirst.item = item;
+                newFirst.next = first;
+                first = newFirst;
+                lastOfDeque = first;
+            }
+        }
+
+        public Item pop() {
+            Item item = firstOfDeque.item;
+            firstOfDeque = firstOfDeque.next;
+            return item;
+        }
+    }
+
+    class Queue {
+
+        // private Node first;
+
+        private Node last;
+
+        public Queue() {
+            // first = firstOfDeque;
+            last = firstOfDeque;
+        }
+
+        public void enqueue(Item item) {
+            if (last == null) {
+                last.item = item;
+                firstOfDeque.next = last;
+            } else {
+                Node newLast = new Node(item);
+                last.next = newLast;
+                last = newLast;
+                firstOfDeque = last;
+            }
+        }
+
+        public Item dequeue() {
+            Item item = lastOfDeque.item;
+            lastOfDeque = lastOfDeque.next;
+            return item;
+        }
     }
 
     // unit testing (required)
@@ -145,9 +172,15 @@ public class Deque<Item> implements Iterable<Item> {
             deque.addFirst("item " + i);
             deque.addLast("item " + i);
         }
-        for (String item : deque) {
-            System.out.println(item);
-        }
+
+        deque.forEach(System.out::println);
+
+        // System.out.println("Remove first and last:");
+        // for (int i = 0; i < 3; ++i) {
+        //     deque.removeFirst();
+        //     deque.removeLast();
+        //     deque.forEach(System.out::println);
+        // }
     }
 
 }
