@@ -7,18 +7,27 @@ import java.util.NoSuchElementException;
  */
 public class RandomizedQueue<Item> implements Iterable<Item> {
 
+    private Node first;
+
+    private Node last;
+
+    private int size;
+
     // construct an empty randomized queue
     public RandomizedQueue() {
+        size = 0;
+        first = new Node(null);
+        last = first;
     }
 
     // is the randomized queue empty?
     public boolean isEmpty() {
-        return false;
+        return size == 0;
     }
 
     // return the number of items on the randomized queue
     public int size() {
-        return 0;
+        return this.size;
     }
 
     private void validateItem(Item item) {
@@ -30,6 +39,17 @@ public class RandomizedQueue<Item> implements Iterable<Item> {
     // add the item
     public void enqueue(Item item) {
         validateItem(item);
+
+        if (last.item == null) {
+            last = new Node(item);
+            first = last;
+        }
+        else {
+            Node newNode = new Node(item);
+            last.next = newNode;
+            last = newNode;
+        }
+        size++;
     }
 
     private void validateEmptyQueue() {
@@ -52,7 +72,7 @@ public class RandomizedQueue<Item> implements Iterable<Item> {
 
     // return an independent iterator over items in random order
     public Iterator<Item> iterator() {
-        return null;
+        return new ListIterator();
     }
 
     private class Node {
@@ -67,20 +87,23 @@ public class RandomizedQueue<Item> implements Iterable<Item> {
 
     private class ListIterator implements Iterator<Item> {
 
-        Node current;
+        Node current = first;
 
         @Override
         public boolean hasNext() {
-            // TODO Auto-generated method stub
-            return false;
+            return current != null;
         }
 
         @Override
         public Item next() {
-            if (current == null) {
+            if (isEmpty()) {
                 throw new NoSuchElementException();
             }
-            return null;
+
+            Item item = current.item;
+            current = current.next;
+
+            return item;
         }
 
         @Override

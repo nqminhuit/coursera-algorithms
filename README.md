@@ -31,4 +31,6 @@ $ javac -cp percolation/libs/algs4.jar percolation/src/*.java -d percolation/bui
 ### How to compile and execute JUnit 4.12 from commandline:
 ```
 $ javac queues/src/Deque.java -d queues/build/classes/java/main/; javac -cp /opt/minh/projects/coursera-algorithms/libs/junit-4.12.jar:queues/build/classes/java/main/ queues/test/DequeTest.java -d queues/build/classes/java/test/; java -cp /opt/minh/projects/coursera-algorithms/libs/junit-4.12.jar:/opt/minh/projects/coursera-algorithms/libs/hamcrest-core-1.3.jar:queues/build/classes/java/main/:queues/build/classes/java/test/ org.junit.runner.JUnitCore  DequeTest
+
+$ javac queues/src/RandomizedQueue.java -d queues/build/classes/java/main/; javac -cp /opt/minh/projects/coursera-algorithms/libs/junit-4.12.jar:queues/build/classes/java/main/ queues/test/RandomizedQueueTest.java -d queues/build/classes/java/test/; java -cp /opt/minh/projects/coursera-algorithms/libs/junit-4.12.jar:/opt/minh/projects/coursera-algorithms/libs/hamcrest-core-1.3.jar:queues/build/classes/java/main/:queues/build/classes/java/test/ org.junit.runner.JUnitCore  RandomizedQueueTest
 ```
