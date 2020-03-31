@@ -62,6 +62,7 @@ public class RandomizedQueue<Item> implements Iterable<Item> {
     // remove and return a random item
     public Item dequeue() {
         validateEmptyQueue();
+        StdRandom.shuffle(items);
         if (items.length <= size / 4) {
             resizeArray(size / 2);
         }
