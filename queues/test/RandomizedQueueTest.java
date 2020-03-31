@@ -63,5 +63,58 @@ public class RandomizedQueueTest {
         randomizedQueue.enqueue(null);
     }
 
+    @Test
+    public void dequeue() {
+        // given:
+        RandomizedQueue<String> randomizedQueue = new RandomizedQueue<>(1);
+        randomizedQueue.enqueue("item 1");
+        randomizedQueue.enqueue("item 2");
+        randomizedQueue.enqueue("item 3");
+        randomizedQueue.enqueue("item 4");
+
+        // when:
+        randomizedQueue.dequeue();
+
+        // then:
+        assertEquals(3, randomizedQueue.size());
+    }
+
+    @Test
+    public void enqueueShouldIncreaseArraySize() {
+        // given:
+        RandomizedQueue<Integer> randomizedQueue = new RandomizedQueue<>(1);
+
+        // when:
+        for (int i = 0; i < 100; ++i) {
+            randomizedQueue.enqueue(i);
+        }
+    }
+
+    @Test
+    public void dequeueShouldDecreaseArraySize() {
+        // given:
+        RandomizedQueue<Integer> randomizedQueue = new RandomizedQueue<>(1);
+        for (int i = 0; i < 100; ++i) {
+            randomizedQueue.enqueue(i);
+        }
+
+        // when:
+        for (int i = 0; i < 100; ++i) {
+            randomizedQueue.dequeue();
+        }
+    }
+
+    @Test
+    public void sample() {
+        // given:
+        RandomizedQueue<Integer> randomizedQueue = new RandomizedQueue<>(1);
+        for (int i = 0; i < 10; ++i) {
+            randomizedQueue.enqueue(i);
+        }
+
+        // when:
+        randomizedQueue.sample();
+
+    }
 
 }
