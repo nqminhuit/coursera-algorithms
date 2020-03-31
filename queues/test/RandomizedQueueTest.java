@@ -10,7 +10,7 @@ public class RandomizedQueueTest {
     @Test
     public void enqueueString() {
         // given:
-        RandomizedQueue<String> randomizedQueue = new RandomizedQueue<>();
+        RandomizedQueue<String> randomizedQueue = new RandomizedQueue<>(1);
         String item = "itemX";
 
         // when:
@@ -24,9 +24,12 @@ public class RandomizedQueueTest {
     @Test
     public void enqueueToExistingQueue() {
         // given:
-        RandomizedQueue<Integer> randomizedQueue = new RandomizedQueue<>();
+        RandomizedQueue<Integer> randomizedQueue = new RandomizedQueue<>(1);
+        assertEquals(0, randomizedQueue.size());
+
         randomizedQueue.enqueue(1234);
         assertEquals(1, randomizedQueue.size());
+
         Iterator<Integer> iterator = randomizedQueue.iterator();
         assertEquals(1234, iterator.next().intValue());
 
@@ -43,10 +46,18 @@ public class RandomizedQueueTest {
         assertTrue(ints.contains(1234) && ints.contains(5678));
     }
 
+    @Test
+    public void ensuredUniformlyRandomOrderIterator() {
+        // when:
+        for (int i = 0; i < 100; ++i) {
+            enqueueToExistingQueue();
+        }
+    }
+
     @Test(expected = IllegalArgumentException.class)
     public void enqueueWithItemNull() {
         // given:
-        RandomizedQueue<String> randomizedQueue = new RandomizedQueue<>();
+        RandomizedQueue<String> randomizedQueue = new RandomizedQueue<>(0);
 
         // when:
         randomizedQueue.enqueue(null);
