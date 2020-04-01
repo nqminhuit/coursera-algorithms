@@ -140,7 +140,7 @@ public class Deque<Item> implements Iterable<Item> {
         }
     }
 
-    class Queue {
+    private class Queue {
 
         public void enqueue(Item item) {
             if (lastOfDeque.item == null) {

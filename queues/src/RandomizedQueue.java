@@ -15,9 +15,9 @@ public class RandomizedQueue<Item> implements Iterable<Item> {
     private Iterator<Item> iterator;
 
     // construct an empty randomized queue
-    public RandomizedQueue(int size) {
+    public RandomizedQueue() {
         this.size = 0;
-        items = (Item[]) new Object[size];
+        items = (Item[]) new Object[1];
         iterator  = iterator();
     }
 

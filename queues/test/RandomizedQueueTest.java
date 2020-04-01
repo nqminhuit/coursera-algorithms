@@ -10,7 +10,7 @@ public class RandomizedQueueTest {
     @Test
     public void enqueueString() {
         // given:
-        RandomizedQueue<String> randomizedQueue = new RandomizedQueue<>(1);
+        RandomizedQueue<String> randomizedQueue = new RandomizedQueue<>();
         String item = "itemX";
 
         // when:
@@ -24,7 +24,7 @@ public class RandomizedQueueTest {
     @Test
     public void enqueueToExistingQueue() {
         // given:
-        RandomizedQueue<Integer> randomizedQueue = new RandomizedQueue<>(1);
+        RandomizedQueue<Integer> randomizedQueue = new RandomizedQueue<>();
         assertEquals(0, randomizedQueue.size());
 
         randomizedQueue.enqueue(1234);
@@ -57,7 +57,7 @@ public class RandomizedQueueTest {
     @Test(expected = IllegalArgumentException.class)
     public void enqueueWithItemNull() {
         // given:
-        RandomizedQueue<String> randomizedQueue = new RandomizedQueue<>(0);
+        RandomizedQueue<String> randomizedQueue = new RandomizedQueue<>();
 
         // when:
         randomizedQueue.enqueue(null);
@@ -66,7 +66,7 @@ public class RandomizedQueueTest {
     @Test
     public void dequeue() {
         // given:
-        RandomizedQueue<String> randomizedQueue = new RandomizedQueue<>(1);
+        RandomizedQueue<String> randomizedQueue = new RandomizedQueue<>();
         randomizedQueue.enqueue("item 1");
         randomizedQueue.enqueue("item 2");
         randomizedQueue.enqueue("item 3");
@@ -82,7 +82,7 @@ public class RandomizedQueueTest {
     @Test
     public void enqueueShouldIncreaseArraySize() {
         // given:
-        RandomizedQueue<Integer> randomizedQueue = new RandomizedQueue<>(1);
+        RandomizedQueue<Integer> randomizedQueue = new RandomizedQueue<>();
 
         // when:
         for (int i = 0; i < 100; ++i) {
@@ -93,7 +93,7 @@ public class RandomizedQueueTest {
     @Test
     public void dequeueShouldDecreaseArraySize() {
         // given:
-        RandomizedQueue<Integer> randomizedQueue = new RandomizedQueue<>(1);
+        RandomizedQueue<Integer> randomizedQueue = new RandomizedQueue<>();
         for (int i = 0; i < 100; ++i) {
             randomizedQueue.enqueue(i);
         }
@@ -107,7 +107,7 @@ public class RandomizedQueueTest {
     @Test
     public void sample_HappyCase() {
         // given:
-        RandomizedQueue<Integer> randomizedQueue = new RandomizedQueue<>(1);
+        RandomizedQueue<Integer> randomizedQueue = new RandomizedQueue<>();
         for (int i = 0; i < 10; ++i) {
             randomizedQueue.enqueue(i);
         }

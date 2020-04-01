@@ -24,7 +24,7 @@ public class Permutation {
         if (k > sequences.length) {
             throw new IllegalArgumentException();
         }
-        RandomizedQueue<String> randomizedQueue = new RandomizedQueue<>(sequences.length);
+        RandomizedQueue<String> randomizedQueue = new RandomizedQueue<>();
         for (String s : sequences) {
             randomizedQueue.enqueue(s);
         }
