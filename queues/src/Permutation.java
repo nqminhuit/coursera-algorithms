@@ -12,20 +12,14 @@ public class Permutation {
         if (k < 0) {
             throw new IllegalArgumentException();
         }
-        StringBuilder sb = new StringBuilder();
-        while (!StdIn.isEmpty()) {
-            sb.append(StdIn.readString() + " ");
-        }
-        String sequence = sb.toString();
-
-        String[] sequences = sequence.split(" ");
-        System.out.println(sequences.length);
-        if (k > sequences.length) {
-            throw new IllegalArgumentException();
-        }
         RandomizedQueue<String> randomizedQueue = new RandomizedQueue<>();
-        for (String s : sequences) {
-            randomizedQueue.enqueue(s);
+        while (!StdIn.isEmpty()) {
+            String input = StdIn.readString();
+            randomizedQueue.enqueue(input);
+        }
+
+        if (k > randomizedQueue.size()) {
+            throw new IllegalArgumentException();
         }
 
         for (int i = 0; i < k; ++i) {
