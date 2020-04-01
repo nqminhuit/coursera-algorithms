@@ -12,10 +12,13 @@ public class RandomizedQueue<Item> implements Iterable<Item> {
 
     private int size;
 
+    private Iterator<Item> iterator;
+
     // construct an empty randomized queue
     public RandomizedQueue(int size) {
         this.size = 0;
         items = (Item[]) new Object[size];
+        iterator  = iterator();
     }
 
     // is the randomized queue empty?
@@ -40,6 +43,7 @@ public class RandomizedQueue<Item> implements Iterable<Item> {
         if (size == items.length) {
             resizeArray(size * 2);
         }
+        shuffleItems();
         items[size++] = item;
     }
 
@@ -59,10 +63,21 @@ public class RandomizedQueue<Item> implements Iterable<Item> {
         }
     }
 
+    private void shuffleItems() {
+        Item[] shuffled = (Item[]) new Object[size];
+        for (int i = 0; i < size; ++i) {
+            shuffled[i] = items[i];
+        }
+        StdRandom.shuffle(shuffled);
+        for (int i = 0; i < size; ++i) {
+            items[i] = shuffled[i];
+        }
+    }
+
     // remove and return a random item
     public Item dequeue() {
         validateEmptyQueue();
-        StdRandom.shuffle(items);
+        shuffleItems();
         if (items.length <= size / 4) {
             resizeArray(size / 2);
         }
@@ -74,7 +89,7 @@ public class RandomizedQueue<Item> implements Iterable<Item> {
     // return a random item (but do not remove it)
     public Item sample() {
         validateEmptyQueue();
-        return items[StdRandom.uniform(size)];
+        return iterator.next();
     }
 
     // return an independent iterator over items in random order
@@ -85,10 +100,6 @@ public class RandomizedQueue<Item> implements Iterable<Item> {
     private class ListIterator implements Iterator<Item> {
 
         int current = 0;
-
-        public ListIterator() {
-            StdRandom.shuffle(items);
-        }
 
         @Override
         public boolean hasNext() {
@@ -101,9 +112,7 @@ public class RandomizedQueue<Item> implements Iterable<Item> {
                 throw new NoSuchElementException();
             }
 
-            Item item = items[current++];
-
-            return item;
+            return items[current++];
         }
 
         @Override
