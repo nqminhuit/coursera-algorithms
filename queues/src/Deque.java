@@ -13,17 +13,17 @@ public class Deque<Item> implements Iterable<Item> {
 
     private int size;
 
-    private Stack stack;
+    private final MyStack stack;
 
-    private Queue queue;
+    private final MyQueue queue;
 
     // construct an empty deque
     public Deque() {
         firstOfDeque = new Node(null);
         lastOfDeque = firstOfDeque;
         firstOfDeque.next = lastOfDeque;
-        stack = new Stack();
-        queue = new Queue();
+        stack = new MyStack();
+        queue = new MyQueue();
         size = 0;
     }
 
@@ -118,7 +118,7 @@ public class Deque<Item> implements Iterable<Item> {
         return new ListItorator();
     }
 
-    private class Stack {
+    private class MyStack {
 
         public void push(Item item) {
             if (firstOfDeque.item == null) {
@@ -140,7 +140,7 @@ public class Deque<Item> implements Iterable<Item> {
         }
     }
 
-    private class Queue {
+    private class MyQueue {
 
         public void enqueue(Item item) {
             if (lastOfDeque.item == null) {

@@ -12,7 +12,7 @@ public class RandomizedQueue<Item> implements Iterable<Item> {
 
     private int size;
 
-    private Iterator<Item> iterator;
+    private final Iterator<Item> iterator;
 
     // construct an empty randomized queue
     public RandomizedQueue() {
@@ -124,5 +124,10 @@ public class RandomizedQueue<Item> implements Iterable<Item> {
 
     // unit testing (required)
     public static void main(String[] args) {
+        RandomizedQueue<String> randomizedQueue = new RandomizedQueue<>();
+        for (int i = 0; i < 10; ++i) {
+            randomizedQueue.enqueue("" + i);
+        }
+        System.out.println(randomizedQueue.sample());
     }
 }
