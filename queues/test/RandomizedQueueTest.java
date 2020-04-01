@@ -105,16 +105,21 @@ public class RandomizedQueueTest {
     }
 
     @Test
-    public void sample() {
+    public void sample_HappyCase() {
         // given:
         RandomizedQueue<Integer> randomizedQueue = new RandomizedQueue<>(1);
         for (int i = 0; i < 10; ++i) {
             randomizedQueue.enqueue(i);
         }
+        assertEquals(10, randomizedQueue.size());
 
-        // when:
-        randomizedQueue.sample();
+        for (int i = 0; i < 100; ++i) {
+            // when:
+            int sampler = randomizedQueue.sample();
 
+            // then:
+            assertTrue(sampler >= 0 && sampler < 10);
+        }
     }
 
 }
