@@ -1,7 +1,9 @@
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
+import static org.junit.Assert.fail;
 import java.util.Iterator;
+import java.util.NoSuchElementException;
 import org.junit.Test;
 
 public class DequeTest {
@@ -311,7 +313,7 @@ public class DequeTest {
         // then:
         int iteratorEntries = 0;
         Iterator<Integer> iterator = deque.iterator();
-        while(iterator.hasNext()) {
+        while (iterator.hasNext()) {
             iterator.next();
             iteratorEntries++;
         }
@@ -319,7 +321,7 @@ public class DequeTest {
     }
 
     @Test
-    public void checkIteratorEntriesAfterRemoveLast() {
+    public void checkIteratorEntriesAfterRemoveOneLastItem() {
         // given:
         Deque<Integer> deque = new Deque<>();
 
@@ -335,11 +337,45 @@ public class DequeTest {
         // then:
         int iteratorEntries = 0;
         Iterator<Integer> iterator = deque.iterator();
-        while(iterator.hasNext()) {
+        while (iterator.hasNext()) {
             iterator.next();
             iteratorEntries++;
         }
         assertEquals(deque.size(), iteratorEntries);
+    }
+
+    @Test(expected = NoSuchElementException.class)
+    public void checkIteratorAfterIntermixedOperations() {
+        Deque<Integer> deque = new Deque<>();
+        deque.addFirst(1);
+        deque.addFirst(2);
+        // deque.removeLast();
+        // deque.removeLast();
+        deque.removeFirst();
+        deque.removeFirst();
+
+        // when:
+        deque.iterator().next();
+    }
+
+    @Test
+    public void checkIteratorEntries_AfterRemovingAllItems() {
+        // given:
+        Deque<Integer> deque = new Deque<>();
+
+        // when:
+        deque.addLast(1);
+        deque.addFirst(2);
+        assertEquals(1, deque.removeLast().intValue());
+        deque.addFirst(4);
+        assertEquals(2, deque.removeLast().intValue());
+        assertEquals(4, deque.removeLast().intValue());
+
+        // when:
+        Iterator<Integer> iterator = deque.iterator();
+        while (iterator.hasNext()) {
+            fail("should not have any entries here");
+        }
     }
 
 }

@@ -122,4 +122,39 @@ public class RandomizedQueueTest {
         }
     }
 
+    @Test
+    public void checkIteratorNext_WhenCallSampleMoreThanQueueSize() {
+        // given:
+        RandomizedQueue<Integer> rq = new RandomizedQueue<>();
+        assertEquals(0, rq.size());
+        assertEquals(0, rq.size());
+        rq.enqueue(331);
+        rq.sample();
+        rq.sample();
+    }
+
+    @Test
+    public void twoIteratersOnSameQueue_ShouldReturnDifferentItemOder() {
+        // given
+        int n = 10;
+        RandomizedQueue<Integer> rq = new RandomizedQueue<>();
+        for (int i = 0; i < n; ++i) {
+            rq.enqueue(i);
+        }
+
+        // when:
+        Iterator<Integer> it1 = rq.iterator();
+        Iterator<Integer> it2 = rq.iterator();
+
+        // then:
+        int i = 0;
+        int count = 0;
+        while (i++ < n) {
+            if (it1.next().intValue() == it2.next().intValue()) {
+                count++;
+            }
+        }
+        assertTrue(count < n);
+    }
+
 }

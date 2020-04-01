@@ -23,9 +23,8 @@ public class Permutation {
         }
 
         for (int i = 0; i < k; ++i) {
-            System.out.print(randomizedQueue.sample() + " ");
+            System.out.println(randomizedQueue.dequeue());
         }
-        System.out.println();
     }
 
 }

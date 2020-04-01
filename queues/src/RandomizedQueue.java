@@ -12,13 +12,10 @@ public class RandomizedQueue<Item> implements Iterable<Item> {
 
     private int size;
 
-    private final Iterator<Item> iterator;
-
     // construct an empty randomized queue
     public RandomizedQueue() {
         this.size = 0;
         items = (Item[]) new Object[1];
-        iterator  = iterator();
     }
 
     // is the randomized queue empty?
@@ -40,8 +37,9 @@ public class RandomizedQueue<Item> implements Iterable<Item> {
     // add the item
     public void enqueue(Item item) {
         validateItem(item);
-        if (size == items.length) {
-            resizeArray(size * 2);
+        int itemLength = items.length;
+        if (size == itemLength) {
+            resizeArray(itemLength * 2);
         }
         shuffleItems();
         items[size++] = item;
@@ -50,7 +48,7 @@ public class RandomizedQueue<Item> implements Iterable<Item> {
     private void resizeArray(int capacity) {
         Item[] copy = (Item[]) new Object[capacity];
 
-        for (int i = 0; i < items.length; ++i) {
+        for (int i = 0; i < size; ++i) {
             copy[i] = items[i];
         }
 
@@ -78,10 +76,13 @@ public class RandomizedQueue<Item> implements Iterable<Item> {
     public Item dequeue() {
         validateEmptyQueue();
         shuffleItems();
-        if (items.length <= size / 4) {
-            resizeArray(size / 2);
+        int itemLength = items.length;
+        if (size <= itemLength / 4) {
+            resizeArray(itemLength / 2);
         }
-        Item item = items[--size];
+        Item item = items[0];
+        size--;
+        items[0] = items[size];
         items[size] = null;
         return item;
     }
@@ -89,7 +90,7 @@ public class RandomizedQueue<Item> implements Iterable<Item> {
     // return a random item (but do not remove it)
     public Item sample() {
         validateEmptyQueue();
-        return iterator.next();
+        return items[StdRandom.uniform(size)];
     }
 
     // return an independent iterator over items in random order
@@ -103,12 +104,12 @@ public class RandomizedQueue<Item> implements Iterable<Item> {
 
         @Override
         public boolean hasNext() {
-            return items[current] != null;
+            return current < size && items[current] != null;
         }
 
         @Override
         public Item next() {
-            if (isEmpty()) {
+            if (!hasNext()) {
                 throw new NoSuchElementException();
             }
 

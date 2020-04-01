@@ -93,12 +93,12 @@ public class Deque<Item> implements Iterable<Item> {
 
         @Override
         public boolean hasNext() {
-            return current != null;
+            return current != null && !isEmpty();
         }
 
         @Override
         public Item next() {
-            if (isEmpty()) {
+            if (!hasNext()) {
                 throw new NoSuchElementException("Cannot perform operation on an empty Queue!");
             }
             Item item = current.item;
