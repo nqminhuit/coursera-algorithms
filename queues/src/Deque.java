@@ -120,7 +120,7 @@ public class Deque<Item> implements Iterable<Item> {
     private class MyStack {
 
         public void push(Item item) {
-            if (firstOfDeque == null) {
+            if (isEmpty()) {
                 firstOfDeque = new Node(item);
                 lastOfDeque = firstOfDeque;
             } else {
@@ -132,9 +132,13 @@ public class Deque<Item> implements Iterable<Item> {
         }
 
         public Item pop() {
-            Item item = lastOfDeque.item;
-            lastOfDeque.next = null;
+            Node oldLast = lastOfDeque;
+            Item item = oldLast.item;
             lastOfDeque = lastOfDeque.prev;
+            if (lastOfDeque != null) { // not the final Node
+                lastOfDeque.next = null;
+            }
+            oldLast.prev = null;
             return item;
         }
     }
@@ -142,7 +146,7 @@ public class Deque<Item> implements Iterable<Item> {
     private class MyQueue {
 
         public void enqueue(Item item) {
-            if (lastOfDeque == null) {
+            if (isEmpty()) {
                 lastOfDeque = new Node(item);
                 firstOfDeque = lastOfDeque;
             } else {

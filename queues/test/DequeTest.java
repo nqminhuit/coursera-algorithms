@@ -265,7 +265,7 @@ public class DequeTest {
     }
 
     @Test
-    public void checkSize_AddFirstAfterRemoveFirst() {
+    public void checkNPE_AddFirstAfterRemoveFirst() {
         // given:
         Deque<Integer> deque = new Deque<>();
         assertTrue(deque.isEmpty());
@@ -277,6 +277,69 @@ public class DequeTest {
         deque.isEmpty();
         deque.isEmpty();
         deque.addFirst(5);
+    }
+
+    @Test
+    public void checkNPE_RemoveLastAfterAddFirst() {
+        // given:
+        Deque<Integer> deque = new Deque<>();
+
+        // when:
+        assertTrue(deque.isEmpty());
+        assertTrue(deque.isEmpty());
+
+        deque.addFirst(3);
+        deque.addFirst(4);
+
+        deque.removeLast();
+        deque.removeLast();
+
+        deque.addFirst(7);
+        deque.removeLast();
+    }
+
+    @Test
+    public void checkIteratorEntriesAfterRemoveFirst() {
+        // given:
+        Deque<Integer> deque = new Deque<>();
+
+        // when:
+        deque.addLast(1);
+        deque.removeFirst();
+        deque.addFirst(3);
+
+        // then:
+        int iteratorEntries = 0;
+        Iterator<Integer> iterator = deque.iterator();
+        while(iterator.hasNext()) {
+            iterator.next();
+            iteratorEntries++;
+        }
+        assertEquals(deque.size(), iteratorEntries);
+    }
+
+    @Test
+    public void checkIteratorEntriesAfterRemoveLast() {
+        // given:
+        Deque<Integer> deque = new Deque<>();
+
+        // when:
+        deque.addFirst(3);
+        deque.addFirst(4);
+        deque.addFirst(5);
+        deque.addLast(6);
+        deque.addLast(7);
+        deque.addFirst(8);
+        deque.removeLast();
+
+        // then:
+        int iteratorEntries = 0;
+        Iterator<Integer> iterator = deque.iterator();
+        while(iterator.hasNext()) {
+            iterator.next();
+            iteratorEntries++;
+        }
+        assertEquals(deque.size(), iteratorEntries);
     }
 
 }
