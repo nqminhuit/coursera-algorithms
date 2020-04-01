@@ -57,22 +57,20 @@ public class Deque<Item> implements Iterable<Item> {
         size++;
     }
 
-    private void preventOperationOnEmptyQueue() {
+    // remove and return the item from the front
+    public Item removeFirst() {
         if (isEmpty()) {
             throw new NoSuchElementException("Cannot perform operation on an empty Queue!");
         }
-    }
-
-    // remove and return the item from the front
-    public Item removeFirst() {
-        preventOperationOnEmptyQueue();
         size--;
         return queue.dequeue();
     }
 
     // remove and return the item from the back
     public Item removeLast() {
-        preventOperationOnEmptyQueue();
+        if (isEmpty()) {
+            throw new NoSuchElementException("Cannot perform operation on an empty Queue!");
+        }
         size--;
         return stack.pop();
     }
@@ -101,7 +99,9 @@ public class Deque<Item> implements Iterable<Item> {
 
         @Override
         public Item next() {
-            preventOperationOnEmptyQueue();
+            if (isEmpty()) {
+                throw new NoSuchElementException("Cannot perform operation on an empty Queue!");
+            }
             Item item = current.item;
             current = current.next;
             return item;

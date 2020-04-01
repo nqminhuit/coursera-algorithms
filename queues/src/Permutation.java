@@ -2,8 +2,8 @@ import edu.princeton.cs.algs4.StdIn;
 
 /**
  * Takes an integer k as a command-line argument; reads a sequence of strings from standard input
- * and prints exactly k of them, uniformly at random. Print each item from the sequence at most once.
- * {@code 0 ≤ k ≤ n}
+ * and prints exactly k of them, uniformly at random. Print each item from the sequence at most
+ * once. {@code 0 ≤ k ≤ n}
  */
 public class Permutation {
 
@@ -12,12 +12,11 @@ public class Permutation {
         if (k < 0) {
             throw new IllegalArgumentException();
         }
-        String sequence = "";
+        StringBuilder sb = new StringBuilder();
         while (!StdIn.isEmpty()) {
-            sequence += StdIn.readString() + " ";
+            sb.append(StdIn.readString() + " ");
         }
-        sequence = sequence.substring(0, sequence.length() - 1);
-        System.out.println(sequence);
+        String sequence = sb.toString();
 
         String[] sequences = sequence.split(" ");
         System.out.println(sequences.length);
