@@ -263,4 +263,20 @@ public class DequeTest {
         Iterator<Integer> iterator = deque.iterator();
         assertEquals(35, iterator.next().intValue());
     }
+
+    @Test
+    public void checkSize_AddFirstAfterRemoveFirst() {
+        // given:
+        Deque<Integer> deque = new Deque<>();
+        assertTrue(deque.isEmpty());
+
+        deque.addFirst(1);
+
+        // when:
+        deque.removeFirst();
+        deque.isEmpty();
+        deque.isEmpty();
+        deque.addFirst(5);
+    }
+
 }
