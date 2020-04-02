@@ -1,7 +1,9 @@
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
+import static org.junit.Assert.fail;
 import java.util.Iterator;
+import java.util.NoSuchElementException;
 import org.junit.Test;
 
 public class DequeTest {
@@ -263,4 +265,117 @@ public class DequeTest {
         Iterator<Integer> iterator = deque.iterator();
         assertEquals(35, iterator.next().intValue());
     }
+
+    @Test
+    public void checkNPE_AddFirstAfterRemoveFirst() {
+        // given:
+        Deque<Integer> deque = new Deque<>();
+        assertTrue(deque.isEmpty());
+
+        deque.addFirst(1);
+
+        // when:
+        deque.removeFirst();
+        deque.isEmpty();
+        deque.isEmpty();
+        deque.addFirst(5);
+    }
+
+    @Test
+    public void checkNPE_RemoveLastAfterAddFirst() {
+        // given:
+        Deque<Integer> deque = new Deque<>();
+
+        // when:
+        assertTrue(deque.isEmpty());
+        assertTrue(deque.isEmpty());
+
+        deque.addFirst(3);
+        deque.addFirst(4);
+
+        deque.removeLast();
+        deque.removeLast();
+
+        deque.addFirst(7);
+        deque.removeLast();
+    }
+
+    @Test
+    public void checkIteratorEntriesAfterRemoveFirst() {
+        // given:
+        Deque<Integer> deque = new Deque<>();
+
+        // when:
+        deque.addLast(1);
+        deque.removeFirst();
+        deque.addFirst(3);
+
+        // then:
+        int iteratorEntries = 0;
+        Iterator<Integer> iterator = deque.iterator();
+        while (iterator.hasNext()) {
+            iterator.next();
+            iteratorEntries++;
+        }
+        assertEquals(deque.size(), iteratorEntries);
+    }
+
+    @Test
+    public void checkIteratorEntriesAfterRemoveOneLastItem() {
+        // given:
+        Deque<Integer> deque = new Deque<>();
+
+        // when:
+        deque.addFirst(3);
+        deque.addFirst(4);
+        deque.addFirst(5);
+        deque.addLast(6);
+        deque.addLast(7);
+        deque.addFirst(8);
+        deque.removeLast();
+
+        // then:
+        int iteratorEntries = 0;
+        Iterator<Integer> iterator = deque.iterator();
+        while (iterator.hasNext()) {
+            iterator.next();
+            iteratorEntries++;
+        }
+        assertEquals(deque.size(), iteratorEntries);
+    }
+
+    @Test(expected = NoSuchElementException.class)
+    public void checkIteratorAfterIntermixedOperations() {
+        Deque<Integer> deque = new Deque<>();
+        deque.addFirst(1);
+        deque.addFirst(2);
+        // deque.removeLast();
+        // deque.removeLast();
+        deque.removeFirst();
+        deque.removeFirst();
+
+        // when:
+        deque.iterator().next();
+    }
+
+    @Test
+    public void checkIteratorEntries_AfterRemovingAllItems() {
+        // given:
+        Deque<Integer> deque = new Deque<>();
+
+        // when:
+        deque.addLast(1);
+        deque.addFirst(2);
+        assertEquals(1, deque.removeLast().intValue());
+        deque.addFirst(4);
+        assertEquals(2, deque.removeLast().intValue());
+        assertEquals(4, deque.removeLast().intValue());
+
+        // when:
+        Iterator<Integer> iterator = deque.iterator();
+        while (iterator.hasNext()) {
+            fail("should not have any entries here");
+        }
+    }
+
 }
