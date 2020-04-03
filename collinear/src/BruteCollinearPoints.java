@@ -10,16 +10,22 @@ public class BruteCollinearPoints {
     // finds all line segments containing 4 points
     public BruteCollinearPoints(Point[] points) {
         if (points == null) {
-            throw new IllegalArgumentException();
+            throw new IllegalArgumentException("Must not contain null array!");
         }
 
         for (int i = 0; i < points.length; ++i) {
             if (points[i] == null) {
-                throw new IllegalArgumentException();
+                throw new IllegalArgumentException("Must not contain null Points!");
             }
         }
 
-        // TODO if points contain duplicate => throw new IllegalArgumentException();
+        for (int i = 0; i < points.length; ++i) {
+            for(int j = i + 1; j < points.length; ++j) {
+                if (0 == points[i].compareTo(points[j])) {
+                    throw new IllegalArgumentException("Must not contain duplicate Points!");
+                }
+            }
+        }
 
         numberOfSegments = 0;
         this.points = points;
@@ -41,13 +47,13 @@ public class BruteCollinearPoints {
                     for (int l = k + 1; l < n; l++) {
                         double slope = points[i].slopeTo(points[j]);
                         if (slope == points[i].slopeTo(points[k]) && slope == points[i].slopeTo(points[l])) {
-                            Point[] sortedSegment = new Point[4];
-                            sortedSegment[0] = points[i];
-                            sortedSegment[1] = points[j];
-                            sortedSegment[2] = points[k];
-                            sortedSegment[3] = points[l];
-                            Arrays.sort(sortedSegment, sortedSegment[0].slopeOrder());
-                            ls[lsIndex++] = new LineSegment(sortedSegment[0], sortedSegment[3]);
+                            Point[] pointsInLine = new Point[4];
+                            pointsInLine[0] = points[i];
+                            pointsInLine[1] = points[j];
+                            pointsInLine[2] = points[k];
+                            pointsInLine[3] = points[l];
+                            Arrays.sort(pointsInLine);
+                            ls[lsIndex++] = new LineSegment(pointsInLine[0], pointsInLine[3]);
                             numberOfSegments++;
                         }
                     }
