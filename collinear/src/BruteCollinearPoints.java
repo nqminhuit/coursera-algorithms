@@ -1,0 +1,83 @@
+import java.util.Arrays;
+import edu.princeton.cs.algs4.StdOut;
+
+public class BruteCollinearPoints {
+
+    private int numberOfSegments;
+
+    private Point[] points;
+
+    // finds all line segments containing 4 points
+    public BruteCollinearPoints(Point[] points) {
+        if (points == null) {
+            throw new IllegalArgumentException();
+        }
+
+        for (int i = 0; i < points.length; ++i) {
+            if (points[i] == null) {
+                throw new IllegalArgumentException();
+            }
+        }
+
+        // TODO if points contain duplicate => throw new IllegalArgumentException();
+
+        numberOfSegments = 0;
+        this.points = points;
+    }
+
+    // the number of line segments
+    public int numberOfSegments() {
+        return numberOfSegments;
+    }
+
+    // the line segments
+    public LineSegment[] segments() {
+        int n = points.length;
+        LineSegment[] ls = new LineSegment[n];
+        int lsIndex = 0;
+        for (int i = 0; i < n; ++i) {
+            for (int j = i + 1; j < n; j++) {
+                for (int k = j + 1; k < n; k++) {
+                    for (int l = k + 1; l < n; l++) {
+                        double slope = points[i].slopeTo(points[j]);
+                        if (slope == points[i].slopeTo(points[k]) && slope == points[i].slopeTo(points[l])) {
+                            Point[] sortedSegment = new Point[4];
+                            sortedSegment[0] = points[i];
+                            sortedSegment[1] = points[j];
+                            sortedSegment[2] = points[k];
+                            sortedSegment[3] = points[l];
+                            Arrays.sort(sortedSegment, sortedSegment[0].slopeOrder());
+                            ls[lsIndex++] = new LineSegment(sortedSegment[0], sortedSegment[3]);
+                            numberOfSegments++;
+                        }
+                    }
+                }
+            }
+        }
+        LineSegment[] result = new LineSegment[numberOfSegments];
+        for (int i = 0; i < numberOfSegments; ++i) {
+            result[i] = ls[i];
+        }
+        return result;
+    }
+
+    public static void main(String[] args) {
+        int n = 8;
+        Point[] points = new Point[n];
+        points[0] = new Point(10_000, 0);
+        points[1] = new Point(0, 10_000);
+        points[2] = new Point(3_000, 7_000);
+        points[3] = new Point(7_000, 3_000);
+        points[4] = new Point(20_000, 21_000);
+        points[5] = new Point(3_000, 4_000);
+        points[6] = new Point(14_000, 15_000);
+        points[7] = new Point(6_000, 7_000);
+
+        // print and draw the line segments
+        BruteCollinearPoints collinear = new BruteCollinearPoints(points);
+        for (LineSegment segment : collinear.segments()) {
+            StdOut.println(segment);
+        }
+    }
+
+}

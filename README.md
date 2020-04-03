@@ -37,4 +37,6 @@ $ javac -cp libs/algs4.jar queues/src/RandomizedQueue.java -d queues/build/class
 $ javac -cp libs/algs4.jar:queues/build/classes/java/main/ queues/src/*.java -d queues/build/classes/java/main/; java -cp queues/build/classes/java/main/:libs/algs4.jar Permutation 3 < queues/test/test-set/permutation1
 
 $ javac -cp libs/algs4.jar collinear/src/Point.java -d collinear/build/classes/java/main/; javac -cp libs/junit-4.12.jar:libs/hamcrest-core-1.3.jar:collinear/build/classes/java/main/ collinear/test/PointTest.java -d collinear/build/classes/java/test; java -cp libs/junit-4.12.jar:libs/hamcrest-core-1.3.jar:collinear/build/classes/java/test:collinear/build/classes/java/main/ org.junit.runner.JUnitCore PointTest
+
+$ javac -cp libs/algs4.jar collinear/src/*.java -d collinear/build/classes/java/main/; javac -cp libs/junit-4.12.jar:libs/hamcrest-core-1.3.jar:collinear/build/classes/java/main/ collinear/test/*.java -d collinear/build/classes/java/test; java -cp libs/junit-4.12.jar:libs/hamcrest-core-1.3.jar:collinear/build/classes/java/test:collinear/build/classes/java/main/ org.junit.runner.JUnitCore BruteCollinearPointsTest
 ```

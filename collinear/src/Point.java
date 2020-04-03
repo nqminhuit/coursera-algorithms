@@ -14,8 +14,6 @@ public class Point implements Comparable<Point> {
     private final int x; // x-coordinate of this point
     private final int y; // y-coordinate of this point
 
-    private final Comparator<Point> SLOPE_ODER = new BySlope();
-
     /**
      * Initializes a new point.
      *
@@ -86,14 +84,16 @@ public class Point implements Comparable<Point> {
      */
     public Comparator<Point> slopeOrder() {
         /* YOUR CODE HERE */
-        return SLOPE_ODER;
+        return new BySlope();
     }
 
     private class BySlope implements Comparator<Point> {
 
+        private Point p0 = new Point(x, y);
+
         @Override
         public int compare(Point p1, Point p2) {
-            return Double.compare(slopeTo(p1), slopeTo(p2));
+            return Double.compare(p0.slopeTo(p1), p0.slopeTo(p2));
         }
     }
 
