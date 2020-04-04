@@ -99,4 +99,35 @@ public class PointTest {
         assertNotNull(slopeOrder);
     }
 
+    @Test
+    public void positiveZeroSlope() {
+        // given:
+        Point p = new Point(163, 34);
+        Point q = new Point(4, 34);
+
+        // when:
+        double positiveZeroSlope = p.slopeTo(q);
+
+        // then:
+        assertEquals(new Double(0D), new Double(positiveZeroSlope));
+    }
+
+    @Test
+    public void compareInSlopeOrder() {
+        // given:
+        Point p = new Point(8, 7);
+        Point q = new Point(0, 7);
+        Point r = new Point(9, 7);
+
+        // when:
+        int pqr = p.slopeOrder().compare(q, r);
+        double pq = p.slopeTo(q);
+        double pr = p.slopeTo(r);
+
+        // then:
+        assertEquals(0, pqr);
+        assertEquals(0D, pq, EPSILON);
+        assertEquals(0D, pr, EPSILON);
+    }
+
 }

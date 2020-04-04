@@ -4,33 +4,37 @@ public class FastCollinearPoints {
 
     private int numSegments;
 
-    private Point[] points;
+    private final Point[] points;
 
     private double[] calculatedSlope;
 
     // finds all line segments containing 4 or more points
-    public FastCollinearPoints(Point[] points) {
-        if (points == null) {
+    public FastCollinearPoints(Point[] newPoints) {
+        if (newPoints == null) {
             throw new IllegalArgumentException("Must not contain null array!");
         }
 
-        for (int i = 0; i < points.length; ++i) {
-            if (points[i] == null) {
+        int pointLength = newPoints.length;
+        for (int i = 0; i < pointLength; ++i) {
+            if (newPoints[i] == null) {
                 throw new IllegalArgumentException("Must not contain null Points!");
             }
         }
 
-        for (int i = 0; i < points.length; ++i) {
-            for (int j = i + 1; j < points.length; ++j) {
-                if (0 == points[i].compareTo(points[j])) {
+        for (int i = 0; i < pointLength; ++i) {
+            for (int j = i + 1; j < pointLength; ++j) {
+                if (0 == newPoints[i].compareTo(newPoints[j])) {
                     throw new IllegalArgumentException("Must not contain duplicate Points!");
                 }
             }
         }
 
         numSegments = 0;
-        this.points = points;
-        this.calculatedSlope = new double[this.points.length - 1];
+        this.points = new Point[pointLength];
+        for (int i = 0; i < pointLength; ++i) {
+            this.points[i] = newPoints[i];
+        }
+        this.calculatedSlope = new double[pointLength - 1];
     }
 
     // the number of line segments
@@ -49,7 +53,7 @@ public class FastCollinearPoints {
         return isSlopeCalculated;
     }
 
-    public Point[] partition(Point[] points, Point valuePoint, double slope) {
+    private Point[] partition(Point[] points, Point valuePoint, double slope) {
         int i = 0;
         int gt = points.length - 1;
         int lt = 0;
@@ -74,10 +78,10 @@ public class FastCollinearPoints {
         return pointsInLine;
     }
 
-    private void exchangePoints(Point[] points, int i, int j) {
-        Point temp = points[i];
-        points[i] = points[j];
-        points[j] = temp;
+    private void exchangePoints(Point[] pointArray, int i, int j) {
+        Point temp = pointArray[i];
+        pointArray[i] = pointArray[j];
+        pointArray[j] = temp;
     }
 
     // the line segments

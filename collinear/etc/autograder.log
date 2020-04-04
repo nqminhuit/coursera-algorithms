@@ -1,0 +1,1072 @@
+See the Assessment Guide for information on how to interpret this report.
+
+ASSESSMENT SUMMARY
+
+Compilation:  FAILED (0 errors, 1 warning)
+API:          PASSED
+
+Spotbugs:     FAILED (5 warnings)
+PMD:          PASSED
+Checkstyle:   FAILED (0 errors, 2 warnings)
+
+Correctness:  26/41 tests passed
+Memory:       1/1 tests passed
+Timing:       18/41 tests passed
+
+Aggregate score: 61.83%
+[Compilation: 5%, API: 5%, Spotbugs: 0%, PMD: 0%, Checkstyle: 0%, Correctness: 60%, Memory: 10%, Timing: 20%]
+
+ASSESSMENT DETAILS
+
+The following files were submitted:
+----------------------------------
+3.2K Apr  4 08:50 BruteCollinearPoints.java
+3.9K Apr  4 08:50 FastCollinearPoints.java
+4.0K Apr  4 08:50 Point.java
+
+
+********************************************************************************
+*  COMPILING
+********************************************************************************
+
+
+% javac11 Point.java
+*-----------------------------------------------------------
+Point.java:67: warning: [deprecation] Double(double) in Double has been deprecated
+            return new Double(0D);
+                   ^
+1 warning
+
+% javac11 LineSegment.java
+*-----------------------------------------------------------
+
+% javac11 BruteCollinearPoints.java
+*-----------------------------------------------------------
+
+% javac11 FastCollinearPoints.java
+*-----------------------------------------------------------
+
+
+================================================================
+
+
+Checking the APIs of your programs.
+*-----------------------------------------------------------
+Point:
+
+BruteCollinearPoints:
+
+FastCollinearPoints:
+
+================================================================
+
+
+********************************************************************************
+*  CHECKING STYLE AND COMMON BUG PATTERNS
+********************************************************************************
+
+
+% spotbugs *.class
+*-----------------------------------------------------------
+M P NAB_NEEDLESS_BOX_TO_UNBOX NAB: Method Point.slopeTo(Point) creates Boxed primitive from primitive only to get primitive value  At Point.java:[line 67]
+L P DM_FP_NUMBER_CTOR Bx: Replace code like 'new Double(double)' with 'Double.valueOf(double)'.  At Point.java:[line 67]
+M P BX_BOXING_IMMEDIATELY_UNBOXED Bx: Boxes and immediately unboxes a primitive value. Use the primitive type (such as 'double') instead of the corresponding wrapper type (such as 'Double').  At Point.java:[line 67]
+L D FE_FLOATING_POINT_EQUALITY FE: Tests for exact floating-point equality. Because floating-point calculations may involve rounding, the calculated values may be imprecise.  At BruteCollinearPoints.java:[line 53]
+L D FE_FLOATING_POINT_EQUALITY FE: Tests for exact floating-point equality. Because floating-point calculations may involve rounding, the calculated values may be imprecise.  At FastCollinearPoints.java:[line 48]
+Warnings generated: 5
+
+
+================================================================
+
+
+% pmd .
+*-----------------------------------------------------------
+
+
+================================================================
+
+
+% checkstyle *.java
+*-----------------------------------------------------------
+[WARN] FastCollinearPoints.java:56:39: The local (or parameter) variable 'points' has the same name as an instance variable. Use a different name. [HiddenField]
+[WARN] Point.java:67:20: You should not need to call the 'java.lang.Double' constructor. [Wrapper]
+Checkstyle ends with 0 errors and 2 warnings.
+
+% custom checkstyle checks for Point.java
+*-----------------------------------------------------------
+
+% custom checkstyle checks for BruteCollinearPoints.java
+*-----------------------------------------------------------
+
+% custom checkstyle checks for FastCollinearPoints.java
+*-----------------------------------------------------------
+
+
+================================================================
+
+
+********************************************************************************
+*  TESTING CORRECTNESS
+********************************************************************************
+
+Testing correctness of Point
+*-----------------------------------------------------------
+Running 3 total tests.
+
+Test 1: p.slopeTo(q)
+  * positive infinite slope, where p and q have coordinates in [0, 500)
+  * positive infinite slope, where p and q have coordinates in [0, 32768)
+  * negative infinite slope, where p and q have coordinates in [0, 500)
+  * negative infinite slope, where p and q have coordinates in [0, 32768)
+  * positive zero     slope, where p and q have coordinates in [0, 500)
+  * positive zero     slope, where p and q have coordinates in [0, 32768)
+  * symmetric for random points p and q with coordinates in [0, 500)
+  * symmetric for random points p and q with coordinates in [0, 32768)
+  * transitive for random points p, q, and r with coordinates in [0, 500)
+  * transitive for random points p, q, and r with coordinates in [0, 32768)
+  * slopeTo(), where p and q have coordinates in [0, 500)
+  * slopeTo(), where p and q have coordinates in [0, 32768)
+  * slopeTo(), where p and q have coordinates in [0, 10)
+  * throw a java.lang.NullPointerException if argument is null
+==> passed
+
+Test 2: p.compareTo(q)
+  * reflexive, where p and q have coordinates in [0, 500)
+  * reflexive, where p and q have coordinates in [0, 32768)
+  * antisymmetric, where p and q have coordinates in [0, 500)
+  * antisymmetric, where p and q have coordinates in [0, 32768)
+  * transitive, where p, q, and r have coordinates in [0, 500)
+  * transitive, where p, q, and r have coordinates in [0, 32768)
+  * sign of compareTo(), where p and q have coordinates in [0, 500)
+  * sign of compareTo(), where p and q have coordinates in [0, 32768)
+  * sign of compareTo(), where p and q have coordinates in [0, 10)
+  * throw java.lang.NullPointerException exception if argument is null
+==> passed
+
+Test 3: p.slopeOrder().compare(q, r)
+  * reflexive, where p and q have coordinates in [0, 500)
+  * reflexive, where p and q have coordinates in [0, 32768)
+  * antisymmetric, where p, q, and r have coordinates in [0, 500)
+  * antisymmetric, where p, q, and r have coordinates in [0, 32768)
+  * transitive, where p, q, r, and s have coordinates in [0, 500)
+  * transitive, where p, q, r, and s have coordinates in [0, 32768)
+  * sign of compare(), where p, q, and r have coordinates in [0, 500)
+  * sign of compare(), where p, q, and r have coordinates in [0, 32768)
+  * sign of compare(), where p, q, and r have coordinates in [0, 10)
+  * throw java.lang.NullPointerException if either argument is null
+==> passed
+
+
+Total: 3/3 tests passed!
+
+
+================================================================
+********************************************************************************
+*  TESTING CORRECTNESS (substituting reference Point and LineSegment)
+********************************************************************************
+
+Testing correctness of BruteCollinearPoints
+*-----------------------------------------------------------
+Running 17 total tests.
+
+The inputs satisfy the following conditions:
+  - no duplicate points
+  - no 5 (or more) points are collinear
+  - all x- and y-coordinates between 0 and 32,767
+
+Test 1: points from a file
+  * filename = input8.txt
+  * filename = equidistant.txt
+  * filename = input40.txt
+  * filename = input48.txt
+==> passed
+
+Test 2a: points from a file with horizontal line segments
+  * filename = horizontal5.txt
+  * filename = horizontal25.txt
+==> passed
+
+Test 2b: random horizontal line segments
+  *  1 random horizontal line segment
+  *  5 random horizontal line segments
+  * 10 random horizontal line segments
+  * 15 random horizontal line segments
+==> passed
+
+Test 3a: points from a file with vertical line segments
+  * filename = vertical5.txt
+  * filename = vertical25.txt
+==> passed
+
+Test 3b: random vertical line segments
+  *  1 random vertical line segment
+  *  5 random vertical line segments
+  * 10 random vertical line segments
+  * 15 random vertical line segments
+==> passed
+
+Test 4a: points from a file with no line segments
+  * filename = random23.txt
+  * filename = random38.txt
+==> passed
+
+Test 4b: random points with no line segments
+  *  5 random points
+  * 10 random points
+  * 20 random points
+  * 50 random points
+==> passed
+
+Test 5: points from a file with fewer than 4 points
+  * filename = input1.txt
+  * filename = input2.txt
+  * filename = input3.txt
+==> passed
+
+Test 6: check for dependence on either compareTo() or compare()
+        returning { -1, +1, 0 } instead of { negative integer,
+        positive integer, zero }
+  * filename = equidistant.txt
+  * filename = input40.txt
+  * filename = input48.txt
+==> passed
+
+Test 7: check for fragile dependence on return value of toString()
+  * filename = equidistant.txt
+  * filename = input40.txt
+  * filename = input48.txt
+==> passed
+
+Test 8: random line segments, none vertical or horizontal
+  *  1 random line segment
+  *  5 random line segments
+  * 10 random line segments
+  * 15 random line segments
+==> passed
+
+Test 9: random line segments
+  *  1 random line segment
+  *  5 random line segments
+  * 10 random line segments
+  * 15 random line segments
+==> passed
+
+Test 10: check that data type is immutable by testing whether each method
+         returns the same value, regardless of any intervening operations
+  * input8.txt
+    - failed after 9 operations involving BruteCollinearPoints
+    - first and last call to segments() returned different arrays
+
+    - sequence of operations was:
+          BruteCollinearPoints collinear = new BruteCollinearPoints(points);
+          collinear.numberOfSegments() -> 0
+          mutate points[] array that was passed to constructor
+          mutate points[] array that was passed to constructor
+          mutate points[] array that was passed to constructor
+          collinear.segments()
+          mutate array returned by last call to segments()
+          mutate points[] array that was passed to constructor
+          collinear.segments()
+
+    - failed on trial 1 of 100
+
+  * equidistant.txt
+    - failed after 4 operations involving BruteCollinearPoints
+    - first and last call to segments() returned different arrays
+
+    - sequence of operations was:
+          BruteCollinearPoints collinear = new BruteCollinearPoints(points);
+          collinear.segments()
+          mutate points[] array that was passed to constructor
+          collinear.segments()
+
+    - failed on trial 1 of 100
+
+==> FAILED
+
+Test 11: check that data type does not mutate the constructor argument
+  * input8.txt
+  * equidistant.txt
+==> passed
+
+Test 12: numberOfSegments() is consistent with segments()
+  * filename = input8.txt
+  * filename = equidistant.txt
+  * filename = input40.txt
+  * filename = input48.txt
+  * filename = horizontal5.txt
+  * filename = vertical5.txt
+  * filename = random23.txt
+==> passed
+
+Test 13: throws an exception if either the constructor argument is null
+         or any entry in array is null
+  * argument is null
+  * Point[] of length 10, number of null entries = 1
+  * Point[] of length 10, number of null entries = 10
+  * Point[] of length 4, number of null entries = 1
+  * Point[] of length 3, number of null entries = 1
+  * Point[] of length 2, number of null entries = 1
+  * Point[] of length 1, number of null entries = 1
+==> passed
+
+Test 14: check that the constructor throws an exception if duplicate points
+  * 50 points
+  * 25 points
+  * 5 points
+  * 4 points
+  * 3 points
+  * 2 points
+==> passed
+
+
+Total: 16/17 tests passed!
+
+
+================================================================
+Testing correctness of FastCollinearPoints
+*-----------------------------------------------------------
+Running 21 total tests.
+
+The inputs satisfy the following conditions:
+  - no duplicate points
+  - all x- and y-coordinates between 0 and 32,767
+
+Test 1: points from a file
+  * filename = input8.txt
+  * filename = equidistant.txt
+    - number of entries in student   solution: 3
+    - number of entries in reference solution: 4
+    - 1 missing entry in student solution:
+      '(30000, 0) -> (20000, 10000) -> (10000, 20000) -> (0, 30000)'
+
+
+  * filename = input40.txt
+    - number of entries in student   solution: 2
+    - number of entries in reference solution: 4
+    - 2 missing entries in student solution, including:
+      '(2000, 29000) -> (4000, 29000) -> (22000, 29000) -> (28000, 29000)'
+
+
+  * filename = input48.txt
+    - number of entries in student   solution: 4
+    - number of entries in reference solution: 6
+    - 2 missing entries in student solution, including:
+      '(1000, 23000) -> (3000, 23000) -> (18000, 23000) -> (24000, 23000)'
+
+
+  * filename = input299.txt
+    - number of entries in student   solution: 4
+    - number of entries in reference solution: 6
+    - 2 missing entries in student solution, including:
+      '(3250, 17450) -> (8500, 17450) -> (13400, 17450) -> (17250, 17450)'
+
+
+==> FAILED
+
+Test 2a: points from a file with horizontal line segments
+  * filename = horizontal5.txt
+    - number of entries in student   solution: 1
+    - number of entries in reference solution: 5
+    - 4 missing entries in student solution, including:
+      '(10375, 12711) -> (14226, 12711) -> (18177, 12711) -> (20385, 12711)'
+
+
+  * filename = horizontal25.txt
+    - number of entries in student   solution: 1
+    - number of entries in reference solution: 25
+    - 24 missing entries in student solution, including:
+      '(8784, 20913) -> (9880, 20913) -> (16352, 20913) -> (19666, 20913)'
+
+
+  * filename = horizontal50.txt
+    - number of entries in student   solution: 1
+    - number of entries in reference solution: 50
+    - 49 missing entries in student solution, including:
+      '(5249, 20754) -> (5559, 20754) -> (14800, 20754) -> (17428, 20754)'
+
+
+  * filename = horizontal75.txt
+    - number of entries in student   solution: 1
+    - number of entries in reference solution: 75
+    - 74 missing entries in student solution, including:
+      '(1536, 20976) -> (6545, 20976) -> (14178, 20976) -> (14591, 20976)'
+
+
+  * filename = horizontal100.txt
+
+
+        ::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::
+        OperationCountLimitExceededException
+        Number of calls to methods in Point exceeds limit: 200000000
+        ::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::
+
+==> FAILED
+
+Test 2b: random horizontal line segments
+  *  1 random horizontal line segment
+  *  5 random horizontal line segments
+    - number of entries in student   solution: 1
+    - number of entries in reference solution: 5
+    - 4 missing entries in student solution, including:
+      '(14177, 17120) -> (16874, 17120) -> (17430, 17120) -> (19158, 17120)'
+
+
+    - failed on trial 1 of 250
+     20
+      4921  5843
+     14177 17120
+     15559  6631
+     17430 17120
+      6250 17724
+     19386 17724
+     19158 17120
+      4947  5843
+      1941 17724
+      6836  6770
+     13381  6770
+     20696  6631
+     19524 17724
+      9134  6631
+     19594  6770
+     10240  5843
+     11641  5843
+     14578  6631
+     19264  6770
+     16874 17120
+
+  * 10 random horizontal line segments
+    - number of entries in student   solution: 1
+    - number of entries in reference solution: 10
+    - 9 missing entries in student solution, including:
+      '(1861, 16854) -> (5985, 16854) -> (9541, 16854) -> (9554, 16854)'
+
+
+    - failed on trial 1 of 50
+
+  * 15 random horizontal line segments
+    - number of entries in student   solution: 1
+    - number of entries in reference solution: 15
+    - 14 missing entries in student solution, including:
+      '(4918, 15129) -> (14123, 15129) -> (19956, 15129) -> (20501, 15129)'
+
+
+    - failed on trial 1 of 5
+
+==> FAILED
+
+Test 3a: points from a file with vertical line segments
+  * filename = vertical5.txt
+    - number of entries in student   solution: 1
+    - number of entries in reference solution: 5
+    - 4 missing entries in student solution, including:
+      '(2088, 6070) -> (2088, 7091) -> (2088, 11500) -> (2088, 16387)'
+
+
+  * filename = vertical25.txt
+    - number of entries in student   solution: 1
+    - number of entries in reference solution: 25
+    - 24 missing entries in student solution, including:
+      '(19953, 10489) -> (19953, 10688) -> (19953, 19299) -> (19953, 20439)'
+
+
+  * filename = vertical50.txt
+    - number of entries in student   solution: 1
+    - number of entries in reference solution: 50
+    - 49 missing entries in student solution, including:
+      '(5991, 15606) -> (5991, 20227) -> (5991, 20340) -> (5991, 20424)'
+
+
+  * filename = vertical75.txt
+    - number of entries in student   solution: 1
+    - number of entries in reference solution: 75
+    - 74 missing entries in student solution, including:
+      '(13780, 16365) -> (13780, 17494) -> (13780, 18253) -> (13780, 18908)'
+
+
+  * filename = vertical100.txt
+
+
+        ::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::
+        OperationCountLimitExceededException
+        Number of calls to methods in Point exceeds limit: 200000000
+        ::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::
+
+==> FAILED
+
+Test 3b: random vertical line segments
+  *  1 random vertical line segment
+  *  5 random vertical line segments
+    - number of entries in student   solution: 1
+    - number of entries in reference solution: 5
+    - 4 missing entries in student solution, including:
+      '(3237, 7569) -> (3237, 13820) -> (3237, 16458) -> (3237, 20665)'
+
+
+    - failed on trial 1 of 250
+     20
+      3237 20665
+      4116  6666
+     10287  2723
+     13380  1427
+     13380 14442
+     10287 16527
+      3237 13820
+      8698  4332
+      8698 20319
+     13380  4380
+      8698 10625
+      4116 12957
+      3237  7569
+      3237 16458
+      8698  4162
+      4116  1844
+     10287  9206
+      4116  7213
+     13380 19092
+     10287  7343
+
+  * 10 random vertical line segments
+    - number of entries in student   solution: 1
+    - number of entries in reference solution: 10
+    - 9 missing entries in student solution, including:
+      '(18677, 6902) -> (18677, 10423) -> (18677, 15096) -> (18677, 17303)'
+
+
+    - failed on trial 1 of 50
+
+  * 15 random vertical line segments
+    - number of entries in student   solution: 1
+    - number of entries in reference solution: 15
+    - 14 missing entries in student solution, including:
+      '(6928, 11561) -> (6928, 14138) -> (6928, 17025) -> (6928, 18741)'
+
+
+    - failed on trial 1 of 5
+
+==> FAILED
+
+Test 4a: points from a file with no line segments
+  * filename = random23.txt
+  * filename = random38.txt
+  * filename = random91.txt
+  * filename = random152.txt
+==> passed
+
+Test 4b: random points with no line segments
+  *  5 random points
+  * 10 random points
+  * 20 random points
+  * 50 random points
+==> passed
+
+Test 5a: points from a file with 5 or more on some line segments
+  * filename = input9.txt
+  * filename = input10.txt
+  * filename = input20.txt
+    - number of entries in student   solution: 2
+    - number of entries in reference solution: 5
+    - 3 missing entries in student solution, including:
+      '(4160, 29184) -> (5120, 29184) -> (6144, 29184) -> (7168, 29184) -> (8192, 29184)'
+
+
+  * filename = input50.txt
+    - number of entries in student   solution: 5
+    - number of entries in reference solution: 7
+    - 2 missing entries in student solution, including:
+      '(1000, 26000) -> (9000, 26000) -> (11000, 26000) -> (18000, 26000)'
+
+
+  * filename = input80.txt
+    - number of entries in student   solution: 14
+    - number of entries in reference solution: 31
+    - 17 missing entries in student solution, including:
+      '(13000, 29000) -> (19000, 29000) -> (25000, 29000) -> (28000, 29000)'
+
+
+  * filename = input300.txt
+    - number of entries in student   solution: 4
+    - number of entries in reference solution: 6
+    - 2 missing entries in student solution, including:
+      '(23000, 8500) -> (29550, 8500) -> (30000, 8500) -> (30950, 8500)'
+
+
+  * filename = inarow.txt
+==> FAILED
+
+Test 5b: points from a file with 5 or more on some line segments
+  * filename = kw1260.txt
+
+
+        ::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::
+        OperationCountLimitExceededException
+        Number of calls to methods in Point exceeds limit: 200000000
+        ::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::
+
+  * filename = rs1423.txt
+
+
+        ::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::
+        OperationCountLimitExceededException
+        Number of calls to methods in Point exceeds limit: 200000000
+        ::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::
+
+==> FAILED
+
+Test 6: points from a file with fewer than 4 points
+  * filename = input1.txt
+  * filename = input2.txt
+  * filename = input3.txt
+==> passed
+
+Test 7: check for dependence on either compareTo() or compare()
+        returning { -1, +1, 0 } instead of { negative integer,
+        positive integer, zero }
+  * filename = equidistant.txt
+    - number of entries in student   solution: 3
+    - number of entries in reference solution: 4
+    - 1 missing entry in student solution:
+      '(30000, 0) -> (20000, 10000) -> (10000, 20000) -> (0, 30000)'
+
+
+  * filename = input40.txt
+    - number of entries in student   solution: 2
+    - number of entries in reference solution: 4
+    - 2 missing entries in student solution, including:
+      '(2000, 29000) -> (4000, 29000) -> (22000, 29000) -> (28000, 29000)'
+
+
+  * filename = input48.txt
+    - number of entries in student   solution: 4
+    - number of entries in reference solution: 6
+    - 2 missing entries in student solution, including:
+      '(1000, 23000) -> (3000, 23000) -> (18000, 23000) -> (24000, 23000)'
+
+
+  * filename = input299.txt
+    - number of entries in student   solution: 4
+    - number of entries in reference solution: 6
+    - 2 missing entries in student solution, including:
+      '(3250, 17450) -> (8500, 17450) -> (13400, 17450) -> (17250, 17450)'
+
+
+==> FAILED
+
+Test 8: check for fragile dependence on return value of toString()
+  * filename = equidistant.txt
+    - number of entries in student   solution: 3
+    - number of entries in reference solution: 4
+    - 1 missing entry in student solution:
+      '(30000, 0) -> (20000, 10000) -> (10000, 20000) -> (0, 30000)'
+
+
+  * filename = input40.txt
+    - number of entries in student   solution: 2
+    - number of entries in reference solution: 4
+    - 2 missing entries in student solution, including:
+      '(2000, 29000) -> (4000, 29000) -> (22000, 29000) -> (28000, 29000)'
+
+
+  * filename = input48.txt
+    - number of entries in student   solution: 4
+    - number of entries in reference solution: 6
+    - 2 missing entries in student solution, including:
+      '(1000, 23000) -> (3000, 23000) -> (18000, 23000) -> (24000, 23000)'
+
+
+
+It is bad style to write code that depends on the particular format of
+the output from the toString() method, especially if your reason for
+doing so is to circumvent the public API (which intentionally does not
+provide access to the x- and y-coordinates).
+
+==> FAILED
+
+Test 9: random line segments, none vertical or horizontal
+  *  1 random line segment
+  *  5 random line segments
+  * 25 random line segments
+
+
+        ::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::
+        OperationCountLimitExceededException
+        Number of calls to methods in Point exceeds limit: 200000000
+        ::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::
+
+    - failed on trial 81 of 100
+
+  * 50 random line segments
+
+
+        ::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::
+        OperationCountLimitExceededException
+        Number of calls to methods in Point exceeds limit: 200000000
+        ::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::
+
+    - failed on trial 1 of 15
+
+  * 100 random line segments
+
+
+        ::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::
+        OperationCountLimitExceededException
+        Number of calls to methods in Point exceeds limit: 200000000
+        ::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::
+
+    - failed on trial 1 of 2
+
+==> FAILED
+
+Test 10: random line segments
+  *  1 random line segment
+  *  5 random line segments
+    - number of entries in student   solution: 4
+    - number of entries in reference solution: 5
+    - 1 missing entry in student solution:
+      '(9114, 12081) -> (9114, 12333) -> (9114, 12382) -> (9114, 12536)'
+
+
+    - failed on trial 20 of 500
+     20
+      5189 10656
+      4364  6037
+      9686  3967
+      9297  7374
+      9686  4117
+      5804  7162
+      9686  5917
+      8037 10656
+      9114 12382
+      7592 10656
+       716  3187
+      9686  4792
+      9114 12333
+      9165  7318
+      9114 12081
+      5073  5582
+      3489  4910
+      6168 10656
+       524  3037
+      9114 12536
+
+  * 25 random line segments
+    - number of entries in student   solution: 23
+    - number of entries in reference solution: 25
+    - 2 missing entries in student solution, including:
+      '(14523, 8054) -> (14523, 8438) -> (14523, 8534) -> (14523, 8630)'
+
+
+    - failed on trial 1 of 100
+
+  * 50 random line segments
+    - number of entries in student   solution: 43
+    - number of entries in reference solution: 50
+    - 7 missing entries in student solution, including:
+      '(12112, 14778) -> (12400, 14778) -> (12560, 14778) -> (14288, 14778)'
+
+
+    - failed on trial 1 of 15
+
+  * 100 random line segments
+    - number of entries in student   solution: 83
+    - number of entries in reference solution: 100
+    - 17 missing entries in student solution, including:
+      '(11852, 14682) -> (11909, 14682) -> (12213, 14682) -> (12821, 14682)'
+
+
+    - failed on trial 1 of 2
+
+==> FAILED
+
+Test 11: random distinct points in a given range
+  * 5 random points in a 10-by-10 grid
+  * 10 random points in a 10-by-10 grid
+  * 50 random points in a 10-by-10 grid
+    - number of entries in student   solution: 10
+    - number of entries in reference solution: 42
+    - 32 missing entries in student solution, including:
+      '(0, 9) -> (5, 9) -> (6, 9) -> (9, 9)'
+
+
+    - failed on trial 1 of 100
+
+  * 90 random points in a 10-by-10 grid
+    - number of entries in student   solution: 16
+    - number of entries in reference solution: 131
+    - 115 missing entries in student solution, including:
+      '(0, 9) -> (1, 9) -> (2, 9) -> (3, 9) -> (4, 9) -> (5, 9) -> (6, 9) -> (7, 9) -> (9, 9)'
+
+
+    - failed on trial 1 of 50
+
+  * 200 random points in a 50-by-50 grid
+    - number of entries in student   solution: 51
+    - number of entries in reference solution: 213
+    - 162 missing entries in student solution, including:
+      '(1, 49) -> (15, 49) -> (20, 49) -> (25, 49) -> (32, 49) -> (35, 49) -> (49, 49)'
+
+
+    - failed on trial 1 of 10
+
+==> FAILED
+
+Test 12: m*n points on an m-by-n grid
+  * 3-by-3 grid
+  * 4-by-4 grid
+    - number of entries in student   solution: 4
+    - number of entries in reference solution: 10
+    - 6 missing entries in student solution, including:
+      '(0, 3) -> (1, 3) -> (2, 3) -> (3, 3)'
+
+
+  * 5-by-5 grid
+    - number of entries in student   solution: 4
+    - number of entries in reference solution: 16
+    - 12 missing entries in student solution, including:
+      '(0, 4) -> (1, 4) -> (2, 4) -> (3, 4) -> (4, 4)'
+
+
+  * 10-by-10 grid
+    - number of entries in student   solution: 16
+    - number of entries in reference solution: 154
+    - 138 missing entries in student solution, including:
+      '(0, 9) -> (1, 9) -> (2, 9) -> (3, 9) -> (4, 9) -> (5, 9) -> (6, 9) -> (7, 9) -> (8, 9) -> (9, 9)'
+
+
+  * 20-by-20 grid
+    - number of entries in student   solution: 48
+    - number of entries in reference solution: 2446
+    - 2398 missing entries in student solution, including:
+      '(0, 19) -> (1, 19) -> (2, 19) -> (3, 19) -> (4, 19) -> (5, 19) -> (6, 19) -> (7, 19) -> (8, 19) -> (9, 19) -> (10, 19) -> (11, 19) -> (12, 19) -> (13, 19) -> (14, 19) -> (15, 19) -> (16, 19) -> (17, 19) -> (18, 19) -> (19, 19)'
+
+
+  * 5-by-4 grid
+    - number of entries in student   solution: 4
+    - number of entries in reference solution: 13
+    - 9 missing entries in student solution, including:
+      '(0, 3) -> (1, 3) -> (2, 3) -> (3, 3) -> (4, 3)'
+
+
+  * 6-by-4 grid
+    - number of entries in student   solution: 4
+    - number of entries in reference solution: 16
+    - 12 missing entries in student solution, including:
+      '(0, 3) -> (1, 3) -> (2, 3) -> (3, 3) -> (4, 3) -> (5, 3)'
+
+
+  * 10-by-4 grid
+    - number of entries in student   solution: 8
+    - number of entries in reference solution: 38
+    - 30 missing entries in student solution, including:
+      '(0, 3) -> (1, 3) -> (2, 3) -> (3, 3) -> (4, 3) -> (5, 3) -> (6, 3) -> (7, 3) -> (8, 3) -> (9, 3)'
+
+
+  * 15-by-4 grid
+    - number of entries in student   solution: 10
+    - number of entries in reference solution: 79
+    - 69 missing entries in student solution, including:
+      '(0, 3) -> (1, 3) -> (2, 3) -> (3, 3) -> (4, 3) -> (5, 3) -> (6, 3) -> (7, 3) -> (8, 3) -> (9, 3) -> (10, 3) -> (11, 3) -> (12, 3) -> (13, 3) -> (14, 3)'
+
+
+  * 25-by-4 grid
+    - number of entries in student   solution: 18
+    - number of entries in reference solution: 213
+    - 195 missing entries in student solution, including:
+      '(0, 3) -> (1, 3) -> (2, 3) -> (3, 3) -> (4, 3) -> (5, 3) -> (6, 3) -> (7, 3) -> (8, 3) -> (9, 3) -> (10, 3) -> (11, 3) -> (12, 3) -> (13, 3) -> (14, 3) -> (15, 3) -> (16, 3) -> (17, 3) -> (18, 3) -> (19, 3) -> (20, 3) -> (21, 3) -> (22, 3) -> (23, 3) -> (24, 3)'
+
+
+==> FAILED
+
+Test 13: check that data type is immutable by testing whether each method
+         returns the same value, regardless of any intervening operations
+  * input8.txt
+    - failed after 6 operations involving FastCollinearPoints
+    - first and last call to segments() returned different arrays
+    - sequence of operations was:
+          FastCollinearPoints collinear = new FastCollinearPoints(points);
+          collinear.numberOfSegments() -> 0
+          mutate points[] array that was passed to constructor
+          collinear.segments()
+          mutate array returned by last call to segments()
+          collinear.segments()
+    - failed on trial 1 of 100
+
+  * equidistant.txt
+    - failed after 4 operations involving FastCollinearPoints
+    - first and last call to segments() returned different arrays
+    - sequence of operations was:
+          FastCollinearPoints collinear = new FastCollinearPoints(points);
+          collinear.numberOfSegments() -> 0
+          collinear.segments()
+          collinear.segments()
+    - failed on trial 1 of 100
+
+==> FAILED
+
+Test 14: check that data type does not mutate the constructor argument
+  * input8.txt
+  * equidistant.txt
+==> passed
+
+Test 15: numberOfSegments() is consistent with segments()
+  * filename = input8.txt
+  * filename = equidistant.txt
+  * filename = input40.txt
+  * filename = input48.txt
+  * filename = horizontal5.txt
+  * filename = vertical5.txt
+  * filename = random23.txt
+==> passed
+
+Test 16: throws an exception if either constructor argument is null
+         or any entry in array is null
+  * argument is null
+  * Point[] of length 10, number of null entries = 1
+  * Point[] of length 10, number of null entries = 10
+  * Point[] of length 4, number of null entries = 1
+  * Point[] of length 3, number of null entries = 1
+  * Point[] of length 2, number of null entries = 1
+  * Point[] of length 1, number of null entries = 1
+==> passed
+
+Test 17: check that the constructor throws an exception if duplicate points
+  * 50 points
+  * 25 points
+  * 5 points
+  * 4 points
+  * 3 points
+  * 2 points
+==> passed
+
+
+Total: 7/21 tests passed!
+
+
+================================================================
+********************************************************************************
+*  MEMORY
+********************************************************************************
+
+Analyzing memory of Point
+*-----------------------------------------------------------
+Running 1 total tests.
+
+The maximum amount of memory per Point object is 32 bytes.
+
+Student memory = 24 bytes (passed)
+
+Total: 1/1 tests passed!
+
+
+================================================================
+
+
+
+********************************************************************************
+*  TIMING
+********************************************************************************
+
+Timing BruteCollinearPoints
+*-----------------------------------------------------------
+Running 10 total tests.
+
+Test 1a-1e: Find collinear points among n random distinct points
+
+
+                                                      slopeTo()
+             n    time     slopeTo()   compare()  + 2*compare()        compareTo()
+-----------------------------------------------------------------------------------------------
+=> passed    16   0.00        3640           0           3640                  120
+=> passed    32   0.00       71920           0          71920                  496
+=> passed    64   0.01     1270752           0        1270752                 2016
+=> passed   128   0.02    21336000           0       21336000                 8128
+=> passed   256   0.25   349585280           0      349585280                32640
+==> 5/5 tests passed
+
+Test 2a-2e: Find collinear points among n/4 arbitrary line segments
+
+
+                                                      slopeTo()
+             n    time     slopeTo()   compare()  + 2*compare()        compareTo()
+-----------------------------------------------------------------------------------------------
+=> passed    16   0.00        3687           0           3687                  139
+=> passed    32   0.00       72143           0          72143                  542
+=> passed    64   0.04     1271706           0        1271706                 2104
+=> passed   128   0.08    21339861           0       21339861                 8298
+=> passed   256   1.24   349600729           0      349600729                32976
+==> 5/5 tests passed
+
+Total: 10/10 tests passed!
+
+
+================================================================
+
+
+
+Timing FastCollinearPoints
+*-----------------------------------------------------------
+Running 31 total tests.
+
+Test 1a-1g: Find collinear points among n random distinct points
+
+
+                                                      slopeTo()
+             n    time     slopeTo()   compare()  + 2*compare()        compareTo()
+-----------------------------------------------------------------------------------------------
+=> FAILED    64   0.01      632709           0         632709   (2.8x)        2016
+=> FAILED   128   0.05     5153415           0        5153415   (4.9x)        8128
+=> FAILED   256   0.29    41629669           0       41629669   (8.6x)       32640
+=> FAILED   512   2.48   334263177           0      334263177  (15.5x)      130816
+=> FAILED  1024  19.44  2679581456           0     2679581456  (27.9x)      523776
+Aborting: time limit of 10 seconds exceeded
+
+Test 2a-2g: Find collinear points among the n points on an n-by-1 grid
+
+                                                      slopeTo()
+             n    time     slopeTo()   compare()  + 2*compare()        compareTo()
+-----------------------------------------------------------------------------------------------
+=> passed    64   0.00        4159           0           4159                 2314
+=> passed   128   0.00       16511           0          16511                 8878
+=> passed   256   0.00       65791           0          65791                34380
+=> passed   512   0.00      262655           0         262655               134780
+=> passed  1024   0.01     1049599           0        1049599               532752
+=> passed  2048   0.03     4196351           0        4196351              2116153
+=> passed  4096   0.13    16781311           0       16781311              8430567
+==> 7/7 tests passed
+
+lg ratio(slopeTo() + 2*compare()) = lg (16781311 / 4196351) = 2.00
+=> passed
+
+==> 8/8 tests passed
+
+Test 3a-3g: Find collinear points among the n points on an n/4-by-4 grid
+
+                                                      slopeTo()
+             n    time     slopeTo()   compare()  + 2*compare()        compareTo()
+-----------------------------------------------------------------------------------------------
+=> FAILED    64   0.00      238290           0         238290   (1.3x)        2113
+=> FAILED   128   0.01     1646586           0        1646586   (2.7x)        8365
+=> FAILED   256   0.09    11417263           0       11417263   (5.3x)       33177
+=> FAILED   512   0.57    77339049           0       77339049   (9.6x)      132017
+=> FAILED  1024   3.58   506138742           0      506138742  (16.1x)      526412
+=> FAILED  2048  23.14  3296464869           0     3296464869  (26.8x)     2101891
+Aborting: time limit of 10 seconds exceeded
+
+Test 4a-4g: Find collinear points among the n points on an n/8-by-8 grid
+
+                                                      slopeTo()
+             n    time     slopeTo()   compare()  + 2*compare()        compareTo()
+-----------------------------------------------------------------------------------------------
+=> FAILED    64   0.00      297815           0         297815   (1.4x)        2090
+=> FAILED   128   0.02     2114931           0        2114931   (2.3x)        8311
+=> FAILED   256   0.13    16576006           0       16576006   (5.6x)       33012
+=> FAILED   512   0.90   120448152           0      120448152  (10.8x)      131658
+=> FAILED  1024   6.93   891929957           0      891929957  (20.7x)      525573
+=> FAILED  2048  52.72  6479744110           0     6479744110  (38.4x)     2099953
+Aborting: time limit of 10 seconds exceeded
+
+Total: 8/31 tests passed!
+
+
+================================================================
+

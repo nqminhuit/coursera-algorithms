@@ -5,7 +5,7 @@ public class BruteCollinearPoints {
 
     private int numberOfSegments;
 
-    private Point[] points;
+    private final Point[] points;
 
     // finds all line segments containing 4 points
     public BruteCollinearPoints(Point[] points) {
@@ -21,7 +21,7 @@ public class BruteCollinearPoints {
         }
 
         for (int i = 0; i < length; ++i) {
-            for(int j = i + 1; j < length; ++j) {
+            for (int j = i + 1; j < length; ++j) {
                 if (0 == points[i].compareTo(points[j])) {
                     throw new IllegalArgumentException("Must not contain duplicate Points!");
                 }
@@ -29,7 +29,10 @@ public class BruteCollinearPoints {
         }
 
         numberOfSegments = 0;
-        this.points = points;
+        this.points = new Point[length];
+        for (int i = 0; i < length; ++i) {
+            this.points[i] = points[i];
+        }
     }
 
     // the number of line segments
@@ -45,14 +48,14 @@ public class BruteCollinearPoints {
         for (int i = 0; i < n; ++i) {
             for (int j = i + 1; j < n; j++) {
                 for (int k = j + 1; k < n; k++) {
-                    for (int l = k + 1; l < n; l++) {
+                    for (int m = k + 1; m < n; m++) {
                         double slope = points[i].slopeTo(points[j]);
-                        if (slope == points[i].slopeTo(points[k]) && slope == points[i].slopeTo(points[l])) {
+                        if (slope == points[i].slopeTo(points[k]) && slope == points[i].slopeTo(points[m])) {
                             Point[] pointsInLine = new Point[4];
                             pointsInLine[0] = points[i];
                             pointsInLine[1] = points[j];
                             pointsInLine[2] = points[k];
-                            pointsInLine[3] = points[l];
+                            pointsInLine[3] = points[m];
                             Arrays.sort(pointsInLine);
                             ls[lsIndex++] = new LineSegment(pointsInLine[0], pointsInLine[3]);
                             numberOfSegments++;
