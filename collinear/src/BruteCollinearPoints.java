@@ -13,14 +13,15 @@ public class BruteCollinearPoints {
             throw new IllegalArgumentException("Must not contain null array!");
         }
 
-        for (int i = 0; i < points.length; ++i) {
+        int length = points.length;
+        for (int i = 0; i < length; ++i) {
             if (points[i] == null) {
                 throw new IllegalArgumentException("Must not contain null Points!");
             }
         }
 
-        for (int i = 0; i < points.length; ++i) {
-            for(int j = i + 1; j < points.length; ++j) {
+        for (int i = 0; i < length; ++i) {
+            for(int j = i + 1; j < length; ++j) {
                 if (0 == points[i].compareTo(points[j])) {
                     throw new IllegalArgumentException("Must not contain duplicate Points!");
                 }
