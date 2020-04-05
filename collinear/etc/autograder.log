@@ -9,20 +9,20 @@ Spotbugs:     PASSED
 PMD:          PASSED
 Checkstyle:   PASSED
 
-Correctness:  29/41 tests passed
+Correctness:  35/41 tests passed
 Memory:       1/1 tests passed
-Timing:       13/41 tests passed
+Timing:       14/41 tests passed
 
-Aggregate score: 68.78%
+Aggregate score: 78.05%
 [Compilation: 5%, API: 5%, Spotbugs: 0%, PMD: 0%, Checkstyle: 0%, Correctness: 60%, Memory: 10%, Timing: 20%]
 
 ASSESSMENT DETAILS
 
 The following files were submitted:
 ----------------------------------
-3.2K Apr  5 02:31 BruteCollinearPoints.java
-3.5K Apr  5 02:31 FastCollinearPoints.java
-3.9K Apr  5 02:31 Point.java
+3.2K Apr  5 03:10 BruteCollinearPoints.java
+3.5K Apr  5 03:10 FastCollinearPoints.java
+3.9K Apr  5 03:10 Point.java
 
 
 ********************************************************************************
@@ -241,14 +241,16 @@ Test 9: random line segments
 Test 10: check that data type is immutable by testing whether each method
          returns the same value, regardless of any intervening operations
   * input8.txt
-    - failed after 5 operations involving BruteCollinearPoints
+    - failed after 7 operations involving BruteCollinearPoints
     - first and last call to segments() returned different arrays
 
     - sequence of operations was:
           BruteCollinearPoints collinear = new BruteCollinearPoints(points);
-          collinear.numberOfSegments() -> 0
-          collinear.numberOfSegments() -> 0
           collinear.segments()
+          mutate points[] array that was passed to constructor
+          mutate points[] array that was passed to constructor
+          mutate array returned by last call to segments()
+          collinear.numberOfSegments() -> 2
           collinear.segments()
 
     - failed on trial 1 of 100
@@ -259,10 +261,10 @@ Test 10: check that data type is immutable by testing whether each method
 
     - sequence of operations was:
           BruteCollinearPoints collinear = new BruteCollinearPoints(points);
-          collinear.segments()
           mutate points[] array that was passed to constructor
-          mutate array returned by last call to segments()
-          mutate array returned by last call to segments()
+          mutate points[] array that was passed to constructor
+          collinear.segments()
+          collinear.numberOfSegments() -> 4
           collinear.segments()
 
     - failed on trial 1 of 100
@@ -323,36 +325,15 @@ Test 1: points from a file
   * filename = input40.txt
   * filename = input48.txt
   * filename = input299.txt
-
-
-        ::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::
-        OperationCountLimitExceededException
-        Number of calls to methods in Point exceeds limit: 200000000
-        ::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::
-
-==> FAILED
+==> passed
 
 Test 2a: points from a file with horizontal line segments
   * filename = horizontal5.txt
   * filename = horizontal25.txt
   * filename = horizontal50.txt
   * filename = horizontal75.txt
-
-
-        ::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::
-        OperationCountLimitExceededException
-        Number of calls to methods in Point exceeds limit: 200000000
-        ::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::
-
   * filename = horizontal100.txt
-
-
-        ::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::
-        OperationCountLimitExceededException
-        Number of calls to methods in Point exceeds limit: 200000000
-        ::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::
-
-==> FAILED
+==> passed
 
 Test 2b: random horizontal line segments
   *  1 random horizontal line segment
@@ -366,22 +347,8 @@ Test 3a: points from a file with vertical line segments
   * filename = vertical25.txt
   * filename = vertical50.txt
   * filename = vertical75.txt
-
-
-        ::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::
-        OperationCountLimitExceededException
-        Number of calls to methods in Point exceeds limit: 200000000
-        ::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::
-
   * filename = vertical100.txt
-
-
-        ::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::
-        OperationCountLimitExceededException
-        Number of calls to methods in Point exceeds limit: 200000000
-        ::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::
-
-==> FAILED
+==> passed
 
 Test 3b: random vertical line segments
   *  1 random vertical line segment
@@ -411,22 +378,8 @@ Test 5a: points from a file with 5 or more on some line segments
   * filename = input50.txt
   * filename = input80.txt
   * filename = input300.txt
-
-
-        ::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::
-        OperationCountLimitExceededException
-        Number of calls to methods in Point exceeds limit: 200000000
-        ::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::
-
   * filename = inarow.txt
-
-
-        ::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::
-        OperationCountLimitExceededException
-        Number of calls to methods in Point exceeds limit: 200000000
-        ::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::
-
-==> FAILED
+==> passed
 
 Test 5b: points from a file with 5 or more on some line segments
   * filename = kw1260.txt
@@ -460,14 +413,7 @@ Test 7: check for dependence on either compareTo() or compare()
   * filename = input40.txt
   * filename = input48.txt
   * filename = input299.txt
-
-
-        ::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::
-        OperationCountLimitExceededException
-        Number of calls to methods in Point exceeds limit: 200000000
-        ::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::
-
-==> FAILED
+==> passed
 
 Test 8: check for fragile dependence on return value of toString()
   * filename = equidistant.txt
@@ -479,15 +425,6 @@ Test 9: random line segments, none vertical or horizontal
   *  1 random line segment
   *  5 random line segments
   * 25 random line segments
-
-
-        ::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::
-        OperationCountLimitExceededException
-        Number of calls to methods in Point exceeds limit: 200000000
-        ::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::
-
-    - failed on trial 30 of 100
-
   * 50 random line segments
 
 
@@ -496,7 +433,7 @@ Test 9: random line segments, none vertical or horizontal
         Number of calls to methods in Point exceeds limit: 200000000
         ::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::
 
-    - failed on trial 1 of 15
+    - failed on trial 12 of 15
 
   * 100 random line segments
 
@@ -514,15 +451,6 @@ Test 10: random line segments
   *  1 random line segment
   *  5 random line segments
   * 25 random line segments
-
-
-        ::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::
-        OperationCountLimitExceededException
-        Number of calls to methods in Point exceeds limit: 200000000
-        ::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::
-
-    - failed on trial 30 of 100
-
   * 50 random line segments
 
 
@@ -531,7 +459,7 @@ Test 10: random line segments
         Number of calls to methods in Point exceeds limit: 200000000
         ::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::
 
-    - failed on trial 1 of 15
+    - failed on trial 12 of 15
 
   * 100 random line segments
 
@@ -550,48 +478,17 @@ Test 11: random distinct points in a given range
   * 10 random points in a 10-by-10 grid
   * 50 random points in a 10-by-10 grid
   * 90 random points in a 10-by-10 grid
-
-    java.lang.ArrayIndexOutOfBoundsException: Index 89 out of bounds for length 89
-
-    FastCollinearPoints.segments(FastCollinearPoints.java:94)
-    TestFastCollinearPoints.testSegments(TestFastCollinearPoints.java:109)
-    TestFastCollinearPoints.randomPointsInRange(TestFastCollinearPoints.java:426)
-    TestFastCollinearPoints.test11(TestFastCollinearPoints.java:447)
-    TestFastCollinearPoints.main(TestFastCollinearPoints.java:819)
-
-    - failed on trial 1 of 50
-
   * 200 random points in a 50-by-50 grid
-
-    java.lang.ArrayIndexOutOfBoundsException: Index 199 out of bounds for length 199
-
-    FastCollinearPoints.segments(FastCollinearPoints.java:94)
-    TestFastCollinearPoints.testSegments(TestFastCollinearPoints.java:109)
-    TestFastCollinearPoints.randomPointsInRange(TestFastCollinearPoints.java:426)
-    TestFastCollinearPoints.test11(TestFastCollinearPoints.java:448)
-    TestFastCollinearPoints.main(TestFastCollinearPoints.java:819)
-
-    - failed on trial 1 of 10
-
-==> FAILED
+==> passed
 
 Test 12: m*n points on an m-by-n grid
   * 3-by-3 grid
   * 4-by-4 grid
   * 5-by-5 grid
   * 10-by-10 grid
-
-    java.lang.ArrayIndexOutOfBoundsException: Index 99 out of bounds for length 99
-
-    FastCollinearPoints.segments(FastCollinearPoints.java:94)
-    TestFastCollinearPoints.testSegments(TestFastCollinearPoints.java:109)
-    TestFastCollinearPoints.grid(TestFastCollinearPoints.java:455)
-    TestFastCollinearPoints.test12(TestFastCollinearPoints.java:463)
-    TestFastCollinearPoints.main(TestFastCollinearPoints.java:822)
-
   * 20-by-20 grid
 
-    java.lang.ArrayIndexOutOfBoundsException: Index 399 out of bounds for length 399
+    java.lang.ArrayIndexOutOfBoundsException: Index 800 out of bounds for length 800
 
     FastCollinearPoints.segments(FastCollinearPoints.java:94)
     TestFastCollinearPoints.testSegments(TestFastCollinearPoints.java:109)
@@ -603,18 +500,9 @@ Test 12: m*n points on an m-by-n grid
   * 6-by-4 grid
   * 10-by-4 grid
   * 15-by-4 grid
-
-    java.lang.ArrayIndexOutOfBoundsException: Index 59 out of bounds for length 59
-
-    FastCollinearPoints.segments(FastCollinearPoints.java:94)
-    TestFastCollinearPoints.testSegments(TestFastCollinearPoints.java:109)
-    TestFastCollinearPoints.grid(TestFastCollinearPoints.java:455)
-    TestFastCollinearPoints.test12(TestFastCollinearPoints.java:468)
-    TestFastCollinearPoints.main(TestFastCollinearPoints.java:822)
-
   * 25-by-4 grid
 
-    java.lang.ArrayIndexOutOfBoundsException: Index 99 out of bounds for length 99
+    java.lang.ArrayIndexOutOfBoundsException: Index 200 out of bounds for length 200
 
     FastCollinearPoints.segments(FastCollinearPoints.java:94)
     TestFastCollinearPoints.testSegments(TestFastCollinearPoints.java:109)
@@ -627,20 +515,25 @@ Test 12: m*n points on an m-by-n grid
 Test 13: check that data type is immutable by testing whether each method
          returns the same value, regardless of any intervening operations
   * input8.txt
-    - failed after 6 operations involving FastCollinearPoints
+    - failed after 3 operations involving FastCollinearPoints
     - first and last call to segments() returned different arrays
     - sequence of operations was:
           FastCollinearPoints collinear = new FastCollinearPoints(points);
-          collinear.numberOfSegments() -> 0
-          mutate points[] array that was passed to constructor
-          collinear.numberOfSegments() -> 0
           collinear.segments()
           collinear.segments()
     - failed on trial 1 of 100
 
   * equidistant.txt
-    - failed after 22 operations involving FastCollinearPoints
+    - failed after 7 operations involving FastCollinearPoints
     - first and last call to segments() returned different arrays
+    - sequence of operations was:
+          FastCollinearPoints collinear = new FastCollinearPoints(points);
+          collinear.segments()
+          mutate points[] array that was passed to constructor
+          mutate array returned by last call to segments()
+          mutate array returned by last call to segments()
+          collinear.numberOfSegments() -> 4
+          collinear.segments()
     - failed on trial 1 of 100
 
 ==> FAILED
@@ -681,7 +574,7 @@ Test 17: check that the constructor throws an exception if duplicate points
 ==> passed
 
 
-Total: 10/21 tests passed!
+Total: 16/21 tests passed!
 
 
 ================================================================
@@ -722,7 +615,7 @@ Test 1a-1e: Find collinear points among n random distinct points
 => passed    32   0.00       71920           0          71920                  496
 => passed    64   0.01     1270752           0        1270752                 2016
 => passed   128   0.08    21336000           0       21336000                 8128
-=> passed   256   1.22   349585280           0      349585280                32640
+=> passed   256   1.21   349585280           0      349585280                32640
 ==> 5/5 tests passed
 
 Test 2a-2e: Find collinear points among n/4 arbitrary line segments
@@ -731,11 +624,11 @@ Test 2a-2e: Find collinear points among n/4 arbitrary line segments
                                                       slopeTo()
              n    time     slopeTo()   compare()  + 2*compare()        compareTo()
 -----------------------------------------------------------------------------------------------
-=> passed    16   0.00        3686           0           3686                  143
-=> passed    32   0.00       72158           0          72158                  541
-=> passed    64   0.02     1271734           0        1271734                 2105
-=> passed   128   0.10    21339800           0       21339800                 8300
-=> passed   256   1.25   349601004           0      349601004                32986
+=> passed    16   0.00        3681           0           3681                  139
+=> passed    32   0.00       72172           0          72172                  541
+=> passed    64   0.04     1271797           0        1271797                 2093
+=> passed   128   0.08    21340162           0       21340162                 8307
+=> passed   256   1.30   349600847           0      349600847                32983
 ==> 5/5 tests passed
 
 Total: 10/10 tests passed!
@@ -755,10 +648,12 @@ Test 1a-1g: Find collinear points among n random distinct points
                                                       slopeTo()
              n    time     slopeTo()   compare()  + 2*compare()        compareTo()
 -----------------------------------------------------------------------------------------------
-=> FAILED    64   0.08      262080     1232532        2727144  (12.0x)        2016
-=> FAILED   128   0.32     2097024    12023217       26143458  (24.8x)        8128
-=> FAILED   256   1.48    16776960   112898700      242574360  (50.3x)       32640
-=> FAILED   512  18.03   134217216  1039425100     2213067416 (102.5x)      130816
+=> FAILED    64   0.01      262080       19587         301254   (1.3x)        2016
+=> FAILED   128   0.03     2097024       94553        2286130   (2.2x)        8128
+=> FAILED   256   0.14    16776960      443245       17663450   (3.7x)       32640
+=> FAILED   512   0.94   134217216     2034765      138286746   (6.4x)      130816
+=> FAILED  1024   7.06  1073740800     9184999     1092110798  (11.4x)      523776
+=> FAILED  2048  55.39  8589932544    40926244     8671785032  (20.5x)     2096128
 Aborting: time limit of 10 seconds exceeded
 
 Test 2a-2g: Find collinear points among the n points on an n-by-1 grid
@@ -766,13 +661,13 @@ Test 2a-2g: Find collinear points among the n points on an n-by-1 grid
                                                       slopeTo()
              n    time     slopeTo()   compare()  + 2*compare()        compareTo()
 -----------------------------------------------------------------------------------------------
-=> passed    64   0.01        8128        4764          17656                21357
-=> passed   128   0.01       32640       17796          68232               100660
-=> FAILED   256   0.03      130816       68717         268250               470257   (1.2x)
-=> FAILED   512   0.17      523776      269399        1062574              2148571   (1.5x)
-=> FAILED  1024   0.29     2096128     1065026        4226180              9627867   (1.7x)
-=> FAILED  2048   0.67     8386560     4231214       16848988             42774287   (2.0x)
-=> FAILED  4096   3.04    33550336    16859163       67268662            187882841   (2.2x)
+=> passed    64   0.00        8128        4764          17656                21058
+=> passed   128   0.01       32640       17796          68232               101228
+=> FAILED   256   0.02      130816       68717         268250               472571   (1.2x)
+=> FAILED   512   0.08      523776      269399        1062574              2143565   (1.5x)
+=> FAILED  1024   0.31     2096128     1065026        4226180              9612070   (1.7x)
+=> FAILED  2048   0.74     8386560     4231214       16848988             42768005   (2.0x)
+=> FAILED  4096   3.03    33550336    16859163       67268662            187791209   (2.2x)
 ==> 2/7 tests passed
 
 lg ratio(slopeTo() + 2*compare()) = lg (67268662 / 16848988) = 2.00
@@ -785,8 +680,9 @@ Test 3a-3g: Find collinear points among the n points on an n/4-by-4 grid
                                                       slopeTo()
              n    time     slopeTo()   compare()  + 2*compare()        compareTo()
 -----------------------------------------------------------------------------------------------
+=> FAILED    64   0.00      160704       19387         199478   (1.1x)        6202
 
-    java.lang.ArrayIndexOutOfBoundsException: Index 63 out of bounds for length 63
+    java.lang.ArrayIndexOutOfBoundsException: Index 256 out of bounds for length 256
 
     FastCollinearPoints.segments(FastCollinearPoints.java:94)
     TimeFastCollinearPoints.timingTest(TimeFastCollinearPoints.java:94)
@@ -799,8 +695,9 @@ Test 4a-4g: Find collinear points among the n points on an n/8-by-8 grid
                                                       slopeTo()
              n    time     slopeTo()   compare()  + 2*compare()        compareTo()
 -----------------------------------------------------------------------------------------------
+=> passed    64   0.00      165312       19488         204288                 5494
 
-    java.lang.ArrayIndexOutOfBoundsException: Index 63 out of bounds for length 63
+    java.lang.ArrayIndexOutOfBoundsException: Index 256 out of bounds for length 256
 
     FastCollinearPoints.segments(FastCollinearPoints.java:94)
     TimeFastCollinearPoints.timingTest(TimeFastCollinearPoints.java:94)
@@ -808,7 +705,7 @@ Test 4a-4g: Find collinear points among the n points on an n/8-by-8 grid
     TimeFastCollinearPoints.timeGrid8(TimeFastCollinearPoints.java:203)
     TimeFastCollinearPoints.main(TimeFastCollinearPoints.java:283)
 
-Total: 3/31 tests passed!
+Total: 4/31 tests passed!
 
 
 ================================================================

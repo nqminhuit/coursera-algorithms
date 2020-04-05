@@ -11,20 +11,25 @@ public class FastCollinearPoints {
     // finds all line segments containing 4 or more points
     public FastCollinearPoints(Point[] newPoints) {
         if (newPoints == null) {
-            throw new IllegalArgumentException("Must not contain null array!");
+            throw new IllegalArgumentException("Array must not be null!");
         }
 
-        this.points = copyArray(newPoints);
-
         int pointLength = newPoints.length;
-        for (int i = 0; i < pointLength; ++i) {
-            for (int j = i + 1; j < pointLength; ++j) {
-                if (0 == newPoints[i].compareTo(newPoints[j])) {
-                    throw new IllegalArgumentException("Must not contain duplicate Points!");
-                }
+        for (int i = 0; i < pointLength - 1; ++i) {
+            if (newPoints[i] == null) {
+                throw new IllegalArgumentException("Must not contain null Points!");
             }
         }
 
+        Point[] tmp = copyArray(newPoints);
+        Arrays.sort(tmp);
+        for (int i = 0; i < pointLength - 1; ++i) {
+            if (0 == tmp[i].compareTo(tmp[i + 1])) {
+                throw new IllegalArgumentException("Must not contain duplicate Points!");
+            }
+        }
+
+        this.points = copyArray(newPoints);
         numSegments = 0;
     }
 
@@ -36,9 +41,6 @@ public class FastCollinearPoints {
     private Point[] copyArray(Point[] arrayToCopy) {
         Point[] copy = new Point[arrayToCopy.length];
         for (int i = 0; i < copy.length; ++i) {
-            if (arrayToCopy[i] == null) {
-                throw new IllegalArgumentException("Must not contain null Points!");
-            }
             copy[i] = arrayToCopy[i];
         }
         return copy;
