@@ -15,7 +15,7 @@ public class FastCollinearPoints {
         }
 
         int pointLength = newPoints.length;
-        for (int i = 0; i < pointLength - 1; ++i) {
+        for (int i = 0; i < pointLength; ++i) {
             if (newPoints[i] == null) {
                 throw new IllegalArgumentException("Must not contain null Points!");
             }

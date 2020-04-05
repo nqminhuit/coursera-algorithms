@@ -116,11 +116,10 @@ public class TestDataHelper {
 
         points[3] = new Point(1, 4);
 
-        points[4] = null;
+        points[4] = new Point(1, 1);
         points[5] = new Point(6, 9);
         points[6] = null;
 
-        StdRandom.shuffle(points);
         return points;
     }
 
