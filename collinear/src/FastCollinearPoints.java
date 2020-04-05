@@ -47,7 +47,6 @@ public class FastCollinearPoints {
     }
 
     private Point[] getPointsInSameLine(Point[] tmpPoints, Point valuePoint, double slope) {
-
         Point[] pointsInLine = new Point[tmpPoints.length];
         int pointIndex = 0;
         for (int i = 0; i < tmpPoints.length; ++i) {
@@ -70,7 +69,7 @@ public class FastCollinearPoints {
     // the line segments
     public LineSegment[] segments() {
         int length = points.length;
-        LineSegment[] segments = new LineSegment[2 * length]; // TODO this is cheating!
+        LineSegment[] segments = new LineSegment[length * length]; // TODO this is cheating!
         for (int i = 0; i < length; ++i) {
             List<Double> checkInSlope = new ArrayList<>();
             Point[] tmpPoints = copyArray(points);
