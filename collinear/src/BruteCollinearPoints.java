@@ -50,7 +50,9 @@ public class BruteCollinearPoints {
                 for (int k = j + 1; k < n; k++) {
                     for (int m = k + 1; m < n; m++) {
                         double slope = points[i].slopeTo(points[j]);
-                        if (slope == points[i].slopeTo(points[k]) && slope == points[i].slopeTo(points[m])) {
+                        if (Double.compare(slope, points[i].slopeTo(points[k])) == 0 &&
+                            Double.compare(slope, points[i].slopeTo(points[m])) == 0) {
+
                             Point[] pointsInLine = new Point[4];
                             pointsInLine[0] = points[i];
                             pointsInLine[1] = points[j];

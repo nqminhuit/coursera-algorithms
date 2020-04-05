@@ -1,12 +1,12 @@
+import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.List;
 
 public class FastCollinearPoints {
 
     private int numSegments;
 
     private final Point[] points;
-
-    private double[] calculatedSlope;
 
     // finds all line segments containing 4 or more points
     public FastCollinearPoints(Point[] newPoints) {
@@ -30,11 +30,7 @@ public class FastCollinearPoints {
         }
 
         numSegments = 0;
-        this.points = new Point[pointLength];
-        for (int i = 0; i < pointLength; ++i) {
-            this.points[i] = newPoints[i];
-        }
-        this.calculatedSlope = new double[pointLength - 1];
+        this.points = copyArray(newPoints);
     }
 
     // the number of line segments
@@ -42,71 +38,62 @@ public class FastCollinearPoints {
         return numSegments;
     }
 
-    private boolean isSlopeCalculated(double slope) {
-        boolean isSlopeCalculated = false;
-        for (int j = 0; j < numSegments; ++j) {
-            if (slope == calculatedSlope[j]) {
-                isSlopeCalculated = true;
-                break;
-            }
+    private Point[] copyArray(Point[] arrayToCopy) {
+        Point[] copy = new Point[arrayToCopy.length];
+        for (int i = 0; i < copy.length; ++i) {
+            copy[i] = arrayToCopy[i];
         }
-        return isSlopeCalculated;
+        return copy;
     }
 
-    private Point[] partition(Point[] points, Point valuePoint, double slope) {
-        int i = 0;
-        int gt = points.length - 1;
-        int lt = 0;
+    private Point[] getPointsInSameLine(Point[] pointToPartition, Point valuePoint, double slope) {
+        Point[] tmpPoints = copyArray(pointToPartition);
 
-        while (i <= gt) {
-            if (valuePoint.slopeTo(points[i]) == Double.NEGATIVE_INFINITY) {
-                ++i;
-            } else if (valuePoint.slopeTo(points[i]) < slope) {
-                exchangePoints(points, i++, lt++);
-            } else if (valuePoint.slopeTo(points[i]) > slope) {
-                exchangePoints(points, i, gt--);
-            } else {
-                ++i;
+        Arrays.sort(tmpPoints, valuePoint.slopeOrder());
+
+        Point[] pointsInLine = new Point[tmpPoints.length];
+        int pointIndex = 0;
+        for (int i = 0; i < tmpPoints.length; ++i) {
+            if (Double.compare(slope, valuePoint.slopeTo(tmpPoints[i])) == 0) {
+                pointsInLine[pointIndex++] = tmpPoints[i];
             }
         }
 
-        Point[] pointsInLine = new Point[gt - lt + 1];
-        for (int j = lt; j <= gt; ++j) {
-            pointsInLine[j - lt] = points[j];
-        }
-
-        return pointsInLine;
+        return truncateArray(pointsInLine, pointIndex);
     }
 
-    private void exchangePoints(Point[] pointArray, int i, int j) {
-        Point temp = pointArray[i];
-        pointArray[i] = pointArray[j];
-        pointArray[j] = temp;
+    private Point[] truncateArray(Point[] arrays, int length) {
+        Point[] truncated = new Point[length];
+        for (int i = 0; i < length; ++i) {
+            truncated[i] = arrays[i];
+        }
+        return truncated;
     }
 
     // the line segments
     public LineSegment[] segments() {
         int length = points.length;
         LineSegment[] segments = new LineSegment[length - 1];
-        for (int i = 0; i < length - 1; ++i) {
+        for (int i = 0; i < length; ++i) {
+            List<Double> checkInSlope = new ArrayList<>();
             for (int j = 0; j < length; ++j) {
-                if (i == j) {
-                    continue;
-                }
-                double slopeI = points[i].slopeTo(points[j]);
-                if (isSlopeCalculated(slopeI)) {
+                if (j == i) {
                     continue;
                 }
 
-                // Arrays.sort(points, points[i].slopeOrder());
-                Point[] partitionedPoints = partition(points, points[i], slopeI);
-                int pLength = partitionedPoints.length;
-                if (pLength > 3) {
-                    Arrays.sort(partitionedPoints);
-                    calculatedSlope[numSegments] = slopeI;
-                    segments[numSegments] =
-                        new LineSegment(partitionedPoints[0], partitionedPoints[pLength - 1]);
-                    numSegments++;
+                double slopeI = points[i].slopeTo(points[j]);
+                if (checkInSlope.contains(slopeI)) {
+                    continue;
+                }
+
+                Point[] pointsSameLine = getPointsInSameLine(points, points[i], slopeI);
+                int pLength = pointsSameLine.length;
+                if (pLength >= 3) {
+                    Arrays.sort(pointsSameLine);
+                    if (points[i].compareTo(pointsSameLine[0]) < 0) {
+                        segments[numSegments++] = new LineSegment(points[i], pointsSameLine[pLength - 1]);
+                    }
+                    checkInSlope.add(slopeI);
                 }
             }
         }

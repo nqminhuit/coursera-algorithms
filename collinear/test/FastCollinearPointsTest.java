@@ -53,7 +53,6 @@ public class FastCollinearPointsTest {
         assertEquals(0, fcp.numberOfSegments());
     }
 
-
     @Test
     public void partition3PointsInSegments() {
         // given:
@@ -65,6 +64,19 @@ public class FastCollinearPointsTest {
 
         // then:
         assertEquals(0, segments.length);
+    }
+
+    @Test
+    public void found4Segments() {
+        // given:
+        Point[] points = TestDataHelper.initWith4Segments();
+        FastCollinearPoints fcp = new FastCollinearPoints(points);
+
+        // when:
+        fcp.segments();
+
+        // then:
+        assertEquals(4, fcp.numberOfSegments());
     }
 
     // test with 1 point belongs to both segments
