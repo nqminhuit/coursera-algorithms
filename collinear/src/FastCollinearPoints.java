@@ -46,10 +46,7 @@ public class FastCollinearPoints {
         return copy;
     }
 
-    private Point[] getPointsInSameLine(Point[] pointToPartition, Point valuePoint, double slope) {
-        Point[] tmpPoints = copyArray(pointToPartition);
-
-        Arrays.sort(tmpPoints, valuePoint.slopeOrder());
+    private Point[] getPointsInSameLine(Point[] tmpPoints, Point valuePoint, double slope) {
 
         Point[] pointsInLine = new Point[tmpPoints.length];
         int pointIndex = 0;
@@ -73,9 +70,12 @@ public class FastCollinearPoints {
     // the line segments
     public LineSegment[] segments() {
         int length = points.length;
-        LineSegment[] segments = new LineSegment[length - 1];
+        LineSegment[] segments = new LineSegment[2 * length];
         for (int i = 0; i < length; ++i) {
             List<Double> checkInSlope = new ArrayList<>();
+            Point[] tmpPoints = copyArray(points);
+            Arrays.sort(tmpPoints, points[i].slopeOrder());
+
             for (int j = 0; j < length; ++j) {
                 if (j == i) {
                     continue;
@@ -86,7 +86,7 @@ public class FastCollinearPoints {
                     continue;
                 }
 
-                Point[] pointsSameLine = getPointsInSameLine(points, points[i], slopeI);
+                Point[] pointsSameLine = getPointsInSameLine(tmpPoints, points[i], slopeI);
                 int pLength = pointsSameLine.length;
                 if (pLength >= 3) {
                     Arrays.sort(pointsSameLine);
