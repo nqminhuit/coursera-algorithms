@@ -19,8 +19,6 @@ public class BruteCollinearPointsTest {
         assertEquals(2, bcp.numberOfSegments());
         List<String> expected = Arrays.asList(
             "(11, 2) -> (7, 10)",
-            "(7, 10) -> (11, 2)",
-            "(14, 7) -> (2, 1)",
             "(2, 1) -> (14, 7)");
         assertTrue(expected.contains(segments[0].toString()));
         assertTrue(expected.contains(segments[1].toString()));

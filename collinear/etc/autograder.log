@@ -20,9 +20,9 @@ ASSESSMENT DETAILS
 
 The following files were submitted:
 ----------------------------------
-3.2K Apr  5 05:57 BruteCollinearPoints.java
-3.5K Apr  5 05:57 FastCollinearPoints.java
-3.9K Apr  5 05:57 Point.java
+4.1K Apr  5 14:14 BruteCollinearPoints.java
+3.5K Apr  5 14:14 FastCollinearPoints.java
+3.9K Apr  5 14:14 Point.java
 
 
 ********************************************************************************
@@ -241,31 +241,29 @@ Test 9: random line segments
 Test 10: check that data type is immutable by testing whether each method
          returns the same value, regardless of any intervening operations
   * input8.txt
-    - failed after 3 operations involving BruteCollinearPoints
+    - failed after 5 operations involving BruteCollinearPoints
     - first and last call to segments() returned different arrays
 
     - sequence of operations was:
           BruteCollinearPoints collinear = new BruteCollinearPoints(points);
           collinear.segments()
+          collinear.numberOfSegments() -> 2
+          collinear.numberOfSegments() -> 2
           collinear.segments()
 
     - failed on trial 1 of 100
 
   * equidistant.txt
-    - failed after 9 operations involving BruteCollinearPoints
-    - first call to student numberOfSegments() = 0
-    - last  call to student numberOfSegments() = 4
+    - failed after 6 operations involving BruteCollinearPoints
+    - first and last call to segments() returned different arrays
 
     - sequence of operations was:
           BruteCollinearPoints collinear = new BruteCollinearPoints(points);
           collinear.numberOfSegments() -> 0
           mutate points[] array that was passed to constructor
-          collinear.numberOfSegments() -> 0
-          mutate points[] array that was passed to constructor
-          collinear.numberOfSegments() -> 0
-          collinear.numberOfSegments() -> 0
           collinear.segments()
-          collinear.numberOfSegments() -> 4
+          mutate points[] array that was passed to constructor
+          collinear.segments()
 
     - failed on trial 1 of 100
 
@@ -497,27 +495,30 @@ Test 12: m*n points on an m-by-n grid
 Test 13: check that data type is immutable by testing whether each method
          returns the same value, regardless of any intervening operations
   * input8.txt
-    - failed after 6 operations involving FastCollinearPoints
-    - first and last call to segments() returned different arrays
-    - sequence of operations was:
-          FastCollinearPoints collinear = new FastCollinearPoints(points);
-          mutate points[] array that was passed to constructor
-          collinear.segments()
-          mutate array returned by last call to segments()
-          mutate array returned by last call to segments()
-          collinear.segments()
-    - failed on trial 1 of 100
-
-  * equidistant.txt
-    - failed after 5 operations involving FastCollinearPoints
+    - failed after 9 operations involving FastCollinearPoints
     - first call to student numberOfSegments() = 0
-    - last  call to student numberOfSegments() = 4
+    - last  call to student numberOfSegments() = 2
     - sequence of operations was:
           FastCollinearPoints collinear = new FastCollinearPoints(points);
           collinear.numberOfSegments() -> 0
           mutate points[] array that was passed to constructor
+          collinear.numberOfSegments() -> 0
+          mutate points[] array that was passed to constructor
+          mutate points[] array that was passed to constructor
+          collinear.segments()
+          mutate points[] array that was passed to constructor
+          collinear.numberOfSegments() -> 2
+    - failed on trial 1 of 100
+
+  * equidistant.txt
+    - failed after 5 operations involving FastCollinearPoints
+    - first and last call to segments() returned different arrays
+    - sequence of operations was:
+          FastCollinearPoints collinear = new FastCollinearPoints(points);
           collinear.segments()
           collinear.numberOfSegments() -> 4
+          collinear.numberOfSegments() -> 4
+          collinear.segments()
     - failed on trial 1 of 100
 
 ==> FAILED
@@ -595,11 +596,11 @@ Test 1a-1e: Find collinear points among n random distinct points
                                                       slopeTo()
              n    time     slopeTo()   compare()  + 2*compare()        compareTo()
 -----------------------------------------------------------------------------------------------
-=> passed    16   0.00        3640           0           3640                  120
-=> passed    32   0.00       71920           0          71920                  496
-=> passed    64   0.02     1270752           0        1270752                 2016
-=> passed   128   0.08    21336000           0       21336000                 8128
-=> passed   256   1.23   349585280           0      349585280                32640
+=> passed    16   0.00        5460           0           5460                  120
+=> passed    32   0.00      107880           0         107880                  496
+=> passed    64   0.02     1906128           0        1906128                 2016
+=> passed   128   0.11    32004000           0       32004000                 8128
+=> passed   256   1.32   524377920           0      524377920                32640
 ==> 5/5 tests passed
 
 Test 2a-2e: Find collinear points among n/4 arbitrary line segments
@@ -608,11 +609,11 @@ Test 2a-2e: Find collinear points among n/4 arbitrary line segments
                                                       slopeTo()
              n    time     slopeTo()   compare()  + 2*compare()        compareTo()
 -----------------------------------------------------------------------------------------------
-=> passed    16   0.00        3683           0           3683                  140
-=> passed    32   0.00       72203           0          72203                  537
-=> passed    64   0.02     1271703           0        1271703                 2102
-=> passed   128   0.10    21339910           0       21339910                 8304
-=> passed   256   1.26   349601420           0      349601420                32978
+=> passed    16   0.00        5460           0           5460                  152
+=> passed    32   0.00      107880           0         107880                  560
+=> passed    64   0.02     1906128           0        1906128                 2144
+=> passed   128   0.10    32004000           0       32004000                 8384
+=> passed   256   1.78   524377920           0      524377920                33152
 ==> 5/5 tests passed
 
 Total: 10/10 tests passed!
@@ -632,12 +633,12 @@ Test 1a-1g: Find collinear points among n random distinct points
                                                       slopeTo()
              n    time     slopeTo()   compare()  + 2*compare()        compareTo()
 -----------------------------------------------------------------------------------------------
-=> FAILED    64   0.01      262080       19601         301282   (1.3x)         370
-=> FAILED   128   0.02     2097024       94288        2285600   (2.2x)         866
-=> FAILED   256   0.17    16776960      442752       17662464   (3.7x)        2003
-=> FAILED   512   0.93   134217216     2035171      138287558   (6.4x)        4502
-=> FAILED  1024   7.13  1073740800     9183287     1092107374  (11.4x)        9962
-=> FAILED  2048  55.94  8589932544    40909714     8671751972  (20.5x)       22028
+=> FAILED    64   0.01      262080       19573         301226   (1.3x)         368
+=> FAILED   128   0.12     2097024       94688        2286400   (2.2x)         868
+=> FAILED   256   0.30    16776960      442921       17662802   (3.7x)        1989
+=> FAILED   512   1.05   134217216     2033555      138284326   (6.4x)        4453
+=> FAILED  1024   7.08  1073740800     9187733     1092116266  (11.4x)        9944
+=> FAILED  2048  55.45  8589932544    40913000     8671758544  (20.5x)       22023
 Aborting: time limit of 10 seconds exceeded
 
 Test 2a-2g: Find collinear points among the n points on an n-by-1 grid
@@ -645,13 +646,13 @@ Test 2a-2g: Find collinear points among the n points on an n-by-1 grid
                                                       slopeTo()
              n    time     slopeTo()   compare()  + 2*compare()        compareTo()
 -----------------------------------------------------------------------------------------------
-=> passed    64   0.00        8128        4764          17656                19088
-=> passed   128   0.00       32640       17796          68232                94331
-=> FAILED   256   0.01      130816       68717         268250               438681   (1.1x)
-=> FAILED   512   0.09      523776      269399        1062574              2005378   (1.4x)
-=> FAILED  1024   0.32     2096128     1065026        4226180              9128717   (1.6x)
-=> FAILED  2048   0.70     8386560     4231214       16848988             40663593   (1.9x)
-=> FAILED  4096   3.34    33550336    16859163       67268662            179545447   (2.1x)
+=> passed    64   0.00        8128        4764          17656                19923
+=> passed   128   0.00       32640       17796          68232                94469
+=> FAILED   256   0.01      130816       68717         268250               439770   (1.1x)
+=> FAILED   512   0.09      523776      269399        1062574              2026378   (1.4x)
+=> FAILED  1024   0.30     2096128     1065026        4226180              9110826   (1.6x)
+=> FAILED  2048   0.69     8386560     4231214       16848988             40704742   (1.9x)
+=> FAILED  4096   3.06    33550336    16859163       67268662            179640221   (2.1x)
 ==> 2/7 tests passed
 
 lg ratio(slopeTo() + 2*compare()) = lg (67268662 / 16848988) = 2.00
@@ -664,12 +665,12 @@ Test 3a-3g: Find collinear points among the n points on an n/4-by-4 grid
                                                       slopeTo()
              n    time     slopeTo()   compare()  + 2*compare()        compareTo()
 -----------------------------------------------------------------------------------------------
-=> FAILED    64   0.00      160704       19664         200032   (1.1x)        4516
-=> FAILED   128   0.01     1255296       93279        1441854   (2.4x)       21392
-=> FAILED   256   0.07     9916160      429170       10774500   (5.0x)      101622
-=> FAILED   512   0.51    78814720     1928839       82672398  (10.2x)      465360
-=> FAILED  1024   3.89   628440064     8559618      645559300  (20.6x)     2129974
-=> FAILED  2048  30.35  5019170816    37530466     5094231748  (41.4x)     9537254
+=> FAILED    64   0.00      160704       19526         199756   (1.1x)        4609
+=> FAILED   128   0.01     1255296       93443        1442182   (2.4x)       21270
+=> FAILED   256   0.07     9916160      427952       10772064   (5.0x)      100308
+=> FAILED   512   0.51    78814720     1929900       82674520  (10.2x)      467044
+=> FAILED  1024   3.94   628440064     8563176      645566416  (20.6x)     2121633
+=> FAILED  2048  30.64  5019170816    37574763     5094320342  (41.4x)     9517663
 Aborting: time limit of 10 seconds exceeded
 
 Test 4a-4g: Find collinear points among the n points on an n/8-by-8 grid
@@ -677,12 +678,12 @@ Test 4a-4g: Find collinear points among the n points on an n/8-by-8 grid
                                                       slopeTo()
              n    time     slopeTo()   compare()  + 2*compare()        compareTo()
 -----------------------------------------------------------------------------------------------
-=> passed    64   0.00      165312       19509         204330                 3897
-=> FAILED   128   0.01     1301888       94540        1490968   (1.6x)       16166
-=> FAILED   256   0.08    10306304      442567       11191438   (3.8x)       70922
-=> FAILED   512   0.55    81978880     2011800       86002480   (7.7x)      314315
-=> FAILED  1024   4.28   653818880     8991552      671801984  (15.6x)     1380775
-=> FAILED  2048  33.36  5222365184    39748626     5301862436  (31.4x)     6036376
+=> passed    64   0.00      165312       19543         204398                 3783
+=> FAILED   128   0.01     1301888       94261        1490410   (1.6x)       16384
+=> FAILED   256   0.07    10306304      441099       11188502   (3.8x)       71108
+=> FAILED   512   0.56    81978880     2011370       86001620   (7.7x)      313799
+=> FAILED  1024   4.28   653818880     8994891      671808662  (15.6x)     1381512
+=> FAILED  2048  33.41  5222365184    39753306     5301871796  (31.4x)     6051913
 Aborting: time limit of 10 seconds exceeded
 
 Total: 4/31 tests passed!
