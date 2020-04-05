@@ -108,4 +108,36 @@ public class TestDataHelper {
         return points;
     }
 
+    public static Point[] initPointsWithNull() {
+        Point[] points = new Point[7];
+        points[0] = new Point(2, 7);
+        points[1] = new Point(4, 9);
+        points[2] = new Point(1, 6);
+
+        points[3] = new Point(1, 4);
+
+        points[4] = null;
+        points[5] = new Point(6, 9);
+        points[6] = null;
+
+        StdRandom.shuffle(points);
+        return points;
+    }
+
+    public static Point[] initPointsWithDuplicate() {
+        Point[] points = new Point[7];
+        points[0] = new Point(2, 7);
+        points[1] = new Point(4, 9);
+        points[2] = new Point(1, 6);
+
+        points[3] = new Point(1, 4);
+        points[4] = new Point(1, 4);
+
+        points[5] = new Point(6, 9);
+        points[6] = new Point(6, 9);
+
+        StdRandom.shuffle(points);
+        return points;
+    }
+
 }

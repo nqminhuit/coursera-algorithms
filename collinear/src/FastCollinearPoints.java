@@ -14,13 +14,9 @@ public class FastCollinearPoints {
             throw new IllegalArgumentException("Must not contain null array!");
         }
 
-        int pointLength = newPoints.length;
-        for (int i = 0; i < pointLength; ++i) {
-            if (newPoints[i] == null) {
-                throw new IllegalArgumentException("Must not contain null Points!");
-            }
-        }
+        this.points = copyArray(newPoints);
 
+        int pointLength = newPoints.length;
         for (int i = 0; i < pointLength; ++i) {
             for (int j = i + 1; j < pointLength; ++j) {
                 if (0 == newPoints[i].compareTo(newPoints[j])) {
@@ -30,7 +26,6 @@ public class FastCollinearPoints {
         }
 
         numSegments = 0;
-        this.points = copyArray(newPoints);
     }
 
     // the number of line segments
@@ -41,6 +36,9 @@ public class FastCollinearPoints {
     private Point[] copyArray(Point[] arrayToCopy) {
         Point[] copy = new Point[arrayToCopy.length];
         for (int i = 0; i < copy.length; ++i) {
+            if (arrayToCopy[i] == null) {
+                throw new IllegalArgumentException("Must not contain null Points!");
+            }
             copy[i] = arrayToCopy[i];
         }
         return copy;
@@ -70,7 +68,7 @@ public class FastCollinearPoints {
     // the line segments
     public LineSegment[] segments() {
         int length = points.length;
-        LineSegment[] segments = new LineSegment[2 * length];
+        LineSegment[] segments = new LineSegment[2 * length]; // TODO this is cheating!
         for (int i = 0; i < length; ++i) {
             List<Double> checkInSlope = new ArrayList<>();
             Point[] tmpPoints = copyArray(points);

@@ -79,6 +79,25 @@ public class FastCollinearPointsTest {
         assertEquals(4, fcp.numberOfSegments());
     }
 
+    @Test(expected = IllegalArgumentException.class)
+    public void nullPointsInArray() {
+        // given:
+        Point[] points = TestDataHelper.initPointsWithNull();
+
+        // when:
+        new FastCollinearPoints(points);
+    }
+
+    @Test(expected = IllegalArgumentException.class)
+    public void duplicateInArray() {
+        // given:
+        Point[] points = TestDataHelper.initPointsWithDuplicate();
+
+        // when:
+        new FastCollinearPoints(points);
+
+    }
+
     // test with 1 point belongs to both segments
 
 }
