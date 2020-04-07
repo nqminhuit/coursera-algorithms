@@ -43,4 +43,7 @@ $ javac -cp libs/algs4.jar collinear/src/Point.java -d collinear/build/classes/j
 $ javac -cp libs/algs4.jar collinear/src/*.java -d collinear/build/classes/java/main/; javac -cp libs/algs4.jar:libs/junit-4.12.jar:libs/hamcrest-core-1.3.jar:collinear/build/classes/java/main/ collinear/test/*.java -d collinear/build/classes/java/test; java -cp libs/algs4.jar:libs/junit-4.12.jar:libs/hamcrest-core-1.3.jar:collinear/build/classes/java/test:collinear/build/classes/java/main/ org.junit.runner.JUnitCore BruteCollinearPointsTest
 
 $ javac -cp libs/algs4.jar collinear/src/*.java -d collinear/build/classes/java/main/; javac -cp libs/algs4.jar:libs/junit-4.12.jar:libs/hamcrest-core-1.3.jar:collinear/build/classes/java/main/ collinear/test/*.java -d collinear/build/classes/java/test; java -cp libs/algs4.jar:libs/junit-4.12.jar:libs/hamcrest-core-1.3.jar:collinear/build/classes/java/test:collinear/build/classes/java/main/ org.junit.runner.JUnitCore FastCollinearPointsTest
+
+# 8-puzzle:
+$ javac 8puzzle/src/*.java -d 8puzzle/build/classes/java/main/; javac -cp libs/junit-4.12.jar:libs/hamcrest-core-1.3.jar:8puzzle/build/classes/java/main/ 8puzzle/test/*.java -d 8puzzle/build/classes/java/test/; java -cp libs/junit-4.12.jar:libs/hamcrest-core-1.3.jar:8puzzle/build/classes/java/test/:8puzzle/build/classes/java/main/ org.junit.runner.JUnitCore BoardTest
 ```

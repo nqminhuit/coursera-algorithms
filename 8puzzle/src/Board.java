@@ -1,14 +1,33 @@
 public class Board {
 
+    private int n;
+
+    private int[][] tiles;
+
     // create a board from an n-by-n array of tiles,
     // where tiles[row][col] = tile at (row, col)
-    public Board(int[][] tiles) {
-
+    public Board(int[][] tilesInput) {
+        n = tilesInput.length;
+        tiles = new int[n][n];
+        for (int i = 0; i < n; ++i) {
+            for (int j = 0; j < n; ++j) {
+                tiles[i][j] = tilesInput[i][j];
+            }
+        }
     }
 
     // string representation of this board
     public String toString() {
-        return "";
+        StringBuilder sb = new StringBuilder();
+        sb.append(n);
+        sb.append("\n");
+        for (int i = 0; i < n; ++i) {
+            for (int j = 0; j < n; ++j) {
+                sb.append(tiles[i][j] + " ");
+            }
+            sb.append("\n");
+        }
+        return sb.toString();
     }
 
     // board dimension n
