@@ -92,4 +92,30 @@ public class BoardTest {
         // then:
         assertEquals(0, hamming);
     }
+
+    @Test
+    public void manhattan() {
+        // given:
+        Board board = new Board(TestSetHelper.initTilesWithManhattan6());
+
+        // when:
+        int manhattan = board.manhattan();
+
+        // then:
+        assertEquals(6, manhattan);
+    }
+
+    @Test
+    public void calculateManhattanOfGoalBoard() {
+        // given:
+        Board board = new Board(TestSetHelper.initGoalTiles(4));
+        assertTrue(board.isGoal());
+
+        // when:
+        int manhattan = board.manhattan();
+
+        // then:
+        assertEquals(0, manhattan);
+    }
+
 }

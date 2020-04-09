@@ -54,14 +54,56 @@ public class Board {
         return ham;
     }
 
+    private int decreaseSteps(int row, int col, int tile) {
+        int distance = 0;
+        while (n * row + col + 1 > tile) {
+            if (n * row > tile) {
+                row--; // move up
+            } else {
+                col--; // move left
+            }
+            distance++;
+        }
+        return distance;
+    }
+
+    private int increaseSteps(int row, int col, int tile) {
+        int distance = 0;
+        while (n * row + col + 1 < tile) { // increase
+            if (n * (row + 1) < tile) {
+                row++; // move down
+            } else {
+                col++; // move right
+            }
+            distance++;
+        }
+        return distance;
+    }
+
     // sum of Manhattan distances between tiles and goal
     public int manhattan() {
-        return 0;
+        int distance = 0;
+
+        for (int i = 0; i < n; ++i) {
+            for (int j = 0; j < n; ++j) {
+                if (n * i + j + 1 == tiles[i][j] || tiles[i][j] == 0) {
+                    continue;
+                }
+                int row = i;
+                int col = j;
+                if (n * row + col + 1 > tiles[i][j]) {
+                    distance += decreaseSteps(row, col, tiles[i][j]);
+                } else {
+                    distance += increaseSteps(row, col, tiles[i][j]);
+                }
+            }
+        }
+        return distance;
     }
 
     // is this board the goal board?
     public boolean isGoal() {
-        return false;
+        return manhattan() == 0;
     }
 
     // does this board equal y?
