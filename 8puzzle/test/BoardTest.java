@@ -1,6 +1,7 @@
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
+import java.util.Iterator;
 import org.junit.Test;
 
 public class BoardTest {
@@ -116,6 +117,34 @@ public class BoardTest {
 
         // then:
         assertEquals(0, manhattan);
+    }
+
+    @Test
+    public void checkNeighbors() {
+        // given:
+        Board board = new Board(TestSetHelper.initTilesWithManhattan6());
+
+        // when:
+        Iterator<Board> iterator = board.neighbors().iterator();
+
+        // then:
+        assertEquals(new Board(TestSetHelper.initTilesNeighborWithManhattan6_1()), iterator.next());
+        assertEquals(new Board(TestSetHelper.initTilesNeighborWithManhattan6_2()), iterator.next());
+    }
+
+    @Test
+    public void check4NeighborsOfBoard() {
+        // given:
+        Board board = new Board(TestSetHelper.initTilesHaving4Neighbors());
+
+        // when:
+        Iterator<Board> iterator = board.neighbors().iterator();
+
+        // then:
+        assertEquals(new Board(TestSetHelper.initTilesHaving4Neighbors_Neighbor1()), iterator.next());
+        assertEquals(new Board(TestSetHelper.initTilesHaving4Neighbors_Neighbor2()), iterator.next());
+        assertEquals(new Board(TestSetHelper.initTilesHaving4Neighbors_Neighbor3()), iterator.next());
+        assertEquals(new Board(TestSetHelper.initTilesHaving4Neighbors_Neighbor4()), iterator.next());
     }
 
 }

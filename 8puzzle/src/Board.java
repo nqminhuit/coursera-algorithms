@@ -1,3 +1,6 @@
+import java.util.ArrayList;
+import java.util.List;
+
 public class Board {
 
     private int n;
@@ -124,9 +127,67 @@ public class Board {
         return true;
     }
 
+    private int[][] copyTiles() {
+        int[][] copy = new int[n][n];
+        for (int i = 0; i < n; ++i) {
+            for (int j = 0; j < n; ++j) {
+                copy[i][j] = tiles[i][j];
+            }
+        }
+        return copy;
+    }
+
+    private void swap(int[][] toSwap, int row, int col, int swapRow, int swapCol) {
+        int temp = toSwap[swapRow][swapCol];
+        toSwap[swapRow][swapCol] = toSwap[row][col];
+        toSwap[row][col] = temp;
+    }
+
     // all neighboring boards
     public Iterable<Board> neighbors() {
-        return null;
+        List<Board> neighbors = new ArrayList<>();
+
+        int row = 0;
+        int col = 0;
+        outer_loop: for (int i = 0; i < n; ++i) {
+            for (int j = 0; j < n; ++j) {
+                if (tiles[i][j] == 0) {
+                    row = i;
+                    col = j;
+                    break outer_loop;
+                }
+            }
+        }
+
+        if (row - 1 >= 0) {
+            int[][] newTiles = copyTiles();
+            swap(newTiles, row, col, row - 1, col);
+            Board neighbor = new Board(newTiles);
+            neighbors.add(neighbor);
+        }
+
+        if (row + 1 < n) {
+            int[][] newTiles = copyTiles();
+            swap(newTiles, row, col, row + 1, col);
+            Board neighbor = new Board(newTiles);
+            neighbors.add(neighbor);
+        }
+
+        if (col - 1 >= 0) {
+            int[][] newTiles = copyTiles();
+            swap(newTiles, row, col, row, col - 1);
+            Board neighbor = new Board(newTiles);
+            neighbors.add(neighbor);
+        }
+
+        if (col + 1 < n) {
+            int[][] newTiles = copyTiles();
+            swap(newTiles, row, col, row, col + 1);
+            Board neighbor = new Board(newTiles);
+            neighbors.add(neighbor);
+        }
+
+        return neighbors;
     }
 
     // a board that is obtained by exchanging any pair of tiles
