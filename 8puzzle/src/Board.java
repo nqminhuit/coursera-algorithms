@@ -1,5 +1,6 @@
 import java.util.ArrayList;
 import java.util.List;
+import edu.princeton.cs.algs4.StdRandom;
 
 public class Board {
 
@@ -192,7 +193,25 @@ public class Board {
 
     // a board that is obtained by exchanging any pair of tiles
     public Board twin() {
-        return null;
+        int[][] swapTiles = copyTiles();
+
+        int row = StdRandom.uniform(n);
+        int col = StdRandom.uniform(n);
+        while (swapTiles[row][col] == 0) {
+            row = StdRandom.uniform(n);
+            col = StdRandom.uniform(n);
+        }
+
+        int row2 = StdRandom.uniform(n);
+        int col2 = StdRandom.uniform(n);
+        while (swapTiles[row2][col2] == 0 || swapTiles[row2][col2] == swapTiles[row][col]) {
+            row2 = StdRandom.uniform(n);
+            col2 = StdRandom.uniform(n);
+        }
+
+        swap(swapTiles, row, col, row2, col2);
+
+        return new Board(swapTiles);
     }
 
 }
