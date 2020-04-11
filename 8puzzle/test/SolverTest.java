@@ -1,5 +1,6 @@
 import static org.junit.Assert.assertEquals;
-import java.util.Iterator;
+import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertTrue;
 import org.junit.Test;
 
 public class SolverTest {
@@ -19,21 +20,26 @@ public class SolverTest {
     @Test
     public void solveSolution() {
         // given:
-        Solver solver = new Solver(new Board(TestSetHelper.initTilesHaving4Neighbors()));
+        Board inputBoard = new Board(TestSetHelper.initTilesHaving4Neighbors());
 
         // when:
-        Iterator<Board> iterator = solver.solution().iterator();
+        Solver solver = new Solver(inputBoard);
 
         // then:
-        while (iterator.hasNext()) {
-            System.out.println(iterator.next());
-        }
-        System.out.println();
-        // assertEquals(null, iterator.next());
-        // assertEquals(null, iterator.next());
-        // assertEquals(null, iterator.next());
-        // assertEquals(null, iterator.next());
+        assertEquals(24, solver.moves());
+        assertTrue(solver.isSolvable());
+    }
 
+    @Test
+    public void unsolvableBoard() {
+        // given:
+        Board unsolvableBoard = new Board(TestSetHelper.initTilesUnsolvable());
+
+        // when:
+        Solver solver = new Solver(unsolvableBoard);
+
+        // then:
+        assertFalse(solver.isSolvable());
     }
 
 }

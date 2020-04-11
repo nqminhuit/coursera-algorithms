@@ -11,11 +11,19 @@ public class Solver {
 
     private int totalMoves;
 
+    private boolean solvable;
+
     // find a solution to the initial board (using the A* algorithm)
     public Solver(Board inputBoard) {
         if (inputBoard == null) {
             throw new IllegalArgumentException();
         }
+
+        if (inputBoard.hamming() % 2 != 0) {
+            solvable = false;
+            return;
+        }
+
         node = new SearchNode(inputBoard);
 
         MinPQ<SearchNode> minPq = new MinPQ<>();
@@ -24,6 +32,7 @@ public class Solver {
         while (true) {
             node = minPq.delMin();
             if (node.board.isGoal()) {
+                solvable = true;
                 break;
             }
 
@@ -36,12 +45,17 @@ public class Solver {
             }
 
             if (minPq.isEmpty()) {
+                solvable = false;
                 break;
             }
         }
 
         totalMoves = node.moves;
 
+        generateSolutionSteps();
+    }
+
+    private void generateSolutionSteps() {
         Stack<Board> stepsToGoalBoard = new Stack<>();
         while (node != null) {
             stepsToGoalBoard.push(node.board);
@@ -55,7 +69,7 @@ public class Solver {
 
     // is the initial board solvable? (see below)
     public boolean isSolvable() {
-        return false;
+        return this.solvable;
     }
 
     // min number of moves to solve initial board
