@@ -107,6 +107,57 @@ public class BoardTest {
     }
 
     @Test
+    public void manhattan_2() {
+        // given:
+        int[][] tiles = {
+                { 1, 2, 3 },
+                { 0, 7, 6 },
+                { 5, 4, 8 }
+        };
+        Board board = new Board(tiles);
+
+        // when:
+        int manhattan = board.manhattan();
+
+        // then:
+        assertEquals(7, manhattan);
+    }
+
+    @Test
+    public void manhattan_3() {
+        // given:
+        int[][] tiles = {
+                { 0, 1, 3 },
+                { 4, 2, 5 },
+                { 7, 8, 6 }
+        };
+        Board board = new Board(tiles);
+
+        // when:
+        int manhattan = board.manhattan();
+
+        // then:
+        assertEquals(4, manhattan);
+    }
+
+    @Test
+    public void manhattan_4() {
+        // given:
+        int[][] tiles = {
+                { 5, 8, 7 },
+                { 1, 4, 6 },
+                { 3, 0, 2 }
+        };
+        Board board = new Board(tiles);
+
+        // when:
+        int manhattan = board.manhattan();
+
+        // then:
+        assertEquals(17, manhattan);
+    }
+
+    @Test
     public void calculateManhattanOfGoalBoard() {
         // given:
         Board board = new Board(TestSetHelper.initGoalTiles(4));

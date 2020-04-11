@@ -21,6 +21,7 @@ public class Solver {
 
         if (inputBoard.hamming() % 2 != 0) {
             solvable = false;
+            totalMoves = 0;
             return;
         }
 
@@ -84,9 +85,9 @@ public class Solver {
 
     private class SearchNode implements Comparable<SearchNode> {
 
-        private Board board;
-        private int moves;
-        private SearchNode prev;
+        private final Board board;
+        private final int moves;
+        private final SearchNode prev;
 
         public SearchNode(Board board) {
             this.board = board;

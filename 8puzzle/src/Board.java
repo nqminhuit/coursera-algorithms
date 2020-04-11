@@ -4,9 +4,9 @@ import edu.princeton.cs.algs4.StdRandom;
 
 public class Board {
 
-    private int n;
+    private final int n;
 
-    private int[][] tiles;
+    private final int[][] tiles;
 
     // create a board from an n-by-n array of tiles,
     // where tiles[row][col] = tile at (row, col)
@@ -58,32 +58,6 @@ public class Board {
         return ham;
     }
 
-    private int decreaseSteps(int row, int col, int tile) {
-        int distance = 0;
-        while (n * row + col + 1 > tile) {
-            if (n * row > tile) {
-                row--; // move up
-            } else {
-                col--; // move left
-            }
-            distance++;
-        }
-        return distance;
-    }
-
-    private int increaseSteps(int row, int col, int tile) {
-        int distance = 0;
-        while (n * row + col + 1 < tile) { // increase
-            if (n * (row + 1) < tile) {
-                row++; // move down
-            } else {
-                col++; // move right
-            }
-            distance++;
-        }
-        return distance;
-    }
-
     // sum of Manhattan distances between tiles and goal
     public int manhattan() {
         int distance = 0;
@@ -95,10 +69,22 @@ public class Board {
                 }
                 int row = i;
                 int col = j;
-                if (n * row + col + 1 > tiles[i][j]) {
-                    distance += decreaseSteps(row, col, tiles[i][j]);
-                } else {
-                    distance += increaseSteps(row, col, tiles[i][j]);
+                while (n * row + col + 1 != tiles[i][j]) {
+                    if (n * row + col + 1 > tiles[i][j]) {
+                        if (n * row >= tiles[i][j]) {
+                            row--; // move up
+                        } else {
+                            col--; // move left
+                        }
+                        distance++;
+                    } else {
+                        if (n * (row + 1) < tiles[i][j]) {
+                            row++; // move down
+                        } else {
+                            col++; // move right
+                        }
+                        distance++;
+                    }
                 }
             }
         }
@@ -112,6 +98,9 @@ public class Board {
 
     // does this board equal y?
     public boolean equals(Object y) {
+        if (y == null) {
+            return false;
+        }
         Board that = (Board) y;
         if (this.n != that.n) {
             return false;
