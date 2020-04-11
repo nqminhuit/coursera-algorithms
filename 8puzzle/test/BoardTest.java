@@ -56,12 +56,24 @@ public class BoardTest {
         assertFalse(isEqual);
     }
 
-
     @Test
     public void equalityTilesPositions_NOK() {
         // given:
         Board board1 = new Board(TestSetHelper.initTiles(3));
         Board board2 = new Board(TestSetHelper.initTilesWithHamming2());
+
+        // when:
+        boolean isEqual = board1.equals(board2);
+
+        // then:
+        assertFalse(isEqual);
+    }
+
+    @Test
+    public void notEqualWhenCompareToString() {
+        // given:
+        Board board1 = new Board(TestSetHelper.initTiles(3));
+        String board2 = "1, 2, 3";
 
         // when:
         boolean isEqual = board1.equals(board2);

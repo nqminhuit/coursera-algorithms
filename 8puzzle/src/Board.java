@@ -101,6 +101,9 @@ public class Board {
         if (y == null) {
             return false;
         }
+        if (y.getClass() != Board.class) {
+            return false;
+        }
         Board that = (Board) y;
         if (this.n != that.n) {
             return false;
