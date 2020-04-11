@@ -1,13 +1,56 @@
 import java.util.ArrayList;
 import java.util.List;
+import edu.princeton.cs.algs4.MinPQ;
+import edu.princeton.cs.algs4.Stack;
 
 public class Solver {
 
-    private int moves;
+    private SearchNode node;
+
+    private List<Board> solutions;
+
+    private int totalMoves;
 
     // find a solution to the initial board (using the A* algorithm)
-    public Solver(Board initial) {
-        moves = 0;
+    public Solver(Board inputBoard) {
+        if (inputBoard == null) {
+            throw new IllegalArgumentException();
+        }
+        node = new SearchNode(inputBoard);
+
+        MinPQ<SearchNode> minPq = new MinPQ<>();
+        minPq.insert(node);
+
+        while (true) {
+            node = minPq.delMin();
+            if (node.board.isGoal()) {
+                break;
+            }
+
+            for (Board neighborBoard : node.board.neighbors()) {
+                SearchNode neighborNode = new SearchNode(neighborBoard, node.moves + 1, node);
+                if (node.prev != null && neighborNode.board.equals(node.prev.board)) {
+                    continue;
+                }
+                minPq.insert(neighborNode);
+            }
+
+            if (minPq.isEmpty()) {
+                break;
+            }
+        }
+
+        totalMoves = node.moves;
+
+        Stack<Board> stepsToGoalBoard = new Stack<>();
+        while (node != null) {
+            stepsToGoalBoard.push(node.board);
+            node = node.prev;
+        }
+        solutions = new ArrayList<>();
+        while (!stepsToGoalBoard.isEmpty()) {
+            solutions.add(stepsToGoalBoard.pop());
+        }
     }
 
     // is the initial board solvable? (see below)
@@ -17,13 +60,38 @@ public class Solver {
 
     // min number of moves to solve initial board
     public int moves() {
-        return moves;
+        return totalMoves;
     }
 
     // sequence of boards in a shortest solution
     public Iterable<Board> solution() {
-        List<Board> solutions = new ArrayList<>();
         return solutions;
+    }
+
+    private class SearchNode implements Comparable<SearchNode> {
+
+        private Board board;
+        private int moves;
+        private SearchNode prev;
+
+        public SearchNode(Board board) {
+            this.board = board;
+            moves = 0;
+            prev = null;
+        }
+
+        public SearchNode(Board board, int moves, SearchNode prev) {
+            this.board = board;
+            this.moves = moves;
+            this.prev = prev;
+        }
+
+        @Override
+        public int compareTo(SearchNode that) {
+            int thisPriority = this.board.manhattan() + this.moves;
+            int thatPriority = that.board.manhattan() + that.moves;
+            return thisPriority - thatPriority;
+        }
     }
 
 }

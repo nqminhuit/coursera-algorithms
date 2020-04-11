@@ -211,6 +211,24 @@ public class TestSetHelper {
         return tiles;
     }
 
+    public static int[][] initTilesHaving2MovesToComplete() {
+        int[][] tiles = new int[3][3];
+
+        tiles[0][0] = 1;
+        tiles[0][1] = 2;
+        tiles[0][2] = 3;
+
+        tiles[1][0] = 4;
+        tiles[1][1] = 0;
+        tiles[1][2] = 6;
+
+        tiles[2][0] = 7;
+        tiles[2][1] = 5;
+        tiles[2][2] = 8;
+
+        return tiles;
+    }
+
     public static int[][] initGoalTiles(int n) {
         int[][] tiles = new int[n][n];
         for (int i = 0; i < n; ++i) {
