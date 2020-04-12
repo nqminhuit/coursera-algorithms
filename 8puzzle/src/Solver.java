@@ -30,6 +30,7 @@ public class Solver {
         MinPQ<SearchNode> minPq = new MinPQ<>();
         minPq.insert(node);
 
+        int manhattan;
         while (true) {
             node = minPq.delMin();
             if (node.board.isGoal()) {
@@ -37,8 +38,9 @@ public class Solver {
                 break;
             }
 
+            manhattan = node.board.manhattan();
             for (Board neighborBoard : node.board.neighbors()) {
-                SearchNode neighborNode = new SearchNode(neighborBoard, node.moves + 1, node);
+                SearchNode neighborNode = new SearchNode(neighborBoard, node.moves + 1, node, manhattan);
                 if (node.prev != null && neighborNode.board.equals(node.prev.board)) {
                     continue;
                 }
@@ -88,22 +90,25 @@ public class Solver {
         private final Board board;
         private final int moves;
         private final SearchNode prev;
+        private final int manhattanDistance;
 
         public SearchNode(Board board) {
             this.board = board;
             moves = 0;
             prev = null;
+            manhattanDistance = 0;
         }
 
-        public SearchNode(Board board, int moves, SearchNode prev) {
+        public SearchNode(Board board, int moves, SearchNode prev, int manhattan) {
             this.board = board;
             this.moves = moves;
             this.prev = prev;
+            this.manhattanDistance = manhattan;
         }
 
         @Override
         public int compareTo(SearchNode that) {
-            int thisPriority = this.board.manhattan() + this.moves;
+            int thisPriority = this.manhattanDistance + this.moves;
             int thatPriority = that.board.manhattan() + that.moves;
             return thisPriority - thatPriority;
         }
