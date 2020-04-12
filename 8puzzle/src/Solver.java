@@ -5,8 +5,6 @@ import edu.princeton.cs.algs4.Stack;
 
 public class Solver {
 
-    private SearchNode node;
-
     private List<Board> solutions;
 
     private final int totalMoves;
@@ -19,7 +17,7 @@ public class Solver {
             throw new IllegalArgumentException();
         }
 
-        node = new SearchNode(inputBoard, 0, null, inputBoard.manhattan());
+        SearchNode node = new SearchNode(inputBoard, 0, null, inputBoard.manhattan());
 
         MinPQ<SearchNode> minPq = new MinPQ<>();
         minPq.insert(node);
@@ -47,10 +45,10 @@ public class Solver {
 
         totalMoves = node.moves;
 
-        generateSolutionSteps();
+        generateSolutionSteps(node);
     }
 
-    private void generateSolutionSteps() {
+    private void generateSolutionSteps(SearchNode node) {
         Stack<Board> stepsToGoalBoard = new Stack<>();
         while (node != null) {
             stepsToGoalBoard.push(node.board);
@@ -69,12 +67,12 @@ public class Solver {
 
     // min number of moves to solve initial board
     public int moves() {
-        return totalMoves;
+        return this.totalMoves;
     }
 
     // sequence of boards in a shortest solution
     public Iterable<Board> solution() {
-        return solutions;
+        return this.solutions;
     }
 
     private class SearchNode implements Comparable<SearchNode> {

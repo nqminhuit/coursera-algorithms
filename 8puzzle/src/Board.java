@@ -75,15 +75,14 @@ public class Board {
                         } else {
                             col--; // move left
                         }
-                        distance++;
                     } else {
                         if (n * (row + 1) < tiles[i][j]) {
                             row++; // move down
                         } else {
                             col++; // move right
                         }
-                        distance++;
                     }
+                    distance++;
                 }
             }
         }
@@ -203,8 +202,6 @@ public class Board {
                 if (flatTiles[i + 1] != 0) {
                     swap(flatTiles, i, i + 1);
                     break;
-                } else {
-                    continue;
                 }
             }
         }

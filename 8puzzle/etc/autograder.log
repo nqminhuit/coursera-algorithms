@@ -20,8 +20,8 @@ ASSESSMENT DETAILS
 
 The following files were submitted:
 ----------------------------------
-5.9K Apr 12 05:59 Board.java
-2.9K Apr 12 05:59 Solver.java
+5.9K Apr 12 07:21 Board.java
+2.9K Apr 12 07:21 Solver.java
 
 
 ********************************************************************************
@@ -748,12 +748,12 @@ Test 1: Measure memory of Solver.
 
                filename   moves   memory
 ---------------------------------------------
-=> passed  puzzle10.txt      10     4448
-=> passed  puzzle15.txt      15     5272
-=> passed  puzzle20.txt      20     2296
-=> passed  puzzle25.txt      25     2864
-=> passed  puzzle30.txt      30     3344
-=> passed  puzzle35.txt      35     4816
+=> passed  puzzle10.txt      10     4440
+=> passed  puzzle15.txt      15     5264
+=> passed  puzzle20.txt      20     2288
+=> passed  puzzle25.txt      25     2856
+=> passed  puzzle30.txt      30     3336
+=> passed  puzzle35.txt      35     4808
 ==> 6/6 tests passed
 
 
@@ -763,12 +763,12 @@ Test 2: Measure memory of MinPQ.
                               deep              max           ending
                filename     memory             size             size
 --------------------------------------------------------------------
-=> passed  puzzle10.txt      12160               17               16
-=> passed  puzzle15.txt      15312               26               25
-=> passed  puzzle20.txt     107496              290              289
-=> passed  puzzle25.txt     773600             2091             2090
-=> passed  puzzle30.txt    3245312             8596             8595
-=> passed  puzzle35.txt   46398016           135154           135153
+=> passed  puzzle10.txt      12152               17               16
+=> passed  puzzle15.txt      15304               26               25
+=> passed  puzzle20.txt     107488              290              289
+=> passed  puzzle25.txt     773592             2091             2090
+=> passed  puzzle30.txt    3245304             8596             8595
+=> passed  puzzle35.txt   46397976           135154           135153
 ==> 6/6 tests passed
 
 
@@ -796,28 +796,28 @@ Test 1: Measure CPU time and check correctness
 => passed  puzzle20.txt      20    3     0.01
 => passed  puzzle22.txt      22    3     0.00
 => passed  puzzle21.txt      21    3     0.00
-=> passed  puzzle23.txt      23    3     0.07
-=> passed  puzzle24.txt      24    3     0.01
-=> passed  puzzle25.txt      25    3     0.00
+=> passed  puzzle23.txt      23    3     0.00
+=> passed  puzzle24.txt      24    3     0.00
+=> passed  puzzle25.txt      25    3     0.01
 => passed  puzzle27.txt      27    3     0.01
 => passed  puzzle29.txt      29    3     0.01
 => passed  puzzle26.txt      26    3     0.00
-=> passed  puzzle28.txt      28    3     0.01
+=> passed  puzzle28.txt      28    3     0.02
 => passed  puzzle30.txt      30    3     0.02
 => passed  puzzle31.txt      31    3     0.02
-=> passed  puzzle39.txt      39    4     0.09
-=> passed  puzzle41.txt      41    5     0.05
-=> passed  puzzle34.txt      34    4     0.05
-=> passed  puzzle37.txt      37    4     0.12
-=> passed  puzzle44.txt      44    5     0.20
-=> passed  puzzle32.txt      32    4     0.33
-=> passed  puzzle35.txt      35    4     0.25
-=> passed  puzzle33.txt      33    4     0.55
-=> passed  puzzle43.txt      43    4     0.86
-=> passed  puzzle46.txt      46    4     0.54
-=> passed  puzzle40.txt      40    4     1.45
-=> passed  puzzle36.txt      36    4     1.10
-=> passed  puzzle45.txt      45    4     1.07
+=> passed  puzzle39.txt      39    4     0.07
+=> passed  puzzle41.txt      41    5     0.08
+=> passed  puzzle34.txt      34    4     0.09
+=> passed  puzzle37.txt      37    4     0.32
+=> passed  puzzle44.txt      44    5     0.14
+=> passed  puzzle32.txt      32    4     0.52
+=> passed  puzzle35.txt      35    4     0.36
+=> passed  puzzle33.txt      33    4     0.64
+=> passed  puzzle43.txt      43    4     0.52
+=> passed  puzzle46.txt      46    4     0.78
+=> passed  puzzle40.txt      40    4     0.86
+=> passed  puzzle36.txt      36    4     1.84
+=> passed  puzzle45.txt      45    4     1.62
 ==> 25/25 tests passed
 
 
