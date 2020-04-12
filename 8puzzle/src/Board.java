@@ -1,6 +1,5 @@
 import java.util.ArrayList;
 import java.util.List;
-import edu.princeton.cs.algs4.StdRandom;
 
 public class Board {
 
@@ -101,7 +100,7 @@ public class Board {
         if (y == null) {
             return false;
         }
-        if (y.getClass() != Board.class) {
+        if (y.getClass() != this.getClass()) {
             return false;
         }
         Board that = (Board) y;
@@ -199,14 +198,13 @@ public class Board {
             }
         }
 
-        for (int i = 0; i < flatTiles.length; ++i) {
-            if (flatTiles[i] != 0) {
-                if (flatTiles[i + 1] != 0) {
-                    swap(flatTiles, i, i + 1);
+        for (int k = 0; k < flatTiles.length; ++k) {
+            if (flatTiles[k] != 0) {
+                if (flatTiles[k + 1] != 0) {
+                    swap(flatTiles, k, k + 1);
                     break;
-                }
-                else {
-                    ++i;
+                } else {
+                    ++k;
                 }
             }
         }
