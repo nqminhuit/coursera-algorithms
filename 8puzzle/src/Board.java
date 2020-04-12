@@ -136,6 +136,12 @@ public class Board {
         toSwap[row][col] = temp;
     }
 
+    private void swap(int[] array, int i, int j) {
+        int temp = array[i];
+        array[i] = array[j];
+        array[j] = temp;
+    }
+
     // all neighboring boards
     public Iterable<Board> neighbors() {
         List<Board> neighbors = new ArrayList<>();
@@ -185,25 +191,35 @@ public class Board {
 
     // a board that is obtained by exchanging any pair of tiles
     public Board twin() {
-        int[][] swapTiles = copyTiles();
-
-        int row = StdRandom.uniform(n);
-        int col = StdRandom.uniform(n);
-        while (swapTiles[row][col] == 0) {
-            row = StdRandom.uniform(n);
-            col = StdRandom.uniform(n);
+        int[] flatTiles = new int[n * n];
+        int idx = 0;
+        for (int i = 0; i < n; ++i) {
+            for (int j = 0; j < n; ++j) {
+                flatTiles[idx++] = tiles[i][j];
+            }
         }
 
-        int row2 = StdRandom.uniform(n);
-        int col2 = StdRandom.uniform(n);
-        while (swapTiles[row2][col2] == 0 || swapTiles[row2][col2] == swapTiles[row][col]) {
-            row2 = StdRandom.uniform(n);
-            col2 = StdRandom.uniform(n);
+        for (int i = 0; i < flatTiles.length; ++i) {
+            if (flatTiles[i] != 0) {
+                if (flatTiles[i + 1] != 0) {
+                    swap(flatTiles, i, i + 1);
+                    break;
+                }
+                else {
+                    ++i;
+                }
+            }
         }
 
-        swap(swapTiles, row, col, row2, col2);
+        idx = 0;
+        int[][] twin = new int[n][n];
+        for (int i = 0; i < n; ++i) {
+            for (int j = 0; j < n; ++j) {
+                twin[i][j] = flatTiles[idx++];
+            }
+        }
 
-        return new Board(swapTiles);
+        return new Board(twin);
     }
 
 }

@@ -210,4 +210,69 @@ public class BoardTest {
         assertEquals(new Board(TestSetHelper.initTilesHaving4Neighbors_Neighbor4()), iterator.next());
     }
 
+    @Test
+    public void twin2by2_BlankStartsAtZero() {
+        // given:
+        int[][] tiles = {
+                { 0, 6 },
+                { 1, 4 } };
+
+        Board board = new Board(tiles);
+
+        // when:
+        Board twin = board.twin();
+
+        // then:
+        assertEquals("2\n0 1 \n6 4 \n", twin.toString());
+    }
+
+    @Test
+    public void twin2by2_BlankStartsAtOne() {
+        // given:
+        int[][] tiles = {
+                { 6, 0 },
+                { 1, 4 } };
+
+        Board board = new Board(tiles);
+
+        // when:
+        Board twin = board.twin();
+
+        // then:
+        assertEquals("2\n6 0 \n4 1 \n", twin.toString());
+    }
+
+    @Test
+    public void twin2by2_BlankStartsAtTwo() {
+        // given:
+        int[][] tiles = {
+                { 6, 1 },
+                { 0, 4 } };
+
+        Board board = new Board(tiles);
+
+        // when:
+        Board twin = board.twin();
+
+        // then:
+        assertEquals("2\n1 6 \n0 4 \n", twin.toString());
+    }
+
+    @Test
+    public void twin3by3() {
+        // given:
+        int[][] tiles = {
+                { 6, 1, 8 },
+                { 0, 4, 7 },
+                { 2, 3, 5 } };
+
+        Board board = new Board(tiles);
+
+        // when:
+        Board twin = board.twin();
+
+        // then:
+        assertEquals("3\n1 6 8 \n0 4 7 \n2 3 5 \n", twin.toString());
+    }
+
 }
