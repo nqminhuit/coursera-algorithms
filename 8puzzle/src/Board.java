@@ -198,13 +198,13 @@ public class Board {
             }
         }
 
-        for (int k = 0; k < flatTiles.length; ++k) {
-            if (flatTiles[k] != 0) {
-                if (flatTiles[k + 1] != 0) {
-                    swap(flatTiles, k, k + 1);
+        for (int i = 0; i < flatTiles.length; ++i) {
+            if (flatTiles[i] != 0) {
+                if (flatTiles[i + 1] != 0) {
+                    swap(flatTiles, i, i + 1);
                     break;
                 } else {
-                    ++k;
+                    continue;
                 }
             }
         }
