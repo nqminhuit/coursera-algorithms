@@ -1,5 +1,6 @@
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertNull;
 import static org.junit.Assert.assertTrue;
 import org.junit.Test;
 
@@ -36,10 +37,12 @@ public class SolverTest {
         Board unsolvableBoard = new Board(TestSetHelper.initTilesUnsolvable());
 
         // when:
-        Solver solver = new Solver(unsolvableBoard);
+        Solver unsolvable = new Solver(unsolvableBoard);
 
         // then:
-        assertFalse(solver.isSolvable());
+        assertFalse(unsolvable.isSolvable());
+        assertEquals(-1, unsolvable.moves());
+        assertNull(unsolvable.solution());
     }
 
 }

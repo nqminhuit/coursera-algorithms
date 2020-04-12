@@ -19,7 +19,7 @@ public class Solver {
             throw new IllegalArgumentException();
         }
 
-        if (inputBoard.hamming() % 2 != 0) {
+        if (inputBoard.twin().isGoal()) {
             solvable = false;
             totalMoves = 0;
             return;
@@ -37,13 +37,18 @@ public class Solver {
                 solvable = true;
                 break;
             }
+            else if (node.board.twin().isGoal()) {
+                solvable = false;
+                totalMoves = -1;
+                return;
+            }
 
             manhattan = node.board.manhattan();
             for (Board neighborBoard : node.board.neighbors()) {
-                SearchNode neighborNode = new SearchNode(neighborBoard, node.moves + 1, node, manhattan);
-                if (node.prev != null && neighborNode.board.equals(node.prev.board)) {
+                if (node.prev != null && neighborBoard.equals(node.prev.board)) {
                     continue;
                 }
+                SearchNode neighborNode = new SearchNode(neighborBoard, node.moves + 1, node, manhattan);
                 minPq.insert(neighborNode);
             }
 
