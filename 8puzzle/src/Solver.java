@@ -9,7 +9,7 @@ public class Solver {
 
     private List<Board> solutions;
 
-    private int totalMoves;
+    private final int totalMoves;
 
     private boolean solvable;
 
@@ -19,42 +19,29 @@ public class Solver {
             throw new IllegalArgumentException();
         }
 
-        if (inputBoard.twin().isGoal()) {
-            solvable = false;
-            totalMoves = 0;
-            return;
-        }
-
-        node = new SearchNode(inputBoard);
+        node = new SearchNode(inputBoard, 0, null, inputBoard.manhattan());
 
         MinPQ<SearchNode> minPq = new MinPQ<>();
         minPq.insert(node);
 
-        int manhattan;
         while (true) {
             node = minPq.delMin();
-            if (node.board.isGoal()) {
+            if (node.manhattanDistance == 0) {
                 solvable = true;
                 break;
-            }
-            else if (node.board.twin().isGoal()) {
+            } else if (node.board.twin().isGoal()) {
                 solvable = false;
                 totalMoves = -1;
                 return;
             }
 
-            manhattan = node.board.manhattan();
             for (Board neighborBoard : node.board.neighbors()) {
                 if (node.prev != null && neighborBoard.equals(node.prev.board)) {
                     continue;
                 }
-                SearchNode neighborNode = new SearchNode(neighborBoard, node.moves + 1, node, manhattan);
+                SearchNode neighborNode =
+                    new SearchNode(neighborBoard, node.moves + 1, node, neighborBoard.manhattan());
                 minPq.insert(neighborNode);
-            }
-
-            if (minPq.isEmpty()) {
-                solvable = false;
-                break;
             }
         }
 
@@ -97,13 +84,6 @@ public class Solver {
         private final SearchNode prev;
         private final int manhattanDistance;
 
-        public SearchNode(Board board) {
-            this.board = board;
-            moves = 0;
-            prev = null;
-            manhattanDistance = 0;
-        }
-
         public SearchNode(Board board, int moves, SearchNode prev, int manhattan) {
             this.board = board;
             this.moves = moves;
@@ -114,7 +94,7 @@ public class Solver {
         @Override
         public int compareTo(SearchNode that) {
             int thisPriority = this.manhattanDistance + this.moves;
-            int thatPriority = that.board.manhattan() + that.moves;
+            int thatPriority = that.manhattanDistance + that.moves;
             return thisPriority - thatPriority;
         }
     }

@@ -11,17 +11,17 @@ Checkstyle:   PASSED
 
 Correctness:  51/51 tests passed
 Memory:       22/22 tests passed
-Timing:       100/125 tests passed
+Timing:       125/125 tests passed
 
-Aggregate score: 96.00%
+Aggregate score: 100.00%
 [Compilation: 5%, API: 5%, Spotbugs: 0%, PMD: 0%, Checkstyle: 0%, Correctness: 60%, Memory: 10%, Timing: 20%]
 
 ASSESSMENT DETAILS
 
 The following files were submitted:
 ----------------------------------
-5.9K Apr 12 04:49 Board.java
-3.3K Apr 12 04:49 Solver.java
+5.9K Apr 12 05:59 Board.java
+2.9K Apr 12 05:59 Solver.java
 
 
 ********************************************************************************
@@ -765,10 +765,10 @@ Test 2: Measure memory of MinPQ.
 --------------------------------------------------------------------
 => passed  puzzle10.txt      12160               17               16
 => passed  puzzle15.txt      15312               26               25
-=> passed  puzzle20.txt     107352              291              290
-=> passed  puzzle25.txt     795920             2208             2207
-=> passed  puzzle30.txt    4421936            12551            12550
-=> passed  puzzle35.txt   46863144           139949           139948
+=> passed  puzzle20.txt     107496              290              289
+=> passed  puzzle25.txt     773600             2091             2090
+=> passed  puzzle30.txt    3245312             8596             8595
+=> passed  puzzle35.txt   46398016           135154           135153
 ==> 6/6 tests passed
 
 
@@ -796,28 +796,28 @@ Test 1: Measure CPU time and check correctness
 => passed  puzzle20.txt      20    3     0.01
 => passed  puzzle22.txt      22    3     0.00
 => passed  puzzle21.txt      21    3     0.00
-=> passed  puzzle23.txt      23    3     0.00
-=> passed  puzzle24.txt      24    3     0.00
-=> passed  puzzle25.txt      25    3     0.01
+=> passed  puzzle23.txt      23    3     0.07
+=> passed  puzzle24.txt      24    3     0.01
+=> passed  puzzle25.txt      25    3     0.00
 => passed  puzzle27.txt      27    3     0.01
 => passed  puzzle29.txt      29    3     0.01
 => passed  puzzle26.txt      26    3     0.00
-=> passed  puzzle28.txt      28    3     0.02
-=> passed  puzzle30.txt      30    3     0.03
+=> passed  puzzle28.txt      28    3     0.01
+=> passed  puzzle30.txt      30    3     0.02
 => passed  puzzle31.txt      31    3     0.02
-=> passed  puzzle39.txt      39    4     0.04
-=> passed  puzzle41.txt      41    5     0.03
-=> passed  puzzle34.txt      34    4     0.11
-=> passed  puzzle37.txt      37    4     0.08
-=> passed  puzzle44.txt      44    5     0.12
-=> passed  puzzle32.txt      32    4     0.41
-=> passed  puzzle35.txt      35    4     0.37
-=> passed  puzzle33.txt      33    4     0.34
-=> passed  puzzle43.txt      43    4     0.61
-=> passed  puzzle46.txt      46    4     0.87
-=> passed  puzzle40.txt      40    4     0.36
-=> passed  puzzle36.txt      36    4     1.92
-=> passed  puzzle45.txt      45    4     1.46
+=> passed  puzzle39.txt      39    4     0.09
+=> passed  puzzle41.txt      41    5     0.05
+=> passed  puzzle34.txt      34    4     0.05
+=> passed  puzzle37.txt      37    4     0.12
+=> passed  puzzle44.txt      44    5     0.20
+=> passed  puzzle32.txt      32    4     0.33
+=> passed  puzzle35.txt      35    4     0.25
+=> passed  puzzle33.txt      33    4     0.55
+=> passed  puzzle43.txt      43    4     0.86
+=> passed  puzzle46.txt      46    4     0.54
+=> passed  puzzle40.txt      40    4     1.45
+=> passed  puzzle36.txt      36    4     1.10
+=> passed  puzzle45.txt      45    4     1.07
 ==> 25/25 tests passed
 
 
@@ -826,31 +826,31 @@ Test 2: Count MinPQ operations
 
                filename   insert()         delMin()
 ---------------------------------------------------
-=> passed  puzzle20.txt        715              425
-=> passed  puzzle22.txt       1500              875
-=> passed  puzzle21.txt       2050             1196
-=> passed  puzzle23.txt       3449             2025
-=> passed  puzzle24.txt       2303             1360
-=> passed  puzzle25.txt       5297             3090
-=> passed  puzzle27.txt       5727             3343
-=> passed  puzzle29.txt       9360             5411
-=> passed  puzzle26.txt       4308             2500
-=> passed  puzzle28.txt      14104             8100
-=> passed  puzzle30.txt      29796            17246
-=> passed  puzzle31.txt      32038            18415
-=> passed  puzzle39.txt      54720            26338
-=> passed  puzzle41.txt      33881            14259
-=> passed  puzzle34.txt     158538            76222
-=> passed  puzzle37.txt     120650            57990
-=> passed  puzzle44.txt     142613            61405
-=> passed  puzzle32.txt     505653           241307
-=> passed  puzzle35.txt     266583           126635
-=> passed  puzzle33.txt     413822           195138
-=> passed  puzzle43.txt     747729           352418
-=> passed  puzzle46.txt     750283           371533
-=> passed  puzzle40.txt     472657           227878
-=> passed  puzzle36.txt    2103600           991665
-=> passed  puzzle45.txt    1779672           869091
+=> passed  puzzle20.txt        716              427
+=> passed  puzzle22.txt       1738             1036
+=> passed  puzzle21.txt       1767             1041
+=> passed  puzzle23.txt       2654             1575
+=> passed  puzzle24.txt       2713             1630
+=> passed  puzzle25.txt       5142             3052
+=> passed  puzzle27.txt       5603             3371
+=> passed  puzzle29.txt       5757             3539
+=> passed  puzzle26.txt       5917             3550
+=> passed  puzzle28.txt      13496             8116
+=> passed  puzzle30.txt      21624            13029
+=> passed  puzzle31.txt      22840            13903
+=> passed  puzzle39.txt      35634            17523
+=> passed  puzzle41.txt      58354            25005
+=> passed  puzzle34.txt      75654            36580
+=> passed  puzzle37.txt      83518            40043
+=> passed  puzzle44.txt     139602            61583
+=> passed  puzzle32.txt     259712           124748
+=> passed  puzzle35.txt     263802           128649
+=> passed  puzzle33.txt     312942           149442
+=> passed  puzzle43.txt     529360           254417
+=> passed  puzzle46.txt     525924           258371
+=> passed  puzzle40.txt     553787           270734
+=> passed  puzzle36.txt    1038848           505743
+=> passed  puzzle45.txt    1218876           594877
 ==> 25/25 tests passed
 
 
@@ -892,31 +892,31 @@ Test 4a: Count Board operations (that should get called)
 
                filename    Board()            equals()         manhattan()
 --------------------------------------------------------------------------
-=> passed  puzzle20.txt       1563                1133                7337
-=> passed  puzzle22.txt       3248                2370               17088
-=> passed  puzzle21.txt       4440                3240               24192
-=> passed  puzzle23.txt       7497                5468               45636
-=> passed  puzzle24.txt       5021                3656               27967
-=> passed  puzzle25.txt      11475                8381               71134
-=> passed  puzzle27.txt      12411                9064               79247
-=> passed  puzzle29.txt      20180               14765              140868
-=> passed  puzzle26.txt       9306                6803               58284
-=> passed  puzzle28.txt      30302               22197              224150
-=> passed  puzzle30.txt      64286               47037              519385
-=> passed  puzzle31.txt      68866               50447              552992
-=> passed  puzzle39.txt     107394               81052              849037
-=> passed  puzzle41.txt      62397               48133              435759
-=> passed  puzzle34.txt     310980              234755             2643892
-=> passed  puzzle37.txt     236628              178634             1842095
-=> passed  puzzle44.txt     265421              204011             2125470
-=> passed  puzzle32.txt     988265              746953             9125594
-=> passed  puzzle35.txt     519851              393211             4591257
-=> passed  puzzle33.txt     804096              608954             7515407
-=> passed  puzzle43.txt    1452563             1100141            14435375
-=> passed  puzzle46.txt    1493347             1121810            13804254
-=> passed  puzzle40.txt     928411              700530             8208854
-=> passed  puzzle36.txt    4086928             3095258            40500518
-=> passed  puzzle45.txt    3517852             2648757            35701255
+=> passed  puzzle20.txt       1567                1136                1142
+=> passed  puzzle22.txt       3807                2769                2773
+=> passed  puzzle21.txt       3846                2802                2807
+=> passed  puzzle23.txt       5801                4223                4228
+=> passed  puzzle24.txt       5970                4336                4342
+=> passed  puzzle25.txt      11243                8188                8193
+=> passed  puzzle27.txt      12342                8968                8973
+=> passed  puzzle29.txt      12832                9290                9295
+=> passed  puzzle26.txt      13014                9462                9466
+=> passed  puzzle28.txt      29725               21605               21611
+=> passed  puzzle30.txt      47679               34648               34652
+=> passed  puzzle31.txt      50643               36737               36742
+=> passed  puzzle39.txt      70677               53151               53156
+=> passed  puzzle41.txt     108361               83352               83358
+=> passed  puzzle34.txt     148811              112229              112233
+=> passed  puzzle37.txt     163601              123555              123560
+=> passed  puzzle44.txt     262765              201178              201184
+=> passed  puzzle32.txt     509205              384453              384459
+=> passed  puzzle35.txt     521097              392444              392450
+=> passed  puzzle33.txt     611823              462378              462383
+=> passed  puzzle43.txt    1038191              783771              783776
+=> passed  puzzle46.txt    1042663              784289              784294
+=> passed  puzzle40.txt    1095252              824516              824520
+=> passed  puzzle36.txt    2050331             1544584             1544590
+=> passed  puzzle45.txt    2408627             1813747             1813752
 ==> 25/25 tests passed
 
 
@@ -926,35 +926,35 @@ Test 4b: count Board operations (that should get called),
 
                filename    Board()            equals()         manhattan()
 --------------------------------------------------------------------------
-=> FAILED  puzzle20.txt       1563                1133                7337   (1.8x)
-=> FAILED  puzzle22.txt       3248                2370               17088   (1.8x)
-=> FAILED  puzzle21.txt       4440                3240               24192   (2.5x)
-=> FAILED  puzzle23.txt       7497                5468               45636   (3.1x)
-=> FAILED  puzzle24.txt       5021                3656               27967   (1.8x)
-=> FAILED  puzzle25.txt      11475                8381               71134   (2.5x)
-=> FAILED  puzzle27.txt      12411                9064               79247   (2.5x)
-=> FAILED  puzzle29.txt      20180               14765              140868   (4.3x)
-=> FAILED  puzzle26.txt       9306                6803               58284   (1.8x)
-=> FAILED  puzzle28.txt      30302               22197              224150   (3.0x)
-=> FAILED  puzzle30.txt      64286               47037              519385   (4.3x)
-=> FAILED  puzzle31.txt      68866               50447              552992   (4.3x)
-=> FAILED  puzzle39.txt     107394               81052              849037   (4.6x)
-=> FAILED  puzzle41.txt      62397               48133              435759   (1.5x)
-=> FAILED  puzzle34.txt     310980              234755             2643892   (6.7x)
-=> FAILED  puzzle37.txt     236628              178634             1842095   (4.3x)
-=> FAILED  puzzle44.txt     265421              204011             2125470   (3.0x)
-=> FAILED  puzzle32.txt     988265              746953             9125594   (6.8x)
-=> FAILED  puzzle35.txt     519851              393211             4591257   (3.3x)
-=> FAILED  puzzle33.txt     804096              608954             7515407   (4.7x)
-=> FAILED  puzzle43.txt    1452563             1100141            14435375   (5.3x)
-=> FAILED  puzzle46.txt    1493347             1121810            13804254   (5.1x)
-=> FAILED  puzzle40.txt     928411              700530             8208854   (2.8x)
-=> FAILED  puzzle36.txt    4086928             3095258            40500518   (7.5x)
-=> FAILED  puzzle45.txt    3517852             2648757            35701255   (5.7x)
-==> 0/25 tests passed
+=> passed  puzzle20.txt       1567                1136                1142
+=> passed  puzzle22.txt       3807                2769                2773
+=> passed  puzzle21.txt       3846                2802                2807
+=> passed  puzzle23.txt       5801                4223                4228
+=> passed  puzzle24.txt       5970                4336                4342
+=> passed  puzzle25.txt      11243                8188                8193
+=> passed  puzzle27.txt      12342                8968                8973
+=> passed  puzzle29.txt      12832                9290                9295
+=> passed  puzzle26.txt      13014                9462                9466
+=> passed  puzzle28.txt      29725               21605               21611
+=> passed  puzzle30.txt      47679               34648               34652
+=> passed  puzzle31.txt      50643               36737               36742
+=> passed  puzzle39.txt      70677               53151               53156
+=> passed  puzzle41.txt     108361               83352               83358
+=> passed  puzzle34.txt     148811              112229              112233
+=> passed  puzzle37.txt     163601              123555              123560
+=> passed  puzzle44.txt     262765              201178              201184
+=> passed  puzzle32.txt     509205              384453              384459
+=> passed  puzzle35.txt     521097              392444              392450
+=> passed  puzzle33.txt     611823              462378              462383
+=> passed  puzzle43.txt    1038191              783771              783776
+=> passed  puzzle46.txt    1042663              784289              784294
+=> passed  puzzle40.txt    1095252              824516              824520
+=> passed  puzzle36.txt    2050331             1544584             1544590
+=> passed  puzzle45.txt    2408627             1813747             1813752
+==> 25/25 tests passed
 
 
-Total: 100/125 tests passed!
+Total: 125/125 tests passed!
 
 
 ================================================================
