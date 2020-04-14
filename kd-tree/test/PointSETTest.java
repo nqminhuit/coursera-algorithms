@@ -45,7 +45,7 @@ public class PointSETTest {
     }
 
     @Test
-    public void insertPoint_Left() {
+    public void insertPoint() {
         // given:
         PointSET points = new PointSET();
         Point2D newPoint = new Point2D(1, 1);
@@ -114,6 +114,27 @@ public class PointSETTest {
         Iterator<Point2D> iterator = points.range(rect).iterator();
         assertEquals(new Point2D(1.0D, 0.5D), iterator.next());
         assertEquals(new Point2D(0.5D, 1.0D), iterator.next());
+    }
+
+    @Test
+    public void nearestPoint() {
+        // given:
+        Point2D[] pointArray = {
+                new Point2D(0.000000D, 0.500000),
+                new Point2D(0.500000D, 1.000000),
+                new Point2D(0.500000D, 0.000000),
+                new Point2D(1.000000D, 0.500000) };
+
+        PointSET points = new PointSET();
+        for (Point2D p : pointArray) {
+            points.insert(p);
+        }
+
+        // when:
+        Point2D nearestPoint = points.nearest(new Point2D(0.25D, 1.5D));
+
+        // then:
+        assertEquals(new Point2D(0.5D, 1.0D), nearestPoint);
     }
 
 }
