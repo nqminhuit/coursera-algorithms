@@ -46,4 +46,7 @@ $ javac -cp libs/algs4.jar collinear/src/*.java -d collinear/build/classes/java/
 
 # 8-puzzle:
 $ javac -cp libs/algs4.jar 8puzzle/src/*.java -d 8puzzle/build/classes/java/main/; javac -cp libs/junit-4.12.jar:libs/hamcrest-core-1.3.jar:8puzzle/build/classes/java/main/ 8puzzle/test/*.java -d 8puzzle/build/classes/java/test/; java -cp libs/algs4.jar:libs/junit-4.12.jar:libs/hamcrest-core-1.3.jar:8puzzle/build/classes/java/test/:8puzzle/build/classes/java/main/ org.junit.runner.JUnitCore SolverTest
+
+# kd-tree:
+$ javac -cp libs/algs4.jar kd-tree/src/*.java -d kd-tree/build/classes/java/main/; javac -cp libs/junit-4.12.jar:libs/hamcrest-core-1.3.jar:kd-tree/build/classes/java/main/:libs/algs4.jar kd-tree/test/*.java -d kd-tree/build/classes/java/test/; java -cp libs/algs4.jar:libs/junit-4.12.jar:libs/hamcrest-core-1.3.jar:kd-tree/build/classes/java/test/:kd-tree/build/classes/java/main/ org.junit.runner.JUnitCore PointSETTest
 ```
