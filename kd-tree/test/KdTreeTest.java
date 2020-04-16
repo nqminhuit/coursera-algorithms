@@ -112,8 +112,8 @@ public class KdTreeTest {
 
         // when:
         Iterator<Point2D> iterator = points.range(rect).iterator();
-        assertEquals(new Point2D(1.0D, 0.5D), iterator.next());
         assertEquals(new Point2D(0.5D, 1.0D), iterator.next());
+        assertEquals(new Point2D(1.0D, 0.5D), iterator.next());
     }
 
 
