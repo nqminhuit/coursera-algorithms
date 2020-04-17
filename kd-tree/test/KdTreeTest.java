@@ -1,6 +1,7 @@
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
+import java.util.Arrays;
 import java.util.Iterator;
 import org.junit.Test;
 import edu.princeton.cs.algs4.Point2D;
@@ -56,6 +57,25 @@ public class KdTreeTest {
         // then:
         assertEquals(1, points.size());
         assertTrue(points.contains(newPoint));
+    }
+
+    @Test
+    public void insertPoint_CheckForContaining() {
+        // given:
+        KdTree points = new KdTree();
+        Point2D[] newPoints = {
+                new Point2D(0.7D, 0.2D),
+                new Point2D(0.5D, 0.4D),
+                new Point2D(0.2D, 0.3D),
+                new Point2D(0.4D, 0.7D),
+                new Point2D(0.9D, 0.6D) };
+
+        // when:
+        Arrays.stream(newPoints).forEach(newPoint -> points.insert(newPoint));
+
+        // then:
+        assertEquals(5, points.size());
+        assertTrue(points.contains(new Point2D(0.2D, 0.3D)));
     }
 
     @Test
