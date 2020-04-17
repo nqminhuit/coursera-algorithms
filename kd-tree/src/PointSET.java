@@ -8,7 +8,7 @@ import edu.princeton.cs.algs4.StdDraw;
 
 public class PointSET {
 
-    private Set<Point2D> points;
+    private final Set<Point2D> points;
 
     // construct an empty set of points
     public PointSET() {
@@ -76,7 +76,7 @@ public class PointSET {
         double nearestDistance = Double.POSITIVE_INFINITY;
         Point2D nearestPoint = null;
         for (Point2D point : points) {
-            double distanceToP = point.distanceTo(p);
+            double distanceToP = point.distanceSquaredTo(p);
             if (distanceToP < nearestDistance) {
                 nearestDistance = distanceToP;
                 nearestPoint = point;

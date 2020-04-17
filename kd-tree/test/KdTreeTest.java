@@ -116,7 +116,6 @@ public class KdTreeTest {
         assertEquals(new Point2D(1.0D, 0.5D), iterator.next());
     }
 
-
     @Test
     public void nearestPoint() {
         // given:

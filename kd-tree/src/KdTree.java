@@ -20,11 +20,14 @@ public class KdTree {
 
     private RectHV queryRect;
 
+    private Point2D closestPoint;
+
     // construct an empty set of points
     public KdTree() {
         size = 0;
         root = null;
         queryRect = null;
+        closestPoint = null;
     }
 
     // is the set empty?
@@ -65,10 +68,10 @@ public class KdTree {
         double cmp = comparePointsWithLevel(node, p);
 
         if (cmp > 0) {
-            node.left_below = put(node.left_below, p, node.level + 1);
+            node.leftBelow = put(node.leftBelow, p, node.level + 1);
         }
         else if (cmp < 0) {
-            node.right_above = put(node.right_above, p, node.level + 1);
+            node.rightAbove = put(node.rightAbove, p, node.level + 1);
         }
         else {
             node.point = p;
@@ -87,10 +90,10 @@ public class KdTree {
         while (node != null) {
             double cmp = comparePointsWithLevel(node, p);
             if (cmp < 0) {
-                node = node.left_below;
+                node = node.leftBelow;
             }
             else if (cmp > 0) {
-                node = node.right_above;
+                node = node.rightAbove;
             }
             else {
                 return true;
@@ -111,8 +114,8 @@ public class KdTree {
         }
         Point2D point = node.point;
         StdDraw.point(point.x(), point.y());
-        draw(node.left_below);
-        draw(node.right_above);
+        draw(node.leftBelow);
+        draw(node.rightAbove);
     }
 
     // all points that are inside the rectangle (or on the boundary)
@@ -127,13 +130,13 @@ public class KdTree {
     }
 
     private void pointInRange(Node node, List<Point2D> pointsInRange,
-        double x_min, double y_min, double x_max, double y_max) {
+        double xMin, double yMin, double xMax, double yMax) {
 
         if (node == null) {
             return;
         }
 
-        if (!queryRect.intersects(new RectHV(x_min, y_min, x_max, y_max))) {
+        if (!queryRect.intersects(new RectHV(xMin, yMin, xMax, yMax))) {
             return;
         }
 
@@ -143,12 +146,12 @@ public class KdTree {
         }
 
         if (node.level % 2 == 0) {
-            pointInRange(node.left_below, pointsInRange, x_min, y_min, point.x(), y_max);
-            pointInRange(node.right_above, pointsInRange, point.x(), y_min, x_max, y_max);
+            pointInRange(node.leftBelow, pointsInRange, xMin, yMin, point.x(), yMax);
+            pointInRange(node.rightAbove, pointsInRange, point.x(), yMin, xMax, yMax);
         }
         else {
-            pointInRange(node.left_below, pointsInRange, x_min, y_min, x_max, point.y());
-            pointInRange(node.right_above, pointsInRange, x_min, point.y(), x_max, y_max);
+            pointInRange(node.leftBelow, pointsInRange, xMin, yMin, xMax, point.y());
+            pointInRange(node.rightAbove, pointsInRange, xMin, point.y(), xMax, yMax);
         }
     }
 
@@ -158,16 +161,35 @@ public class KdTree {
             throw new IllegalArgumentException();
         }
 
-        return null;
+        findNearestPoint(root, p, Double.POSITIVE_INFINITY);
+
+        return this.closestPoint;
+    }
+
+    private void findNearestPoint(Node node, Point2D queryPoint, double distance) {
+        if (node == null) {
+            return;
+        }
+
+        double newDistance = node.point.distanceSquaredTo(queryPoint);
+        if (newDistance > distance) {
+            return;
+        }
+
+        distance = newDistance;
+        closestPoint = node.point;
+
+        findNearestPoint(node.leftBelow, queryPoint, distance);
+        findNearestPoint(node.rightAbove, queryPoint, distance);
     }
 
     private class Node {
 
-        private int level;
+        private final int level;
 
         private Point2D point;
 
-        private Node left_below, right_above;
+        private Node leftBelow, rightAbove;
 
         public Node(Point2D point, int level) {
             this.point = point;
