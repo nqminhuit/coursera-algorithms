@@ -41,7 +41,13 @@ public class KdTree {
     }
 
     private double comparePointsWithLevel(Node node, Point2D p) {
-        return node.level % 2 == 0 ? node.point.x() - p.x() : node.point.y() - p.y();
+        if (node.point.equals(p)) {
+            return 0D;
+        }
+        if (node.level % 2 == 0) {
+            return node.point.x() == p.x() ? -1 : node.point.x() - p.x();
+        }
+        return node.point.y() == p.y() ? -1 : node.point.y() - p.y();
     }
 
     // add the point to the set (if it is not already in the set)

@@ -112,10 +112,10 @@ public class KdTreeTest {
     public void pointsInRange() {
         // given:
         Point2D[] pointArray = {
-                new Point2D(0.000000D, 0.500000),
-                new Point2D(0.500000D, 1.000000),
-                new Point2D(0.500000D, 0.000000),
-                new Point2D(1.000000D, 0.500000) };
+                new Point2D(0.0D, 0.50D),
+                new Point2D(0.5D, 1.0D),
+                new Point2D(0.5D, 0.0D),
+                new Point2D(1.0D, 0.5D) };
 
         KdTree points = new KdTree();
         for (Point2D p : pointArray) {
@@ -128,6 +128,37 @@ public class KdTreeTest {
         Iterator<Point2D> iterator = points.range(rect).iterator();
         assertEquals(new Point2D(0.5D, 1.0D), iterator.next());
         assertEquals(new Point2D(1.0D, 0.5D), iterator.next());
+    }
+
+    @Test
+    public void pointsInRange_ShouldNotMiss() {
+        // given:
+        Point2D[] pointArray = {
+                new Point2D(0.25D, 0.0D),
+                new Point2D(1.0D, 0.25D),
+                new Point2D(0.75D, 0.0D),
+                new Point2D(0.75D, 1.0D),
+                new Point2D(0.0D, 0.0D),
+                new Point2D(0.0D, 0.5D),
+                new Point2D(1.0D, 0.0D),
+                new Point2D(0.75D, 0.5D),
+                new Point2D(0.5D, 0.25D),
+                new Point2D(0.5D, 1.0D) };
+
+        KdTree points = new KdTree();
+        for (Point2D p : pointArray) {
+            points.insert(p);
+        }
+        assertEquals(10, points.size());
+
+        RectHV rect = new RectHV(0.25D, 0.75D, 1.0D, 1.0D);
+
+        // when:
+        Iterator<Point2D> iterator = points.range(rect).iterator();
+
+        // then:
+        assertEquals(new Point2D(0.75D, 1.0D), iterator.next());
+        assertEquals(new Point2D(0.5D, 1.0D), iterator.next());
     }
 
     @Test
@@ -162,6 +193,7 @@ public class KdTreeTest {
         boolean contains = points.contains(new Point2D(1.0D, 0.0D));
 
         // then:
+        assertEquals(2, points.size());
         assertTrue(contains);
     }
 
