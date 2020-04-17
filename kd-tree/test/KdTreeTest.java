@@ -151,4 +151,31 @@ public class KdTreeTest {
         assertEquals(new Point2D(0.5D, 1.0D), nearestPoint);
     }
 
+    @Test
+    public void contains_OK() {
+        // given:
+        KdTree points = new KdTree();
+        points.insert(new Point2D(1.0D, 1.0D));
+        points.insert(new Point2D(1.0D, 0.0D));
+
+        // when:
+        boolean contains = points.contains(new Point2D(1.0D, 0.0D));
+
+        // then:
+        assertTrue(contains);
+    }
+
+    @Test
+    public void contains_NOK() {
+        // given:
+        KdTree points = new KdTree();
+        points.insert(new Point2D(1.0D, 1.0D));
+
+        // when:
+        boolean contains = points.contains(new Point2D(1.0D, 0.0D));
+
+        // then:
+        assertFalse(contains);
+    }
+
 }

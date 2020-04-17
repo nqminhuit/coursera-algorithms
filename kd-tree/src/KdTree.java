@@ -81,7 +81,7 @@ public class KdTree {
 
         Node node = root;
         while (node != null) {
-            double cmp = comparePointsWithLevel(node, p);
+            int cmp = node.point.compareTo(p);
             if (cmp < 0) {
                 node = node.leftBelow;
             }
