@@ -95,6 +95,20 @@ public class KdTreeTest {
     }
 
     @Test
+    public void pointsSize_UpdateValueShouldRemainSameSize() {
+        // given:
+        KdTree points = new KdTree();
+
+        // when:
+        points.insert(new Point2D(1, 1));
+        points.insert(new Point2D(2, 2));
+        points.insert(new Point2D(2, 2));
+
+        // then:
+        assertEquals(2, points.size());
+    }
+
+    @Test
     public void pointsInRange() {
         // given:
         Point2D[] pointArray = {

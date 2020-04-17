@@ -41,14 +41,7 @@ public class KdTree {
     }
 
     private double comparePointsWithLevel(Node node, Point2D p) {
-        double cmp;
-        if (node.level % 2 == 0) {
-            cmp = node.point.x() - p.x();
-        }
-        else {
-            cmp = node.point.y() - p.y();
-        }
-        return cmp;
+        return node.level % 2 == 0 ? node.point.x() - p.x() : node.point.y() - p.y();
     }
 
     // add the point to the set (if it is not already in the set)
@@ -57,11 +50,11 @@ public class KdTree {
             throw new IllegalArgumentException();
         }
         root = put(root, p, 0);
-        size++;
     }
 
     private Node put(Node node, Point2D p, int level) {
         if (node == null) {
+            size++;
             return new Node(p, level);
         }
 
