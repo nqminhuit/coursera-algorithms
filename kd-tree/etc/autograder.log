@@ -5,23 +5,23 @@ ASSESSMENT SUMMARY
 Compilation:  PASSED
 API:          PASSED
 
-Spotbugs:     PASSED
+Spotbugs:     FAILED (1 warning)
 PMD:          PASSED
 Checkstyle:   PASSED
 
-Correctness:  33/35 tests passed
+Correctness:  35/35 tests passed
 Memory:       16/16 tests passed
-Timing:       34/42 tests passed
+Timing:       42/42 tests passed
 
-Aggregate score: 92.76%
+Aggregate score: 100.00%
 [Compilation: 5%, API: 5%, Spotbugs: 0%, PMD: 0%, Checkstyle: 0%, Correctness: 60%, Memory: 10%, Timing: 20%]
 
 ASSESSMENT DETAILS
 
 The following files were submitted:
 ----------------------------------
-6.1K Apr 18 09:35 KdTree.java
-2.3K Apr 18 09:35 PointSET.java
+7.4K Apr 18 10:09 KdTree.java
+2.3K Apr 18 10:09 PointSET.java
 
 
 ********************************************************************************
@@ -55,6 +55,8 @@ KdTree:
 
 % spotbugs *.class
 *-----------------------------------------------------------
+L D FE_FLOATING_POINT_EQUALITY FE: Tests for exact floating-point equality. Because floating-point calculations may involve rounding, the calculated values may be imprecise.  At KdTree.java:[line 198]
+Warnings generated: 1
 
 
 ================================================================
@@ -339,156 +341,18 @@ Test 5d: insert general points; check nearest() with random query points
 Test 6a: insert points from file; check nearest() with random query points
          and check traversal of kd-tree
   * input5.txt
-    - student   nearest() = (0.9, 0.6)
-    - reference nearest() = (0.9, 0.6)
-    - performs incorrect traversal of kd-tree during call to nearest()
-    - query point = (0.88, 1.0)
-    - sequence of points inserted:
-      A  0.7 0.2
-      B  0.5 0.4
-      C  0.2 0.3
-      D  0.4 0.7
-      E  0.9 0.6
-    - student sequence of kd-tree nodes involved in calls to Point2D methods:
-      A B C D E
-    - reference sequence of kd-tree nodes involved in calls to Point2D methods:
-      A E B D
-    - failed on trial 1 of 1000
-
   * input10.txt
-    - student   nearest() = (0.785, 0.725)
-    - reference nearest() = (0.785, 0.725)
-    - performs incorrect traversal of kd-tree during call to nearest()
-    - query point = (0.86, 0.67)
-    - sequence of points inserted:
-      A  0.372 0.497
-      B  0.564 0.413
-      C  0.226 0.577
-      D  0.144 0.179
-      E  0.083 0.51
-      F  0.32 0.708
-      G  0.417 0.362
-      H  0.862 0.825
-      I  0.785 0.725
-      J  0.499 0.208
-    - student sequence of kd-tree nodes involved in calls to Point2D methods:
-      A C D F B G J H I
-    - reference sequence of kd-tree nodes involved in calls to Point2D methods:
-      A B H I
-    - failed on trial 1 of 1000
-
-==> FAILED
+==> passed
 
 Test 6b: insert non-degenerate points; check nearest() with random query points
          and check traversal of kd-tree
   * 5 random non-degenerate points in a 8-by-8 grid
-    - student   nearest() = (0.25, 0.625)
-    - reference nearest() = (0.25, 0.625)
-    - performs incorrect traversal of kd-tree during call to nearest()
-    - query point = (0.125, 0.875)
-    - sequence of points inserted:
-      A  0.25 0.625
-      B  0.875 0.75
-      C  0.375 0.5
-      D  1.0 1.0
-      E  0.75 0.375
-    - student sequence of kd-tree nodes involved in calls to Point2D methods:
-      A B C E D
-    - reference sequence of kd-tree nodes involved in calls to Point2D methods:
-      A B D C
-    - failed on trial 4 of 1000
-
   * 10 random non-degenerate points in a 16-by-16 grid
-    - student   nearest() = (0.8125, 1.0)
-    - reference nearest() = (0.8125, 1.0)
-    - performs incorrect traversal of kd-tree during call to nearest()
-    - query point = (0.9375, 0.9375)
-    - sequence of points inserted:
-      A  0.0625 0.5625
-      B  0.375 0.875
-      C  0.125 0.1875
-      D  0.4375 0.3125
-      E  0.8125 1.0
-      F  0.25 0.6875
-      G  0.1875 0.0
-      H  0.0 0.5
-      I  0.875 0.0625
-      J  0.75 0.4375
-    - student sequence of kd-tree nodes involved in calls to Point2D methods:
-      A H B C D F J E
-    - reference sequence of kd-tree nodes involved in calls to Point2D methods:
-      A B E C D F J
-    - failed on trial 1 of 1000
-
   * 20 random non-degenerate points in a 32-by-32 grid
-    - student   nearest() = (0.875, 0.0625)
-    - reference nearest() = (0.875, 0.0625)
-    - performs incorrect traversal of kd-tree during call to nearest()
-    - query point = (1.0, 0.25)
-    - sequence of points inserted:
-      A  0.03125 0.65625
-      B  0.40625 0.125
-      C  0.53125 0.28125
-      D  0.875 0.0625
-      E  0.375 0.78125
-      F  0.5 0.84375
-      G  0.1875 0.40625
-      H  0.78125 0.09375
-      I  0.9375 0.53125
-      J  0.25 0.90625
-      K  0.0625 0.75
-      L  0.625 0.21875
-      M  0.71875 0.3125
-      N  0.15625 0.34375
-      O  0.28125 0.1875
-      P  0.75 0.71875
-      Q  0.46875 0.46875
-      R  0.3125 0.9375
-      S  0.09375 0.59375
-      T  0.34375 1.0
-    - student sequence of kd-tree nodes involved in calls to Point2D methods:
-      A B D H C I L M
-    - reference sequence of kd-tree nodes involved in calls to Point2D methods:
-      A B C I L M P D H
-    - failed on trial 2 of 1000
-
   * 30 random non-degenerate points in a 64-by-64 grid
-    - student   nearest() = (0.78125, 0.8125)
-    - reference nearest() = (0.78125, 0.8125)
-    - performs incorrect traversal of kd-tree during call to nearest()
-    - number of student   entries = 21
-    - number of reference entries = 7
-    - entry 2 of the two sequences are not equal
-    - student   entry 2 = (0.21875, 0.171875)
-    - reference entry 2 = (0.359375, 0.5)
-
-    - failed on trial 1 of 1000
-
   * 50 random non-degenerate points in a 128-by-128 grid
-    - student   nearest() = (0.7734375, 0.625)
-    - reference nearest() = (0.7734375, 0.625)
-    - performs incorrect traversal of kd-tree during call to nearest()
-    - number of student   entries = 18
-    - number of reference entries = 11
-    - entry 1 of the two sequences are not equal
-    - student   entry 1 = (0.203125, 0.6015625)
-    - reference entry 1 = (0.5078125, 0.546875)
-
-    - failed on trial 1 of 1000
-
   * 1000 random non-degenerate points in a 2048-by-2048 grid
-    - student   nearest() = (0.921875, 0.40087890625)
-    - reference nearest() = (0.921875, 0.40087890625)
-    - performs incorrect traversal of kd-tree during call to nearest()
-    - number of student   entries = 68
-    - number of reference entries = 14
-    - entry 1 of the two sequences are not equal
-    - student   entry 1 = (0.5703125, 0.8916015625)
-    - reference entry 1 = (0.93994140625, 0.490234375)
-
-    - failed on trial 1 of 1000
-
-==> FAILED
+==> passed
 
 Test 7: check with no points
   * size() and isEmpty()
@@ -565,7 +429,7 @@ Test 10: insert n random points into two different KdTree objects;
 ==> passed
 
 
-Total: 25/27 tests passed!
+Total: 27/27 tests passed!
 
 
 ================================================================
@@ -658,38 +522,38 @@ Inserting n points into a PointSET
 
                n      ops per second
 ----------------------------------------
-=> passed   160000    1505220
-=> passed   320000    1773258
-=> passed   640000    1733996
-=> passed  1280000    1375600
+=> passed   160000    1417599
+=> passed   320000    1672148
+=> passed   640000    1649802
+=> passed  1280000    1294944
 ==> 4/4 tests passed
 
 Performing contains() queries after inserting n points into a PointSET
 
                n      ops per second
 ----------------------------------------
-=> passed   160000    1035334
-=> passed   320000     981103
-=> passed   640000     739307
-=> passed  1280000     660098
+=> passed   160000    1052859
+=> passed   320000     824309
+=> passed   640000     737033
+=> passed  1280000     710093
 ==> 4/4 tests passed
 
 Performing range() queries after inserting n points into a PointSET
 
                n      ops per second
 ----------------------------------------
-=> passed    10000       4302
-=> passed    20000       1609
-=> passed    40000        697
+=> passed    10000       4909
+=> passed    20000       1661
+=> passed    40000        760
 ==> 3/3 tests passed
 
 Performing nearest() queries after inserting n points into a PointSET
 
                n      ops per second
 ----------------------------------------
-=> passed    10000       5569
-=> passed    20000       1754
-=> passed    40000        797
+=> passed    10000       6329
+=> passed    20000       1728
+=> passed    40000        769
 ==> 3/3 tests passed
 
 Total: 14/14 tests passed!
@@ -710,10 +574,10 @@ Test 1a-d: Insert n points into a 2d tree. The table gives the average number of
                                                                                                 Point2D
                n      ops per second       RectHV()           x()               y()             equals()
 ----------------------------------------------------------------------------------------------------------------
-=> passed   160000    1552350               0.0              44.3              42.3              21.6
-=> passed   320000    1346873               0.0              45.1              43.1              22.0
-=> passed   640000    1013999               0.0              48.1              46.1              23.5
-=> passed  1280000     799361               0.0              52.3              50.3              25.6
+=> passed   160000    1604753               0.0              44.3              42.3              21.6
+=> passed   320000    1487114               0.0              45.1              43.1              22.0
+=> passed   640000    1139926               0.0              48.1              46.1              23.5
+=> passed  1280000     913683               0.0              52.3              50.3              25.6
 ==> 4/4 tests passed
 
 
@@ -723,14 +587,14 @@ Test 2a-h: Perform contains() queries after inserting n points into a 2d tree. T
                                                                                Point2D
                n      ops per second       x()               y()               equals()
 -----------------------------------------------------------------------------------------------
-=> passed    10000    1209108              37.0              35.0              18.0
-=> passed    20000    1204374              39.3              37.3              19.2
-=> passed    40000    1142186              43.6              41.6              21.3
-=> passed    80000    1093185              44.0              42.0              21.5
-=> passed   160000     878305              46.5              44.5              22.7
-=> passed   320000     737492              50.1              48.1              24.5
-=> passed   640000     650731              51.4              49.4              25.2
-=> passed  1280000     551859              54.4              52.4              26.7
+=> passed    10000    1245707              37.0              35.0              18.0
+=> passed    20000    1256627              39.3              37.3              19.2
+=> passed    40000    1144960              43.6              41.6              21.3
+=> passed    80000    1053251              44.0              42.0              21.5
+=> passed   160000     855130              46.5              44.5              22.7
+=> passed   320000     746624              50.1              48.1              24.5
+=> passed   640000     665085              51.4              49.4              25.2
+=> passed  1280000     593098              54.4              52.4              26.7
 ==> 8/8 tests passed
 
 
@@ -739,14 +603,14 @@ Test 3a-h: Perform range() queries after inserting n points into a 2d tree. The 
 
                n      ops per second       intersects()      contains()        x()               y()
 ---------------------------------------------------------------------------------------------------------------
-=> passed    10000     459325              50.4              31.1              81.9              42.5
-=> passed    20000     481899              52.7              32.6              85.9              48.8
-=> passed    40000     385634              64.9              39.3             103.2              52.7
-=> passed    80000     348838              67.1              40.7             106.5              55.0
-=> passed   160000     256928              70.0              42.5             113.1              63.2
-=> passed   320000     374805              67.0              40.2             105.7              55.7
-=> passed   640000     180274              72.0              43.3             113.8              62.6
-=> passed  1280000      91152              78.7              47.0             123.0              60.1
+=> passed    10000     470928              50.4              31.1              81.9              42.5
+=> passed    20000     548288              52.7              32.6              85.9              48.8
+=> passed    40000     436422              64.9              39.3             103.2              52.7
+=> passed    80000     403500              67.1              40.7             106.5              55.0
+=> passed   160000     315923              70.0              42.5             113.1              63.2
+=> passed   320000     355510              67.0              40.2             105.7              55.7
+=> passed   640000     214068              72.0              43.3             113.8              62.6
+=> passed  1280000     177018              78.7              47.0             123.0              60.1
 ==> 8/8 tests passed
 
 
@@ -756,22 +620,19 @@ Test 4a-h: Perform nearest() queries after inserting n points into a 2d tree. Th
                                          Point2D                 RectHV
                n      ops per second     distanceSquaredTo()     distanceSquaredTo()        x()               y()
 ------------------------------------------------------------------------------------------------------------------------
-=> FAILED    10000    60845                 161.7                  323.5   (1.1x)         1173.7   (1.5x)   1119.4   (1.4x)
-=> FAILED    20000   104406                 156.6                  313.3                  1114.1   (1.4x)   1083.1   (1.4x)
-=> FAILED    40000    52009                 359.9                  719.7   (2.4x)         2665.5   (3.3x)   2489.2   (3.1x)
-=> FAILED    80000    59270                 320.3                  640.6   (2.1x)         2249.1   (2.8x)   2305.5   (2.9x)
-
-
-        ::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::
-        OperationCountLimitExceededException
-        Number of calls to methods in Point2D exceeds limit: 1000000000
-        ::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::
-
-==> 0/8 tests passed
+=> passed    10000   489329                  24.8                   49.5                   149.5             146.8
+=> passed    20000   480430                  27.2                   54.3                   163.5             161.1
+=> passed    40000   399721                  31.9                   63.8                   192.9             188.9
+=> passed    80000   366513                  32.5                   65.0                   193.9             194.1
+=> passed   160000   311916                  35.2                   70.5                   212.1             209.5
+=> passed   320000   203092                  36.7                   73.3                   219.4             218.0
+=> passed   640000   173174                  38.1                   76.2                   227.5             226.9
+=> passed  1280000   189672                  42.5                   85.1                   255.8             250.9
+==> 8/8 tests passed
 
 
 
-Total: 20/28 tests passed!
+Total: 28/28 tests passed!
 
 
 ================================================================

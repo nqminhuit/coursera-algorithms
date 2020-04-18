@@ -186,26 +186,55 @@ public class KdTree {
             nearestDistance = distance;
         }
 
-        RectHV rect;
         if (node.level % 2 == 0) {
-            rect = new RectHV(xMin, yMin, point.x(), yMax);
-            if (rect.distanceSquaredTo(queryPoint) <= nearestDistance) {
-                findNearestPoint(node.leftBelow, xMin, yMin, point.x(), yMax);
-            }
+            RectHV rectLeft = new RectHV(xMin, yMin, point.x(), yMax);
+            RectHV rectRight = new RectHV(point.x(), yMin, xMax, yMax);
 
-            rect = new RectHV(point.x(), yMin, xMax, yMax);
-            if (rect.distanceSquaredTo(queryPoint) <= nearestDistance) {
-                findNearestPoint(node.rightAbove, point.x(), yMin, xMax, yMax);
+            double dstLeftQuery = rectLeft.distanceSquaredTo(queryPoint);
+            double dstRightQuery = rectRight.distanceSquaredTo(queryPoint);
+
+            double dstMinQuery = dstLeftQuery - dstRightQuery < 0 ? dstLeftQuery : dstRightQuery;
+
+            if (dstMinQuery - dstLeftQuery == 0D) {
+                if (dstLeftQuery <= nearestDistance) {
+                    findNearestPoint(node.leftBelow, xMin, yMin, point.x(), yMax);
+                }
+                if (dstRightQuery <= nearestDistance) {
+                    findNearestPoint(node.rightAbove, point.x(), yMin, xMax, yMax);
+                }
+            }
+            else if (dstMinQuery - dstRightQuery == 0D) {
+                if (dstRightQuery <= nearestDistance) {
+                    findNearestPoint(node.rightAbove, point.x(), yMin, xMax, yMax);
+                }
+                if (dstLeftQuery <= nearestDistance) {
+                    findNearestPoint(node.leftBelow, xMin, yMin, point.x(), yMax);
+                }
             }
         }
         else {
-            rect = new RectHV(xMin, yMin, xMax, point.y());
-            if (rect.distanceSquaredTo(queryPoint) <= nearestDistance) {
-                findNearestPoint(node.leftBelow, xMin, yMin, xMax, point.y());
+            RectHV rectBelow = new RectHV(xMin, yMin, xMax, point.y());
+            RectHV rectAbove = new RectHV(xMin, point.y(), xMax, yMax);
+
+            double dstBelowQuery = rectBelow.distanceSquaredTo(queryPoint);
+            double dstAboveQuery = rectAbove.distanceSquaredTo(queryPoint);
+
+            double dstMinQuery = dstBelowQuery - dstAboveQuery < 0 ? dstBelowQuery : dstAboveQuery;
+            if (dstMinQuery - dstBelowQuery == 0D) {
+                if (dstBelowQuery <= nearestDistance) {
+                    findNearestPoint(node.leftBelow, xMin, yMin, xMax, point.y());
+                }
+                if (dstAboveQuery <= nearestDistance) {
+                    findNearestPoint(node.rightAbove, xMin, point.y(), xMax, yMax);
+                }
             }
-            rect = new RectHV(xMin, point.y(), xMax, yMax);
-            if (rect.distanceSquaredTo(queryPoint) <= nearestDistance) {
-                findNearestPoint(node.rightAbove, xMin, point.y(), xMax, yMax);
+            else if (dstMinQuery - dstAboveQuery == 0D) {
+                if (dstAboveQuery <= nearestDistance) {
+                    findNearestPoint(node.rightAbove, xMin, point.y(), xMax, yMax);
+                }
+                if (dstBelowQuery <= nearestDistance) {
+                    findNearestPoint(node.leftBelow, xMin, yMin, xMax, point.y());
+                }
             }
         }
     }
