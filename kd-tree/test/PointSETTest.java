@@ -98,10 +98,10 @@ public class PointSETTest {
     public void pointsInRange() {
         // given:
         Point2D[] pointArray = {
-                new Point2D(0.000000D, 0.500000),
-                new Point2D(0.500000D, 1.000000),
-                new Point2D(0.500000D, 0.000000),
-                new Point2D(1.000000D, 0.500000) };
+                new Point2D(0.0D, 0.5D),
+                new Point2D(0.5D, 1.0D),
+                new Point2D(0.5D, 0.0D),
+                new Point2D(1.0D, 0.5D) };
 
         PointSET points = new PointSET();
         for (Point2D p : pointArray) {
@@ -120,10 +120,10 @@ public class PointSETTest {
     public void nearestPoint() {
         // given:
         Point2D[] pointArray = {
-                new Point2D(0.000000D, 0.500000),
-                new Point2D(0.500000D, 1.000000),
-                new Point2D(0.500000D, 0.000000),
-                new Point2D(1.000000D, 0.500000) };
+                new Point2D(0.0D, 0.5D),
+                new Point2D(0.5D, 1.0D),
+                new Point2D(0.5D, 0.0D),
+                new Point2D(1.0D, 0.5D) };
 
         PointSET points = new PointSET();
         for (Point2D p : pointArray) {

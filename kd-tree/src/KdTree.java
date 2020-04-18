@@ -20,14 +20,19 @@ public class KdTree {
 
     private RectHV queryRect;
 
-    private Point2D closestPoint;
+    private Point2D nearestPoint;
+
+    private double nearestDistance;
+
+    private Point2D queryPoint;
 
     // construct an empty set of points
     public KdTree() {
         size = 0;
         root = null;
         queryRect = null;
-        closestPoint = null;
+        queryPoint = null;
+        nearestPoint = null;
     }
 
     // is the set empty?
@@ -160,26 +165,31 @@ public class KdTree {
             throw new IllegalArgumentException();
         }
 
-        findNearestPoint(root, p, Double.POSITIVE_INFINITY);
+        this.nearestDistance = Double.POSITIVE_INFINITY;
 
-        return this.closestPoint;
+        this.queryPoint = p;
+
+        findNearestPoint(root);
+
+        return this.nearestPoint;
     }
 
-    private void findNearestPoint(Node node, Point2D queryPoint, double distance) {
+    private void findNearestPoint(Node node) {
         if (node == null) {
             return;
         }
 
-        double newDistance = node.point.distanceSquaredTo(queryPoint);
-        if (newDistance > distance) {
+        Point2D point = node.point;
+        double newDistance = point.distanceSquaredTo(queryPoint);
+        if (newDistance > nearestDistance) {
             return;
         }
 
-        distance = newDistance;
-        closestPoint = node.point;
+        nearestDistance = newDistance;
+        nearestPoint = point;
 
-        findNearestPoint(node.leftBelow, queryPoint, distance);
-        findNearestPoint(node.rightAbove, queryPoint, distance);
+        findNearestPoint(node.leftBelow);
+        findNearestPoint(node.rightAbove);
     }
 
     private class Node {
@@ -194,7 +204,5 @@ public class KdTree {
             this.point = point;
             this.level = level;
         }
-
     }
-
 }

@@ -185,10 +185,10 @@ public class KdTreeTest {
     public void nearestPoint() {
         // given:
         Point2D[] pointArray = {
-                new Point2D(0.000000D, 0.500000),
-                new Point2D(0.500000D, 1.000000),
-                new Point2D(0.500000D, 0.000000),
-                new Point2D(1.000000D, 0.500000) };
+                new Point2D(0.0D, 0.5D),
+                new Point2D(0.5D, 1.0D),
+                new Point2D(0.5D, 0.0D),
+                new Point2D(1.0D, 0.5D) };
 
         KdTree points = new KdTree();
         for (Point2D p : pointArray) {
@@ -200,6 +200,29 @@ public class KdTreeTest {
 
         // then:
         assertEquals(new Point2D(0.5D, 1.0D), nearestPoint);
+    }
+
+    @Test
+    public void nearestPoint_ShoudReturnCorrectWhenContiniouslyQuerying() {
+        // given:
+        Point2D[] pointArray = {
+                new Point2D(0.7D, 0.2D),
+                new Point2D(0.5D, 0.4D),
+                new Point2D(0.2D, 0.3D),
+                new Point2D(0.4D, 0.7D),
+                new Point2D(0.9D, 0.6D) };
+
+        KdTree points = new KdTree();
+        Arrays.stream(pointArray).forEach(point -> points.insert(point));
+        assertEquals(5, points.size());
+
+        // when:
+        Point2D nearestPoint = points.nearest(new Point2D(0.013D, 0.46D));
+        assertEquals(new Point2D(0.2D, 0.3D), nearestPoint);
+
+        // then:
+        nearestPoint = points.nearest(new Point2D(0.937D, 0.3D));
+        assertEquals(new Point2D(0.7D, 0.2D), nearestPoint);
     }
 
     @Test
