@@ -221,6 +221,7 @@ public class KdTreeTest {
         assertEquals(new Point2D(0.2D, 0.3D), points.nearest(new Point2D(0.013D, 0.46D)));
         assertEquals(new Point2D(0.7D, 0.2D), points.nearest(new Point2D(0.937D, 0.3D)));
         assertEquals(new Point2D(0.4D, 0.7D), points.nearest(new Point2D(0.57D, 0.784D)));
+        assertEquals(new Point2D(0.4D, 0.7D), points.nearest(new Point2D(0.705D, 0.989D)));
     }
 
     @Test
@@ -249,6 +250,24 @@ public class KdTreeTest {
 
         // then:
         assertFalse(contains);
+    }
+
+    @Test
+    public void nearestPoint_() {
+        // given:
+        Point2D[] pointArray = {
+                new Point2D(0.7D, 0.2D),
+                new Point2D(0.5D, 0.4D),
+                new Point2D(0.2D, 0.3D),
+                new Point2D(0.4D, 0.7D),
+                new Point2D(0.9D, 0.6D) };
+
+        KdTree points = new KdTree();
+        Arrays.stream(pointArray).forEach(point -> points.insert(point));
+        assertEquals(5, points.size());
+
+        // when:
+        assertEquals(new Point2D(0.2D, 0.3D), points.nearest(new Point2D(0.13D, 0.46D)));
     }
 
 }
