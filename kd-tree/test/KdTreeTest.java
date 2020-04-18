@@ -217,12 +217,10 @@ public class KdTreeTest {
         assertEquals(5, points.size());
 
         // when:
-        Point2D nearestPoint = points.nearest(new Point2D(0.013D, 0.46D));
-        assertEquals(new Point2D(0.2D, 0.3D), nearestPoint);
-
-        // then:
-        nearestPoint = points.nearest(new Point2D(0.937D, 0.3D));
-        assertEquals(new Point2D(0.7D, 0.2D), nearestPoint);
+        assertEquals(new Point2D(0.2D, 0.3D), points.nearest(new Point2D(0.371D, 0.034D)));
+        assertEquals(new Point2D(0.2D, 0.3D), points.nearest(new Point2D(0.013D, 0.46D)));
+        assertEquals(new Point2D(0.7D, 0.2D), points.nearest(new Point2D(0.937D, 0.3D)));
+        assertEquals(new Point2D(0.4D, 0.7D), points.nearest(new Point2D(0.57D, 0.784D)));
     }
 
     @Test

@@ -180,16 +180,38 @@ public class KdTree {
         }
 
         Point2D point = node.point;
-        double newDistance = point.distanceSquaredTo(queryPoint);
-        if (newDistance > nearestDistance) {
+        double distance = point.distanceSquaredTo(queryPoint);
+        if (distance < nearestDistance) {
+            nearestPoint = point;
+            nearestDistance = distance;
+        }
+
+        double distanceLeft = Double.POSITIVE_INFINITY;
+        double distanceRight = Double.POSITIVE_INFINITY;
+
+        if (node.leftBelow != null) {
+            distanceLeft = node.leftBelow.point.distanceSquaredTo(queryPoint);
+        }
+
+        if (node.rightAbove != null) {
+            distanceRight = node.rightAbove.point.distanceSquaredTo(queryPoint);
+        }
+
+        double min = distanceLeft - distanceRight < 0 ? distanceLeft : distanceRight;
+
+        if (min == Double.POSITIVE_INFINITY) {
             return;
         }
 
-        nearestDistance = newDistance;
-        nearestPoint = point;
+        if (min == distanceLeft) {
+            findNearestPoint(node.leftBelow);
+            findNearestPoint(node.rightAbove);
+        }
+        else {
+            findNearestPoint(node.rightAbove);
+            findNearestPoint(node.leftBelow);
+        }
 
-        findNearestPoint(node.leftBelow);
-        findNearestPoint(node.rightAbove);
     }
 
     private class Node {
