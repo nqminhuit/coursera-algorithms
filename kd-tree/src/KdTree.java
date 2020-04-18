@@ -46,13 +46,18 @@ public class KdTree {
     }
 
     private double comparePointsWithLevel(Node node, Point2D p) {
-        if (node.point.equals(p)) {
+        Point2D point = node.point;
+        if (point.equals(p)) {
             return 0D;
         }
         if (node.level % 2 == 0) {
-            return node.point.x() - p.x() == 0D ? -1 : node.point.x() - p.x();
+            double thisX = point.x();
+            double thatX = p.x();
+            return equals(thisX, thatX) ? -1 : thatX - thisX;
         }
-        return node.point.y() - p.y() == 0D ? -1 : node.point.y() - p.y();
+        double thisY = point.y();
+        double thatY = p.y();
+        return equals(thisY, thatY) ? -1 : thatY - thisY;
     }
 
     // add the point to the set (if it is not already in the set)
@@ -71,10 +76,10 @@ public class KdTree {
 
         double cmp = comparePointsWithLevel(node, p);
 
-        if (cmp > 0) {
+        if (cmp < 0) {
             node.leftBelow = put(node.leftBelow, p, node.level + 1);
         }
-        else if (cmp < 0) {
+        else if (cmp > 0) {
             node.rightAbove = put(node.rightAbove, p, node.level + 1);
         }
         else {
@@ -90,21 +95,24 @@ public class KdTree {
             throw new IllegalArgumentException();
         }
 
-        Node node = root;
-        while (node != null) {
-            double cmp = comparePointsWithLevel(node, p);
-            if (cmp > 0) {
-                node = node.leftBelow;
-            }
-            else if (cmp < 0) {
-                node = node.rightAbove;
-            }
-            else {
-                return true;
-            }
+        return contains(root, p);
+    }
+
+    private boolean contains(Node node, Point2D p) {
+        if (node == null) {
+            return false;
         }
 
-        return false;
+        double cmp = comparePointsWithLevel(node, p);
+        if (cmp == 0) {
+            return true;
+        }
+
+        if (cmp < 0) {
+            return contains(node.leftBelow, p);
+        }
+
+        return contains(node.rightAbove, p);
     }
 
     // draw all points to standard draw
